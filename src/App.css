@@ -1,0 +1,10 @@
+.panels-container{
+    width: calc(100vw - 100px);
+    height: calc(100vh - 100px);
+    display: flex;
+    padding: 50px;
+}
+
+body{
+    margin: unset;
+}

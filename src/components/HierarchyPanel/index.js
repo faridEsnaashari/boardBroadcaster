@@ -1,6 +1,8 @@
+import "./index.css";
+
 const HierarchyPanel = (props) => {
     return(
-        <p>HierarchyPanel</p>
+        <div className="hierarchy-panel">HierarchyPanel</div>
     )
 };
 

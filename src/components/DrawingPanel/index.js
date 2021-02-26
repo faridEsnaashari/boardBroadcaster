@@ -1,6 +1,8 @@
+import "./index.css";
+
 const DrawingPanel = (props) => {
     return(
-        <p>DrawingPanel</p>
+        <div className="drawing-panel">DrawingPanel</div>
     )
 };
 
