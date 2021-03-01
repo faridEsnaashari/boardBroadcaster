@@ -4,30 +4,8 @@ import { useState, useRef } from "react";
 
 const HierarchyPanel = (props) => {
 
-    const [shapesDetails, setShapeDetails] = useState([
-        {
-            type: "verticalLine",
-            x: 100,
-            y: 100,
-            length: 50, 
-            color: "#000000",
-        },
-        {
-            type: "horizontalLine",
-            x: 100,
-            y: 100,
-            length: 50, 
-            color: "#000000",
-        },
-        {
-            type: "rectongle",
-            x: 100,
-            y: 100,
-            width: 100, 
-            height: 50, 
-            color: "#000000",
-        },
-    ]);
+    const shapesDetailsRef = useRef([]);
+    const [shapesDetails, setShapeDetails] = useState([]);
 
     const getShapesDetails = () => {
         return shapesDetails.map((shapeDetails, index) => {
@@ -38,9 +16,60 @@ const HierarchyPanel = (props) => {
                 }
             }
 
-            return <ShapeDetail key={ index } name="test123" type={ shapeDetails.type } attributes={ attributes }></ShapeDetail>
+            return <ShapeDetail key={ index } name={ shapeDetails.name } type={ shapeDetails.type } attributes={ attributes }></ShapeDetail>
         });
     };
+
+    const createHorizontalLine = () => {
+        const shapeId = Date.now();
+        const shapeName = `horizontalLine${ shapeId }`;
+
+        const newHorizontalLine = {
+            name: shapeName,
+            type: "horizontalLine",
+            x: 0,
+            y: 0,
+            length: 0, 
+            color: "#000000",
+        };
+
+        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newHorizontalLine ];
+        setShapeDetails(shapesDetailsRef.current);
+    }
+
+    const createVerticalLine = () => {
+        const shapeId = Date.now();
+        const shapeName = `verticalLine${ shapeId }`;
+
+        const newVerticalLine = {
+            name: shapeName,
+            type: "verticalLine",
+            x: 0,
+            y: 0,
+            length: 0, 
+            color: "#000000",
+        };
+
+        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newVerticalLine ];
+        setShapeDetails(shapesDetailsRef.current);
+    }
+
+    const createRectongle = () => {
+        const shapeId = Date.now();
+        const shapeName = `rectongle${ shapeId }`;
+
+        const newRectongle = {
+            name: shapeName,
+            type: "rectongle",
+            x: 0,
+            y: 0,
+            length: 0, 
+            color: "#000000",
+        };
+
+        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newRectongle ];
+        setShapeDetails(shapesDetailsRef.current);
+    }
 
     return(
         <div className="hierarchy-panel">
@@ -48,9 +77,9 @@ const HierarchyPanel = (props) => {
                 { getShapesDetails() }
             </div>
             <div className="buttons-container">
-                <div className="button horizontal-line"></div>
-                <div className="button vertical-line"></div>
-                <div className="button rectongle"></div>
+                <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
+                <div className="button vertical-line" onClick={ createVerticalLine }></div>
+                <div className="button rectongle" onClick={ createRectongle }></div>
             </div>
         </div>
     )
