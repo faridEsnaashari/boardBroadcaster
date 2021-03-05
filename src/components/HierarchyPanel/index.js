@@ -1,11 +1,14 @@
 import "./index.css";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const HierarchyPanel = (props) => {
+    const onShapesUpdated = props.onShapesUpdated;
 
     const shapesDetailsRef = useRef([]);
     const [shapesDetails, setShapeDetails] = useState([]);
+
+    useEffect(() => onShapesUpdated(shapesDetails), [shapesDetails]);
 
     const onAShapeAttributeChanged = async(updatedShape) => {
         shapesDetailsRef.current.map(shape => {
