@@ -17,6 +17,25 @@
     width: 100%;
     margin: 3px;
     border-radius: 10px;
+    background-size: 2em 2em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.horizontal-line{
+    background-image: url(/src/assets/icons/horizontalLineIcon.svg);
+}
+
+.vertical-line{
+    background-image: url(/src/assets/icons/verticalLineIcon.png);
+}
+
+.normal-line{
+    background-image: url(/src/assets/icons/normalLineIcon.png);
+}
+
+.rectongle{
+    background-image: url(/src/assets/icons/rectongleIcon.svg);
 }
 
 .shapes-details-container{

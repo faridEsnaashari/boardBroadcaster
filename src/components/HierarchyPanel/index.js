@@ -119,7 +119,7 @@ const HierarchyPanel = (props) => {
                 <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
                 <div className="button vertical-line" onClick={ createVerticalLine }></div>
                 <div className="button rectongle" onClick={ createRectongle }></div>
-                <div className="button rectongle" onClick={ createNormalLine }></div>
+                <div className="button normal-line" onClick={ createNormalLine }></div>
             </div>
         </div>
     )
