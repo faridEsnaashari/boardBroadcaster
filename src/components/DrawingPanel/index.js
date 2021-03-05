@@ -25,7 +25,7 @@ const Shape = (props) => {
         type,
     } = props.shapeDetails;
 
-    const setFinalStyles = shapeStyles => {
+    const setCommonStyles = shapeStyles => {
         const left = `${ attributes.x }px`;
         const top = `${ attributes.y }px`;
 
@@ -40,41 +40,138 @@ const Shape = (props) => {
         return shapeStyles;
     };
 
-    const preperShape = () => {
+    const prepareShape = () => {
         let shapeStyles = {};
 
-        switch(type){
-            case "rectongle":
-                shapeStyles.height = `${ attributes.height }px`;
-                shapeStyles.width = `${ attributes.width }px`;
-                break;
+        shapeStyles = setCommonStyles(shapeStyles);
 
-            case "horizontalLine":
-                shapeStyles.height = `0px`;
-                shapeStyles.width = `${ attributes.length }px`;
-                break;
-
-            case "verticalLine":
-                shapeStyles.width = `0px`;
-                shapeStyles.height = `${ attributes.length }px`;
-                break;
-
-            default:
-                break;
-        }
-
-        shapeStyles = setFinalStyles(shapeStyles);
-
-        return (<div className="shape" id={ name } style={ shapeStyles }></div>);
+        return (
+            <>
+                {
+                    type === "verticalLine" && <VerticalLine shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
+                }
+                {
+                    type === "horizontalLine" && <HorizontalLine shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
+                }
+                {
+                    type === "normalLine" && <NormalLine shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
+                }
+                {
+                    type === "rectongle" && <Rectongle shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
+                }
+            </>
+        );
     };
 
     return(
         <>
             {
-                preperShape()
+                prepareShape()
             }
         </>
     )
+};
+
+const Rectongle = (props) => {
+    const { shapeStyles, name, attributes } = props;
+
+    const prepareRectangle = () => {
+        shapeStyles.height = `${ attributes.height }px`;
+        shapeStyles.width = `${ attributes.width }px`;
+
+        return(<div className="shape" style={ shapeStyles } id={ name }></div>);
+    };
+
+    return(
+        <>
+            {
+                prepareRectangle()
+            }
+        </>
+    );
+};
+
+const HorizontalLine = (props) => {
+    const { shapeStyles, name, attributes } = props;
+
+    const prepareHorizontalLine = () => {
+        shapeStyles.width = `${ attributes.length }px`;
+        shapeStyles.height = `0px`;
+
+        return(<div className="shape" style={ shapeStyles } id={ name }></div>);
+    };
+
+    return(
+        <>
+            {
+                prepareHorizontalLine()
+            }
+        </>
+    );
+};
+
+const VerticalLine = (props) => {
+    const { shapeStyles, name, attributes } = props;
+
+    const prepareVerticalLine = () => {
+        shapeStyles.width = `0px`;
+        shapeStyles.height = `${ attributes.length }px`;
+
+        return(<div className="shape" style={ shapeStyles } id={ name }></div>);
+    };
+
+    return(
+        <>
+            {
+                prepareVerticalLine()
+            }
+        </>
+    );
+};
+
+const NormalLine = (props) => {
+    const { shapeStyles, name, attributes } = props;
+
+    const prepareNormal = () => {
+        const { x1, y1, x2, y2 } = attributes;
+
+        const length = y1 - y2;
+        const width = x1 - x2;
+
+        const squreOfLength = length * length;
+        const squreOfWidth = width * width;
+
+        const sum = squreOfWidth + squreOfLength;
+
+        const diagonalLength = Math.abs(Math.sqrt(sum));
+
+        const angelInRadians = Math.atan(length / width);
+        const angelInDegree = (angelInRadians * 180) / Math.PI;
+        const angel = -angelInDegree;
+
+        shapeStyles.width = `0px`;
+        shapeStyles.height = `${ diagonalLength }px`;
+
+        const normalLineHolderStyles = {
+            transform: `rotate(${ angel }deg)`,
+            width: "1px",
+            height: "1px",
+        };
+
+        return(
+            <div style={ normalLineHolderStyles }>
+                <div className="shape" style={ shapeStyles } id={ name }></div>
+            </div>
+        );
+    };
+
+    return(
+        <>
+            {
+                prepareNormal()
+            }
+        </>
+    );
 };
 
 
