@@ -32,6 +32,26 @@ const HierarchyPanel = (props) => {
         });
     };
 
+    const createNormalLine = () => {
+        const shapeId = Date.now();
+        const shapeName = `normalLine${ shapeId }`;
+
+        const newNormalLine = {
+            name: shapeName,
+            type: "normalLine",
+            attributes: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 0,
+                color: "#000000",
+            },
+        };
+
+        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newNormalLine ];
+        setShapeDetails(shapesDetailsRef.current);
+    }
+
     const createHorizontalLine = () => {
         const shapeId = Date.now();
         const shapeName = `horizontalLine${ shapeId }`;
@@ -99,6 +119,7 @@ const HierarchyPanel = (props) => {
                 <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
                 <div className="button vertical-line" onClick={ createVerticalLine }></div>
                 <div className="button rectongle" onClick={ createRectongle }></div>
+                <div className="button rectongle" onClick={ createNormalLine }></div>
             </div>
         </div>
     )
