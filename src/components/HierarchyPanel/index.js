@@ -7,16 +7,25 @@ const HierarchyPanel = (props) => {
     const shapesDetailsRef = useRef([]);
     const [shapesDetails, setShapeDetails] = useState([]);
 
-    const getShapesDetails = () => {
-        return shapesDetails.map((shapeDetails, index) => {
-            const attributes = {};
-            for(let detail in shapeDetails){
-                if(detail !== "type"){
-                    attributes[detail] = shapeDetails[detail];
-                }
+    const onAShapeAttributeChanged = async(updatedShape) => {
+        shapesDetailsRef.current.map(shape => {
+            if(updatedShape.name !== shape.name){
+                return shape;
             }
 
-            return <ShapeDetail key={ index } name={ shapeDetails.name } type={ shapeDetails.type } attributes={ attributes }></ShapeDetail>
+            for(let attribute in shape.attributes){
+                shape.attributes[attribute] = updatedShape.attributes[attribute];
+            }
+
+            return shape;
+        });
+
+        setShapeDetails([ ...shapesDetailsRef.current ]);
+    };
+
+    const getShapesDetails = () => {
+        return shapesDetailsRef.current.map((shapeDetails, index) => {
+            return <ShapeDetail key={ index } onAttributesChanged={ onAShapeAttributeChanged } name={ shapeDetails.name } type={ shapeDetails.type } attributes={ shapeDetails.attributes }/>
         });
     };
 
@@ -27,10 +36,12 @@ const HierarchyPanel = (props) => {
         const newHorizontalLine = {
             name: shapeName,
             type: "horizontalLine",
-            x: 0,
-            y: 0,
-            length: 0, 
-            color: "#000000",
+            attributes: {
+                x: 0,
+                y: 0,
+                length: 0, 
+                color: "#000000",
+            },
         };
 
         shapesDetailsRef.current = [ ...shapesDetailsRef.current, newHorizontalLine ];
@@ -44,10 +55,12 @@ const HierarchyPanel = (props) => {
         const newVerticalLine = {
             name: shapeName,
             type: "verticalLine",
-            x: 0,
-            y: 0,
-            length: 0, 
-            color: "#000000",
+            attributes: {
+                x: 0,
+                y: 0,
+                length: 0, 
+                color: "#000000",
+            },
         };
 
         shapesDetailsRef.current = [ ...shapesDetailsRef.current, newVerticalLine ];
@@ -61,10 +74,13 @@ const HierarchyPanel = (props) => {
         const newRectongle = {
             name: shapeName,
             type: "rectongle",
-            x: 0,
-            y: 0,
-            length: 0, 
-            color: "#000000",
+            attributes: {
+                x: 0,
+                y: 0,
+                width: 0,
+                height: 0,
+                color: "#000000",
+            },
         };
 
         shapesDetailsRef.current = [ ...shapesDetailsRef.current, newRectongle ];
@@ -86,18 +102,33 @@ const HierarchyPanel = (props) => {
 };
 
 const ShapeDetail = (props) => {
-    const name = props.name;
+    const shapeName = props.name;
     const attributes = props.attributes;
     const type = props.type;
+    const onThisShapeAttributesChanged = props.onAttributesChanged;
+
+    const onAttributesChanged = e => {
+        const attributeName = e.target.name;
+        const attributeValue = e.target.value;
+
+        const shapeWithNewAttributes = { 
+            name: shapeName, 
+            type: type, 
+            attributes: { ...attributes },
+        };
+        shapeWithNewAttributes.attributes[attributeName] = attributeValue;
+
+        onThisShapeAttributesChanged(shapeWithNewAttributes);
+    };
 
     const getAttributes = () => {
         let renderedComponents = [];
         for(let attribute in attributes){
             renderedComponents.push(
-                <div className="attribute">
+                <div className="attribute" key= { renderedComponents.length }>
                     <label>{ attribute }</label>
                     <br></br>
-                    <input type="text" defaultValue={ attributes.attribute }></input>
+                    <input type="text" name={ attribute } id={ shapeName } defaultValue={ attributes[attribute] } onChange={ onAttributesChanged }/>
                 </div>
             );
         }
@@ -106,9 +137,9 @@ const ShapeDetail = (props) => {
     };
 
     return(
-        <div className="shape-detail-container">
+        <div className="shape-detail-container" key={ shapeName }>
             <div className="general-info-container">
-                <p>{ name }</p>
+                <p>{ shapeName }</p>
                 <p>{ type }</p>
             </div>
             <div className="attributes-container">
@@ -117,7 +148,6 @@ const ShapeDetail = (props) => {
         </div>
     );
 };
-
 
 
 export default HierarchyPanel;
