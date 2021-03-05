@@ -139,8 +139,8 @@ const ShapeDetail = (props) => {
     return(
         <div className="shape-detail-container" key={ shapeName }>
             <div className="general-info-container">
-                <p>{ shapeName }</p>
-                <p>{ type }</p>
+                <p className="shape-name">{ shapeName }</p>
+                <p className="shape-type">{ type }</p>
             </div>
             <div className="attributes-container">
                 { getAttributes() }
