@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/shapesGenerator/static/css/main.b88a4d30.chunk.css",
-    "main.js": "/shapesGenerator/static/js/main.69b08b20.chunk.js",
-    "main.js.map": "/shapesGenerator/static/js/main.69b08b20.chunk.js.map",
+    "main.js": "/shapesGenerator/static/js/main.eaf9452e.chunk.js",
+    "main.js.map": "/shapesGenerator/static/js/main.eaf9452e.chunk.js.map",
     "runtime-main.js": "/shapesGenerator/static/js/runtime-main.8c16123d.js",
     "runtime-main.js.map": "/shapesGenerator/static/js/runtime-main.8c16123d.js.map",
     "static/js/2.17841395.chunk.js": "/shapesGenerator/static/js/2.17841395.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.8c16123d.js",
     "static/js/2.17841395.chunk.js",
     "static/css/main.b88a4d30.chunk.css",
-    "static/js/main.69b08b20.chunk.js"
+    "static/js/main.eaf9452e.chunk.js"
   ]
 }
