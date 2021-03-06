@@ -26,13 +26,9 @@ const Shape = (props) => {
     } = props.shapeDetails;
 
     const setCommonStyles = shapeStyles => {
-        const left = `${ attributes.x }px`;
-        const top = `${ attributes.y }px`;
 
         const color = attributes.color;
 
-        shapeStyles.left = left;
-        shapeStyles.top = top;
 
         shapeStyles.border = `1px solid ${ color }`;
         shapeStyles.borderRadius = "2px";
@@ -76,6 +72,12 @@ const Rectongle = (props) => {
     const { shapeStyles, name, attributes } = props;
 
     const prepareRectangle = () => {
+        const left = `${ attributes.x }px`;
+        const top = `${ attributes.y }px`;
+
+        shapeStyles.left = left;
+        shapeStyles.top = top;
+
         shapeStyles.height = `${ attributes.height }px`;
         shapeStyles.width = `${ attributes.width }px`;
 
@@ -95,6 +97,12 @@ const HorizontalLine = (props) => {
     const { shapeStyles, name, attributes } = props;
 
     const prepareHorizontalLine = () => {
+        const left = `${ attributes.x }px`;
+        const top = `${ attributes.y }px`;
+
+        shapeStyles.left = left;
+        shapeStyles.top = top;
+
         shapeStyles.width = `${ attributes.length }px`;
         shapeStyles.height = `0px`;
 
@@ -114,6 +122,12 @@ const VerticalLine = (props) => {
     const { shapeStyles, name, attributes } = props;
 
     const prepareVerticalLine = () => {
+        const left = `${ attributes.x }px`;
+        const top = `${ attributes.y }px`;
+
+        shapeStyles.left = left;
+        shapeStyles.top = top;
+
         shapeStyles.width = `0px`;
         shapeStyles.height = `${ attributes.length }px`;
 
@@ -135,27 +149,32 @@ const NormalLine = (props) => {
     const prepareNormal = () => {
         const { x1, y1, x2, y2 } = attributes;
 
-        const length = y1 - y2;
-        const width = x1 - x2;
+        const length = y2 - y1;
+        const width = x2 - x1;
 
         const squreOfLength = length * length;
         const squreOfWidth = width * width;
 
         const sum = squreOfWidth + squreOfLength;
 
-        const diagonalLength = Math.abs(Math.sqrt(sum));
+        const diagonalLength = Math.sqrt(sum);
 
-        const angelInRadians = Math.atan(length / width);
-        const angelInDegree = (angelInRadians * 180) / Math.PI;
-        const angel = -angelInDegree;
+        const angleInRadians = Math.atan2(y2 - y1, x2 - x1);
+        const angleInDegree = angleInRadians * 180 / Math.PI;
 
-        shapeStyles.width = `0px`;
-        shapeStyles.height = `${ diagonalLength }px`;
+        shapeStyles.width = `${ diagonalLength }px`;
+        shapeStyles.height = `0px`;
+
+        const left = `${ attributes.x1 }px`;
+        const top = `${ attributes.y1 }px`;
 
         const normalLineHolderStyles = {
-            transform: `rotate(${ angel }deg)`,
+            transform: `rotate(${ angleInDegree }deg)`,
             width: "1px",
             height: "1px",
+            position: "absolute",
+            top: top,
+            left: left,
         };
 
         return(
