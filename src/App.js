@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import "./App.css";
 
-import DrawingPanel from "./components/DrawingPanel/index";
-import HierarchyPanel from "./components/HierarchyPanel/index";
+import DrawingPanel from "./pages/DrawingPanel/index";
+import HierarchyPanel from "./pages/HierarchyPanel/index";
 
 const App = () => {
     const [shapes, setShapes] = useState([]);
