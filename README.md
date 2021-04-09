@@ -1,5 +1,5 @@
 # Diagram
-![diagram](https://github.com/faridEsnaashari/shapesGenerator/blob/main/diagrams/usecaseDiagram)
+![diagram](https://github.com/faridEsnaashari/shapesGenerator/blob/main/diagrams/usecaseDiagram.png)
 
 # Directory structure
 
