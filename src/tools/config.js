@@ -1,3 +1,4 @@
-const baseUrl = "http://localhost:3001";
+const API_URL = "http://localhost:3001";
+const APP_URL = "http://localhost:3000";
 
-export default baseUrl;
+export { API_URL, APP_URL };
