@@ -8,7 +8,7 @@ const routes = [
         component: VerificationSentPage,
     },
     {
-        path: "/verify_email",
+        path: "/verify_email/:verificationToken",
         component: VerifyEmailPage,
     },
     {
