@@ -5,4 +5,5 @@ module.exports = {
     INTERNAL_SERVER_ERR: 500,
     SUCCESS_MSG: 200,
     SUCCESS_CREATE_MSG: 201,
+    UNAUTHORIZED_ERR: 401,
 };
