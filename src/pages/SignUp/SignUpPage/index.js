@@ -1,19 +1,11 @@
 import { isValidEmail, isValidPassword, isValidUseerName } from "../../../tools/validators";
 import { SUCCESS_CREATE_MSG, CONFILICT_ERR, INTERNAL_SERVER_ERR } from "../../../tools/statusCodes";
 import { APP_URL } from "../../../tools/config";
+import { getElementValue } from "../../../tools/helpers";
 import useRequestSender from "../../../hooks/useRequestSender";
 
 const SignUpPage = () => {
     const { fetching, axios } = useRequestSender();
-
-    const getElementValue = id => {
-        const element = document.getElementById(id);
-        if(!element){
-            return;
-        }
-
-        return element.value;
-    };
 
     const registerTheUser = async (e) => {
         e.preventDefault();
