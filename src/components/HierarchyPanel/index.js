@@ -32,6 +32,25 @@ const HierarchyPanel = (props) => {
         });
     };
 
+    const createCircle = () => {
+        const shapeId = Date.now();
+        const shapeName = `circle${ shapeId }`;
+
+        const newCircle = {
+            name: shapeName,
+            type: "circle",
+            attributes: {
+                centerX: 0,
+                centerY: 0,
+                radius: 0,
+                color: "#000000",
+            },
+        };
+
+        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newCircle ];
+        setShapeDetails(shapesDetailsRef.current);
+    }
+
     const createNormalLine = () => {
         const shapeId = Date.now();
         const shapeName = `normalLine${ shapeId }`;
@@ -120,6 +139,7 @@ const HierarchyPanel = (props) => {
                 <div className="button vertical-line" onClick={ createVerticalLine }></div>
                 <div className="button rectongle" onClick={ createRectongle }></div>
                 <div className="button normal-line" onClick={ createNormalLine }></div>
+                <div className="button circle" onClick={ createCircle }></div>
             </div>
         </div>
     )

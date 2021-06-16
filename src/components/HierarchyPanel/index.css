@@ -30,6 +30,10 @@
     background-image: url(/src/assets/icons/verticalLineIcon.png);
 }
 
+.circle{
+    background-image: url(/src/assets/icons/circleIcon.svg);
+}
+
 .normal-line{
     background-image: url(/src/assets/icons/normalLineIcon.png);
 }

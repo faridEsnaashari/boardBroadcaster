@@ -55,6 +55,9 @@ const Shape = (props) => {
                 {
                     type === "rectongle" && <Rectongle shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
                 }
+                {
+                    type === "circle" && <Circle shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
+                }
             </>
         );
     };
@@ -80,6 +83,33 @@ const Rectongle = (props) => {
 
         shapeStyles.height = `${ attributes.height }px`;
         shapeStyles.width = `${ attributes.width }px`;
+
+        return(<div className="shape" style={ shapeStyles } id={ name }></div>);
+    };
+
+    return(
+        <>
+            {
+                prepareRectangle()
+            }
+        </>
+    );
+};
+
+const Circle = (props) => {
+    const { shapeStyles, name, attributes } = props;
+
+    const prepareRectangle = () => {
+        const left = `${ attributes.centerX - attributes.radius }px`;
+        const top = `${ attributes.centerY - attributes.radius }px`;
+
+        shapeStyles.left = left;
+        shapeStyles.top = top;
+
+        shapeStyles.height = `${ attributes.radius * 2 }px`;
+        shapeStyles.width = `${ attributes.radius * 2 }px`;
+
+        shapeStyles.borderRadius = "100px";
 
         return(<div className="shape" style={ shapeStyles } id={ name }></div>);
     };
