@@ -9,6 +9,12 @@ const useRequestSender = () => {
 
     axios.interceptors.request.use(config => { 
         setFetching(true);
+
+        const userToken = localStorage.getItem('user_token');
+        if (userToken){
+            config.headers.authorization = `Bearer ${ userToken }`;
+        }
+
         return config;
     }, () => { setFetching(false) });
 
