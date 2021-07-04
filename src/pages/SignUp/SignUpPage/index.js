@@ -1,13 +1,16 @@
+import { useReducer } from "react";
+
 import { isValidEmail, isValidPassword, isValidUseerName } from "../../../tools/validators";
 import { SUCCESS_CREATE_MSG, CONFILICT_ERR, INTERNAL_SERVER_ERR } from "../../../tools/statusCodes";
 import { APP_URL } from "../../../tools/config";
 import { getElementValue } from "../../../tools/helpers";
-import useRequestSender from "../../../hooks/useRequestSender";
+
+import useAPICaller from "../../../APIs/APICallers/APICallers";
 
 const SignUpPage = () => {
-    const { fetching, axios } = useRequestSender();
+    const [ signUp, result ] = useAPICaller().signUpCaller;
 
-    const registerTheUser = async (e) => {
+    const registerTheUser = (e) => {
         e.preventDefault();
         const name = getElementValue("name");
         const password = getElementValue("password");
@@ -24,24 +27,7 @@ const SignUpPage = () => {
             email,
         };
 
-        try{
-            const result = await axios.post("/register", userInformation);
-
-            if(result.status === SUCCESS_CREATE_MSG){
-                window.location.href = `${ APP_URL }/signup/verification_sent`;
-            }
-        }
-        catch(err){
-            const { status } = err.response;
-
-            if(status === INTERNAL_SERVER_ERR){
-                console.error("internal server error happened");
-            }
-
-            if(status === CONFILICT_ERR){
-                console.error("there already is a user with this email");
-            }
-        }
+        signUp(userInformation);
     };
 
     return (
@@ -58,7 +44,6 @@ const SignUpPage = () => {
                 <br/>
                 <input type="submit"/>
             </form>
-            <p>{ fetching ? "wait": "succeed" }</p>
         </>
     );
 }
