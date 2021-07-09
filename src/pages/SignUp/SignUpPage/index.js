@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 
 import { isValidEmail, isValidPassword, isValidUseerName } from "../../../tools/validators";
 import { SUCCESS_CREATE_MSG, CONFILICT_ERR, INTERNAL_SERVER_ERR } from "../../../tools/statusCodes";
@@ -9,6 +9,12 @@ import useAPICaller from "../../../APIs/APICallers/APICallers";
 
 const SignUpPage = () => {
     const [ signUp, result ] = useAPICaller().signUpCaller;
+
+    useEffect(() => {
+        if(result.status === SUCCESS_CREATE_MSG){
+            window.location.href = "/signup/verification_sent";
+        }
+    }, [result]);
 
     const registerTheUser = (e) => {
         e.preventDefault();
