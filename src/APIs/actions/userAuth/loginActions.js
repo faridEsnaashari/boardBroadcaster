@@ -20,8 +20,8 @@ export const loginAction = (dispatch, userInformation) => {
         .catch(error => {
             dispatch({
                 type: FAILED_LOGIN,
-                statusCode: error.response.status,
-                payload: error.response.data,
+                statusCode: error.response && error.response.status,
+                payload: error.response && error.response.data,
             })
         });
 };

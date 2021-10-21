@@ -22,8 +22,8 @@ export const signUpAction = (dispatch, data) => {
         .catch(error => {
             dispatch({
                 type: FAILED_SIGNUP,
-                statusCode: error.response.status,
-                payload: error.response.data,
+                statusCode: error.response && error.response.status,
+                payload: error.response && error.response.data,
             })
         });
 };
@@ -41,8 +41,8 @@ export const verifyEmailAction = (dispatch, verificationToken) => {
         .catch(error => {
             dispatch({
                 type: FAILED_VERIFY_EMAIL,
-                statusCode: error.response.status,
-                payload: error.response.data,
+                statusCode: error.response && error.response.status,
+                payload: error.response && error.response.data,
             })
         });
 };
