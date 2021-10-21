@@ -1,12 +1,15 @@
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 import { isValidEmail, isValidPassword } from "../../../tools/validators";
 import { SUCCESS_MSG, UNAUTHORIZED_ERR, INTERNAL_SERVER_ERR } from "../../../tools/statusCodes";
-import { APP_URL } from "../../../tools/config";
 import { getElementValue } from "../../../tools/helpers";
+
 import useAPICaller from "../../../APIs/APICallers/APICallers";
 
 const LogInPage = () => {
     const [ login, result ] = useAPICaller().loginCaller;
+    const history = useHistory();
 
     const logInTheUser = (e) => {
         e.preventDefault();
@@ -26,7 +29,9 @@ const LogInPage = () => {
         login(userInformation);
     };
 
-    useEffect(() => result.status === SUCCESS_MSG && console.log("redirected"), [ result.status ]);
+    const redirectToBoardsPanel = () => history.push("boards-panel");
+
+    useEffect(() => result.status === SUCCESS_MSG && redirectToBoardsPanel(), [ result.status ]);
 
     return (
         <>
