@@ -1,0 +1,34 @@
+.loading-circle-main-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.loading-circle-main-container > div{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 50%;
+    animation-name: rotate-loading-circle;
+    border: 10px solid transparent;
+    border-top: 10px solid #0064ff;
+    animation-iteration-count: infinite;
+}
+
+.first-loading-circle{
+    animation-duration: 1s;
+}
+
+.second-loading-circle{
+    animation-duration: 2s;
+}
+
+@keyframes rotate-loading-circle{
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(360deg);
+    }
+}
