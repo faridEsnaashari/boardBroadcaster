@@ -18,6 +18,9 @@ import {
 import { loginReducer, loginInitialState } from "../reducers/userAuth/loginReducers";
 import { loginAction } from "../actions/userAuth/loginActions";
 
+import { userGetReducer, userGetInitialState } from "../reducers/user/userReducers";
+import { userGetAction } from "../actions/user/userActions";
+
 axios.defaults.baseURL = API_URL;
 const userToken = localStorage.getItem("userToken");
 if(userToken){
@@ -34,10 +37,14 @@ export const useAPICaller = () => {
     const [ loginResult, loginDispatch ] = useReducer(loginReducer, loginInitialState);
     const login = data => loginAction(loginDispatch, data);
 
+    const [ userGetResult, userGetDispatch ] = useReducer(userGetReducer, userGetInitialState);
+    const getUser = data => userGetAction(userGetDispatch, data);
+
     return { 
         signUpCaller: [ signUp, signUpResult ],
         verifyEmailCaller: [ verifyEmail, verifyEmailResult ],
         loginCaller: [ login, loginResult ],
+        getUserCaller: [ getUser, userGetResult ],
     };
 };
 
