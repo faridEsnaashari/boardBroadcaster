@@ -1,7 +1,10 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+
+import PrivateRoute from "./components/PrivateRoute";
 
 import SignUpRouter from "./routers/singUp";
 import LogInRouter from "./routers/logIn";
+import BoardsPanelRouter from "./routers/boardsPanel";
 
 import "./App.css";
 
@@ -15,6 +18,10 @@ const App = () => {
                 <Route path="/signup">
                     <SignUpRouter/>
                 </Route>
+                <PrivateRoute path="/boards-panel">
+                    <BoardsPanelRouter/>
+                </PrivateRoute>
+                <Redirect push to="/boards-panel"/>
             </Switch>
         </Router>
     );
