@@ -9,6 +9,10 @@ body{
     margin: unset;
 }
 
+p{
+    margin: unset;
+}
+
 @media(max-width: 850px){
     .panels-container{
         flex-direction: column;
