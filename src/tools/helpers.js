@@ -7,6 +7,9 @@ const getElementValue = id => {
     return element.value;
 };
 
+const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) ) + min; 
+
 export {
     getElementValue,
+    getRandomNumber,
 };
