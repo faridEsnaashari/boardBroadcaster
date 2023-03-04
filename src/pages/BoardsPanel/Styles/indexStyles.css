@@ -1,0 +1,83 @@
+.boards-panel-main-container {
+    background-color: #494a57;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow: auto;
+}
+
+.boards-panel-header > div:first-child {
+    display: flex;
+    align-items: center;
+    font-size: 2em;
+}
+
+.boards-panel-header {
+    padding: 0 2em;
+    height: 5em;
+    background-color: #9d9d9d;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    width: 100%;
+    z-index: 1;
+    box-sizing: border-box;
+    top: 0;
+    color: #21222d;
+    font-weight: bold;
+}
+
+.boards-panel-body {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 2em;
+}
+
+.option-container {
+    width: 8em;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.option-container > div {
+    height: 50%;
+    border-radius: 3em;
+    position: absolute;
+    right: 0;
+    background-color: #878793;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.log-out {
+    width: 100%;
+    transition: width 300ms;
+    transition-delay: 100ms;
+    padding-right: 1em;
+    box-sizing: border-box;
+}
+
+.log-out-close {
+    width: 30%;
+    overflow: hidden;
+}
+
+.three-dot-container {
+    width: 30%;
+    flex-direction: column;
+    gap: .1em;
+}
+
+.three-dot-container > div{
+    width: .4em;
+    height: .4em;
+    background-color: #21222d;
+    border-radius: 1em;
+}
