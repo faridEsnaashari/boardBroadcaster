@@ -5,6 +5,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import SignUpRouter from "./routers/singUp";
 import LogInRouter from "./routers/logIn";
 import BoardsPanelRouter from "./routers/boardsPanel";
+import LogOutRouter from "./routers/logOut";
 
 import "./App.css";
 
@@ -17,6 +18,9 @@ const App = () => {
                 </Route>
                 <Route path="/signup">
                     <SignUpRouter/>
+                </Route>
+                <Route path="/logout">
+                    <LogOutRouter/>
                 </Route>
                 <PrivateRoute path="/boards-panel">
                     <BoardsPanelRouter/>
