@@ -1,4 +1,5 @@
 import { statusCodesDictionary } from "../../../tools/statusCodes";
+import axios from "axios";
 
 import {
     REQUESTD_LOGIN,
@@ -27,6 +28,7 @@ export const loginReducer = (state, action) => {
         case RECIVED_LOGIN: 
             const userToken = action.payload.data.userToken;
             localStorage.setItem("userToken", userToken);
+            axios.defaults.headers.common['Authorization'] = userToken;
 
             currentState = {
                 isFetching: false,
