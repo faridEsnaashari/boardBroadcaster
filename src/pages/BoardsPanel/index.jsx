@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import Board from "./Components/Board";
+import NewBoard from "./Components/newBoard";
 
 import "./Styles/indexStyles.css";
 
@@ -118,6 +119,7 @@ const BoardsPanelPage = props => {
                     <Board 
                         boardColor="#d04f4f"
                     />
+                    <NewBoard/>
             </div>
         </div>
     );
