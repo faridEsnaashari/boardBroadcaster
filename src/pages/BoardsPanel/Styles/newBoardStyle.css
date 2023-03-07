@@ -1,0 +1,126 @@
+.new-board-main-container {
+    border: 3px dashed;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    max-width: 22.5rem;
+    height: 3rem;
+    box-sizing: border-box;
+    transition: background-color 200ms;
+    cursor: pointer;
+}
+
+.new-board-main-container-open {
+    background-color: #21222d;
+    border: unset;
+}
+
+.new-board-main-container-open.new-board-main-container:hover {
+    background-color: #21222d;
+    cursor: unset;
+}
+
+.new-board-main-container-close {
+
+}
+
+.new-board-main-container:hover {
+    background-color: #64646c;
+}
+
+.new-board-rename-field-container {
+    transition: height 500ms;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    height: 100%;
+}
+
+.new-board-rename-input-container {
+    width: 0;
+    overflow: clip;
+    transition: width 1s;
+    height: 60%;
+    max-height: 2rem;
+}
+
+.new-board-rename-input-container-close {
+    width: 0;
+}
+
+.new-board-rename-input-container-open {
+    width: 70%;
+}
+
+.new-board-rename-input {
+    border-radius: .5em;
+    outline: unset;
+    background-color: #21222d;
+    color: #fff;
+    padding-left: 1em;
+    transition: background-color 100ms;
+    height: 100%;
+    box-sizing: border-box;
+    width: 90%;
+}
+
+.new-board-rename-input:focus-visible {
+    background-color: #5f606c;
+}
+
+.new-board-rename-confirm-button-container {
+    display: flex;
+}
+
+.new-board-rename-confirm-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-board-rename-confirm-button div {
+    width: 25%;
+    height: 100%;
+    background-color: #21222d;
+    position: absolute;
+    border-radius: 10px;
+    transition: background-color 200ms;
+}
+
+.new-board-rename-confirm-button-white div {
+    background-color: #f2f2f3;
+}
+
+.new-board-rename-confirm-button-black div {
+    background-color: #21222d;
+}
+
+.new-board-rename-confirm-button div:first-child {
+    width: 100%;
+    height: 25%;
+}
+
+.new-board-rename-confirm-button img {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 500px) {
+    .new-board-main-container {
+        max-width: unset;
+    }
+}
+
+@media (max-width: 410px) {
+    .new-board-main-container {
+        height: 6rem;
+    }
+}
