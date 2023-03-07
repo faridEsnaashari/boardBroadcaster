@@ -46,7 +46,7 @@ const PrivateRoute = props => {
         return(
             <Route path={ path }>
                 <UserDetailsContext.Provider value={ userDetailsContext }>
-                    <Test/>
+                    { children }
                 </UserDetailsContext.Provider>
             </Route>
         );
