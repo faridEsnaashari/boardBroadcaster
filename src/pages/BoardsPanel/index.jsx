@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+
+import UserDetailsContext from "../../contexts/userDetails.js";
 
 import Board from "./Components/Board";
 import NewBoard from "./Components/newBoard";
@@ -7,6 +9,8 @@ import NewBoard from "./Components/newBoard";
 import "./Styles/indexStyles.css";
 
 const BoardsPanelPage = props => {
+    const userDetails = useContext(UserDetailsContext);
+
     const [ openLogOutDialog, setOpenLogOutDialog ] = useState(false);
 
     const history = useHistory();
@@ -26,100 +30,11 @@ const BoardsPanelPage = props => {
                 </div>
             </div>
             <div className="boards-panel-body">
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <Board 
-                        boardColor="#d04f4f"
-                    />
-                    <NewBoard/>
+                {
+                    userDetails.user.boards && 
+                        userDetails.user.boards.map((board, index) => (<Board boardColor={ board.color } key={ index }/>))
+                }
+                <NewBoard/>
             </div>
         </div>
     );
