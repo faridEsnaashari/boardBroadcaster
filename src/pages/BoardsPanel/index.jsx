@@ -14,38 +14,44 @@ import NewBoard from "./Components/newBoard";
 import "./Styles/indexStyles.css";
 
 const BoardsPanelPage = props => {
-    const userDetails = useContext(UserDetailsContext);
+    const userDetailsContext = useContext(UserDetailsContext);
+
+    const [ boards, setBoards ] = useState(userDetailsContext.user.boards);
+
+    useEffect(() => setBoards(userDetailsContext.user.boards), [userDetailsContext]);
 
     const [ openLogOutDialog, setOpenLogOutDialog ] = useState(false);
 
     const history = useHistory();
     const redirectToLogOut = () => history.push("logout");
 
-    const [ createBoard, createBoardResult ] = useAPICaller().createBoardCaller;
+    const [ createBoardAction, createBoardActionResult ] = useAPICaller().createBoardCaller;
 
     const [ createBoardLoading, setCreateBoardLoading ] = useState(false);
 
     useEffect(() => {
-        if(createBoardResult.isFetching){
+        if(createBoardActionResult.isFetching){
             setCreateBoardLoading(true);
             return;
         }
 
         setCreateBoardLoading(false);
 
-        if(createBoardResult.status === SUCCESS_CREATE_MSG){
-            userDetails.updateUserDetails();
+        if(createBoardActionResult.status === SUCCESS_CREATE_MSG){
+            setBoards([ ...boards, createBoardActionResult.data ])
         }
-    }, [createBoardResult.isFetching]);
+    }, [createBoardActionResult.isFetching]);
     
-    const addBoard = (name) => {
+    const createBoard = (name) => {
         const color = getRandomBoardColor();
 
-        createBoard({
+        createBoardAction({
             name,
             color,
         });
     };
+
+    const deleteBoard = (boardId) => () => console.log(boardId);
 
     return(
         <div className="boards-panel-main-container">
@@ -62,12 +68,19 @@ const BoardsPanelPage = props => {
             </div>
             <div className="boards-panel-body">
                 {
-                    userDetails.user.boards && 
-                        userDetails.user.boards.map((board, index) => (<Board boardColor={ board.color } key={ index }/>))
+                    boards && 
+                        boards.map((board, index) => (
+                            <Board 
+                                boardColor={ board.color } 
+                                name={ board.name }
+                                deleteBoard={ deleteBoard(board._id) }
+                                key={ index }
+                            />
+                        ))
                 }
                 <NewBoard
                     isLoading={ createBoardLoading }
-                    addBoard={ addBoard }
+                    createBoard={ createBoard }
                 />
             </div>
         </div>
