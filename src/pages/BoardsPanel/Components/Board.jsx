@@ -39,7 +39,7 @@ const Board = props => {
         "#d04f4f": 1,
         "#d0984f": 2,
         "#a8d04f": 3,
-        "#4fd0ac": 3,
+        "#4fd0ac": 4,
     };
     useEffect(() => {
         if(inputFocuesd){
