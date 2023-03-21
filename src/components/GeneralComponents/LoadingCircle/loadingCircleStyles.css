@@ -13,6 +13,7 @@
     border: 10px solid transparent;
     border-top: 10px solid #0064ff;
     animation-iteration-count: infinite;
+    box-sizing: border-box;
 }
 
 .first-loading-circle{
