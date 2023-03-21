@@ -1,7 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import useAPICaller from "../../APIs/APICallers/APICallers.js";
+
+import { SUCCESS_CREATE_MSG } from "../../tools/statusCodes.js";
 
 import UserDetailsContext from "../../contexts/userDetails.js";
+
+import {getRandomBoardColor} from "../../tools/helpers.js";
 
 import Board from "./Components/Board";
 import NewBoard from "./Components/newBoard";
@@ -15,6 +20,32 @@ const BoardsPanelPage = props => {
 
     const history = useHistory();
     const redirectToLogOut = () => history.push("logout");
+
+    const [ createBoard, createBoardResult ] = useAPICaller().createBoardCaller;
+
+    const [ createBoardLoading, setCreateBoardLoading ] = useState(false);
+
+    useEffect(() => {
+        if(createBoardResult.isFetching){
+            setCreateBoardLoading(true);
+            return;
+        }
+
+        setCreateBoardLoading(false);
+
+        if(createBoardResult.status === SUCCESS_CREATE_MSG){
+            userDetails.updateUserDetails();
+        }
+    }, [createBoardResult.isFetching]);
+    
+    const addBoard = (name) => {
+        const color = getRandomBoardColor();
+
+        createBoard({
+            name,
+            color,
+        });
+    };
 
     return(
         <div className="boards-panel-main-container">
@@ -34,7 +65,10 @@ const BoardsPanelPage = props => {
                     userDetails.user.boards && 
                         userDetails.user.boards.map((board, index) => (<Board boardColor={ board.color } key={ index }/>))
                 }
-                <NewBoard/>
+                <NewBoard
+                    isLoading={ createBoardLoading }
+                    addBoard={ addBoard }
+                />
             </div>
         </div>
     );
