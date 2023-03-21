@@ -7,7 +7,7 @@ import "../Styles/newBoardStyle.css";
 const NewBoard = props => {
 
     const {
-        addBoard,
+        createBoard,
         isLoading,
     } = props;
 
@@ -68,7 +68,7 @@ const NewBoard = props => {
                             :
                             <div 
                                 className={`new-board-rename-confirm-button ${ openRenameDialog ? "new-board-rename-confirm-button-white" : "new-board-rename-confirm-button-black" }`} 
-                                onClick={ () => addBoard(boardNameRef.current.value) }
+                                onClick={ () => createBoard(boardNameRef.current.value) }
                             >
                                 <div/>
                                 <div/>
