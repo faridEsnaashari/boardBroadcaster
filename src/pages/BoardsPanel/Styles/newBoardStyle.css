@@ -1,5 +1,5 @@
 .new-board-main-container {
-    border: 3px dashed;
+    border: 3px dashed #21222d;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -111,6 +111,12 @@
 .new-board-rename-confirm-button img {
     width: 100%;
     height: 100%;
+}
+
+.new-board-loading-circle {
+    cursor: unset;
+    width: 1rem;
+    height: 1rem;
 }
 
 @media (max-width: 500px) {

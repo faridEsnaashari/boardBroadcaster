@@ -1,12 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 
-import "../Styles/newBoardStyle.css";
+import LoadingCircle from "../../../components/GeneralComponents/LoadingCircle/LoadingCircle";
 
-import CrossIcon from "../../../assets/icons/plus.png";
+import "../Styles/newBoardStyle.css";
 
 const NewBoard = props => {
 
+    const {
+        addBoard,
+        isLoading,
+    } = props;
+
     const boardRef = useRef(null);
+    const boardNameRef = useRef("");
 
     const [ openRenameDialog, setOpenRenameDialog ] = useState(false);
     const [ inputFocuesd, setInputFocused ] = useState(false);
@@ -43,16 +49,31 @@ const NewBoard = props => {
             >
                 <div className={`new-board-rename-input-container ${ openRenameDialog ? "new-board-rename-input-container-open" : "new-board-rename-input-container-close" }`}>
                     <input 
+                        ref={ boardNameRef }
                         type="text"
                         className="new-board-rename-input"
                         onFocus={ () => setInputFocused(true) }
                         onBlur={ () => setInputFocused(false) }
                     />
                 </div>
-                <div className={`new-board-rename-confirm-button ${ openRenameDialog ? "new-board-rename-confirm-button-white" : "new-board-rename-confirm-button-black" }`}>
-                    <div/>
-                    <div/>
-                </div>
+                {
+                    isLoading 
+                        ?
+                            <div className="new-board-loading-circle">
+                                <LoadingCircle
+                                    color={ openRenameDialog ? "#fff" : "#21222d" }
+                                    size="3"
+                                />
+                            </div>
+                            :
+                            <div 
+                                className={`new-board-rename-confirm-button ${ openRenameDialog ? "new-board-rename-confirm-button-white" : "new-board-rename-confirm-button-black" }`} 
+                                onClick={ () => addBoard(boardNameRef.current.value) }
+                            >
+                                <div/>
+                                <div/>
+                            </div>
+                }
             </div>
         </div>
     );
