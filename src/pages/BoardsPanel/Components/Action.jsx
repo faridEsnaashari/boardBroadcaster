@@ -39,6 +39,10 @@ const Action = props => {
     }
 
     const toggleTooltipShowStatus = (e, showStatus) => {
+        if(!tooltipRef.current){
+            return; 
+        }
+
         if(showStatus){
             tooltipRef.current.style.top = getTooltipPosition(tooltipRef.current, e.target).top + "px";
             tooltipRef.current.style.left = getTooltipPosition(tooltipRef.current, e.target).left + "px";
