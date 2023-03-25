@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import LoadingCircle from "../../../components/GeneralComponents/LoadingCircle/LoadingCircle";
+
 import "../Styles/actionStyle.css";
 
 const Action = props => {
@@ -9,6 +11,7 @@ const Action = props => {
         color,
         tooltipText,
         icon: Icon,
+        isLoading,
     } = props;
 
 
@@ -71,7 +74,12 @@ const Action = props => {
             onMouseOver={ (e) => toggleTooltipShowStatus(e, true) }
             onMouseLeave={ (e) => toggleTooltipShowStatus(e, false) }
         >
-            <img src={ Icon }/>
+            <div className={ `actions ${ isLoading && "actions-loading" }` }>
+                <div>
+                    <LoadingCircle size="3" color="#fff"/>
+                </div>
+                <img src={ Icon }/>
+            </div>
         </div>
     );
 };

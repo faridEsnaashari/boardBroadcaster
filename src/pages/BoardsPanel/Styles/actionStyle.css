@@ -9,7 +9,7 @@
 
 .actions-container img {
     width: 100%;
-    height: 100%;
+    height: 40%;
 }
 
 .actions-container::before {
@@ -43,4 +43,24 @@
 
 .tooltip-show{
     opacity: 1;
+}
+
+.actions {
+    width: 100%;
+    height: 220%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    top: -120%;
+    transition: top 400ms;
+}
+
+.actions > div {
+    width: 100%;
+    height: 40%;
+}
+
+.actions-loading {
+    top: 0;
 }
