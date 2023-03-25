@@ -12,10 +12,18 @@ import AbortIcon from "../../../assets/icons/crossWhite.png";
 
 const Board = props => {
 
+    const {
+        boardColor,
+        name,
+        deleteBoard,
+        deleted,
+        isLoading,
+    } = props;
+
     const [ openRenameDialog, setOpenRenameDialog ] = useState(false);
     const [ openDeleteDialog, setOpenDeleteDialog ] = useState(false);
 
-    const [ deleteBoard, setDeleteBoard ] = useState(false);
+    const [ deleteBoardStatus, setDeleteBoardStatus ] = useState(false);
 
     const [ inputFocuesd, setInputFocused ] = useState(false);
 
@@ -30,10 +38,6 @@ const Board = props => {
             setOpenDeleteDialog(false);
         }
     }, [openRenameDialog, openDeleteDialog]);
-
-    const {
-        boardColor,
-    } = props;
 
     const colors = {
         "#d04f4f": 1,
@@ -68,7 +72,7 @@ const Board = props => {
         <div 
             className={`board-main-container 
             board-main-container-color${ colors[boardColor] }
-            ${ deleteBoard && "board-main-container-delete" }
+            ${ deleted && "board-main-container-delete" }
             `} 
             tabIndex="1" 
             onBlur={ resetBoard }
@@ -76,7 +80,7 @@ const Board = props => {
         >
             <div className="board-wrapper">
                 <div className="board-name-container">
-                    <div className="board-name" style={{ color: boardColor }}>dddddddddddddddddddddddddddddddddddddddddddddddddddddd</div>
+                    <div className="board-name" style={{ color: boardColor }}>{ name }</div>
                 </div>
                 <div className="board-actions">
                     <div className="board-copy-presenter-url-action">
@@ -108,12 +112,14 @@ const Board = props => {
                             onClick={ () => console.log("lll") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            isLoading={ isLoading.delete }
                             icon={ DeleteIcon }
-                        />
+                        >
+                        </Action>
                     </div>
                 </div>
                 <div className={`board-delete-confirmaion-container ${ openDeleteDialog ? "board-delete-confirmaion-container-open" : "board-delete-confirmaion-container-close" }`}>
-                    <div onClick={ () => setDeleteBoard(true) }>
+                    <div onClick={ () => deleteBoard() }>
                         <img src={ ConfirmIcon } alt="confirm?"/>
                     </div>
                     <div onClick={ resetBoard }>
