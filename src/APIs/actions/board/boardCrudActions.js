@@ -30,3 +30,19 @@ export const boardCreateAction = (dispatch, data) => {
             payload: err.response && err.response.data,
         }));
 };
+
+export const boardDeleteAction = (dispatch, data) => {
+    dispatch({ type: REQUESTED_BOARD_DELETE });
+
+    axios.delete(`/board/${ data.id }`)
+        .then(response => dispatch({
+            type: RECIVED_BOARD_DELETE,
+            statusCode: response.status,
+            payload: response.data,
+        }))
+        .catch(err => dispatch({
+            type: FAILED_BOARD_DELETE,
+            statusCode: err.response && err.response.status,
+            payload: err.response && err.response.data,
+        }));
+};

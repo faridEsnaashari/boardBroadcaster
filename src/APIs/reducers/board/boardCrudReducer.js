@@ -4,6 +4,10 @@ import {
     RECIVED_BOARD_CREATE,
     REQUESTED_BOARD_CREATE,
     FAILED_BOARD_CREATE,
+
+    REQUESTED_BOARD_DELETE,
+    RECIVED_BOARD_DELETE,
+    FAILED_BOARD_DELETE,
 } from "../../actionsTypes/boardCrudActionsTypes";
 
 export const boardCreateInitialState = {
@@ -12,6 +16,8 @@ export const boardCreateInitialState = {
     data: null,
     error: null,
 };
+
+export const prepareBoard = (board) => ({ ...board, deleted: false, renamed: false, isLoading: { delete: false, rename: false } });
 
 export const boardCreateReducer = (state, action) => {
     let currentState = {};
@@ -30,12 +36,54 @@ export const boardCreateReducer = (state, action) => {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
-                data: action.payload.data,
+                data: prepareBoard(action.payload.data),
                 error: null,
             };
             break;
 
         case FAILED_BOARD_CREATE: 
+            currentState = {
+                isFetching: false,
+                status: statusCodesDictionary[action.statusCode],
+                data: null,
+                error: action.payload,
+            };
+            break;
+    }
+
+    return currentState;
+};
+
+export const boardDeleteInitialState = {
+    isFetching: false,
+    status: null,
+    data: null,
+    error: null,
+};
+
+export const boardDeleteReducer = (state, action) => {
+    let currentState = {};
+
+    switch(action.type){
+        case REQUESTED_BOARD_DELETE: 
+            currentState = {
+                isFetching: true,
+                status: null,
+                data: null,
+                error: null,
+            };
+            break;
+
+        case RECIVED_BOARD_DELETE: 
+            currentState = {
+                isFetching: false,
+                status: statusCodesDictionary[action.statusCode],
+                data: action.payload.data,
+                error: null,
+            };
+            break;
+
+        case FAILED_BOARD_DELETE: 
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
