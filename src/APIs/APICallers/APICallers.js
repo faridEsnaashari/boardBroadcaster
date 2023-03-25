@@ -23,9 +23,16 @@ import { userGetAction } from "../actions/user/userActions";
 
 import {
     boardCreateReducer,
-    boardCreateInitialState
+    boardCreateInitialState,
+
+    boardDeleteReducer,
+    boardDeleteInitialState,
 } from "../reducers/board/boardCrudReducer";
-import { boardCreateAction } from "../actions/board/boardCrudActions";
+
+import { 
+    boardCreateAction,
+    boardDeleteAction,
+} from "../actions/board/boardCrudActions";
 
 axios.defaults.baseURL = API_URL;
 const userToken = localStorage.getItem("userToken");
@@ -49,12 +56,16 @@ export const useAPICaller = () => {
     const [ createBoardResult, boardCreateDispatch ] = useReducer(boardCreateReducer, boardCreateInitialState);
     const createBoard = data => boardCreateAction(boardCreateDispatch, data);
 
+    const [ deleteBoardResult, boardDeleteDispatch ] = useReducer(boardDeleteReducer, boardDeleteInitialState);
+    const deleteBoard = data => boardDeleteAction(boardDeleteDispatch, data);
+
     return { 
         signUpCaller: [ signUp, signUpResult ],
         verifyEmailCaller: [ verifyEmail, verifyEmailResult ],
         loginCaller: [ login, loginResult ],
         getUserCaller: [ getUser, userGetResult ],
         createBoardCaller: [ createBoard, createBoardResult ],
+        deleteBoardCaller: [ deleteBoard, deleteBoardResult ],
     };
 };
 
