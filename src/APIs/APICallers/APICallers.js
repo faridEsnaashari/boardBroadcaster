@@ -27,11 +27,15 @@ import {
 
     boardDeleteReducer,
     boardDeleteInitialState,
+
+    boardUpdateReducer,
+    boardUpdateInitialState,
 } from "../reducers/board/boardCrudReducer";
 
 import { 
     boardCreateAction,
     boardDeleteAction,
+    boardUpdateAction,
 } from "../actions/board/boardCrudActions";
 
 axios.defaults.baseURL = API_URL;
@@ -59,6 +63,9 @@ export const useAPICaller = () => {
     const [ deleteBoardResult, boardDeleteDispatch ] = useReducer(boardDeleteReducer, boardDeleteInitialState);
     const deleteBoard = data => boardDeleteAction(boardDeleteDispatch, data);
 
+    const [ updateBoardResult, boardUpdateDispatch ] = useReducer(boardUpdateReducer, boardUpdateInitialState);
+    const updateBoard = data => boardUpdateAction(boardUpdateDispatch, data);
+
     return { 
         signUpCaller: [ signUp, signUpResult ],
         verifyEmailCaller: [ verifyEmail, verifyEmailResult ],
@@ -66,6 +73,7 @@ export const useAPICaller = () => {
         getUserCaller: [ getUser, userGetResult ],
         createBoardCaller: [ createBoard, createBoardResult ],
         deleteBoardCaller: [ deleteBoard, deleteBoardResult ],
+        updateBoardCaller: [ updateBoard, updateBoardResult ],
     };
 };
 
