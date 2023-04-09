@@ -27,6 +27,7 @@ const BoardsPanelPage = props => {
 
     const [ createBoardAction, createBoardActionResult ] = useAPICaller().createBoardCaller;
     const [ deleteBoardAction, deleteBoardActionResult ] = useAPICaller().deleteBoardCaller;
+    const [ updateBoardAction, updateBoardActionResult ] = useAPICaller().updateBoardCaller;
 
     const [ createBoardLoading, setCreateBoardLoading ] = useState(false);
 
@@ -59,6 +60,33 @@ const BoardsPanelPage = props => {
             setBoards(updatedboards);
         }
     }, [deleteBoardActionResult.isFetching]);
+
+    useEffect(() => {
+        if(updateBoardActionResult.isFetching){
+            return;
+        }
+
+        if(updateBoardActionResult.error){
+            const updatedBoards = boards.map(board => ({ ...board, isLoading: { ...board.isLoading, rename: false } }));
+            setBoards(updatedBoards);
+            return;
+        }
+
+        if(updateBoardActionResult.status === SUCCESS_MSG){
+            const updatedboards = boards.map(board => {
+                if(!board.isLoading.rename){
+                    return board;
+                }
+
+                return {
+                    ...board,
+                    name: updateBoardActionResult.data.name,
+                    isLoading: { ...board.isLoading, rename: false }
+                };
+            });
+            setBoards(updatedboards);
+        }
+    }, [updateBoardActionResult.isFetching]);
     
     const createBoard = (name) => {
         const color = getRandomBoardColor();
@@ -67,6 +95,22 @@ const BoardsPanelPage = props => {
             name,
             color,
         });
+    };
+
+    const updateBoard = boardId => name => {
+        updateBoardAction({ id: boardId, name });
+
+        const updatedBoards = boards.map(board => {
+            if(board._id === boardId){
+                return {
+                    ...board,
+                    isLoading: { ...board.isLoading, rename: true }
+                };
+            }
+
+            return board;
+        });
+        setBoards(updatedBoards);
     };
 
     const deleteBoard = (boardId) => () => {
@@ -105,6 +149,7 @@ const BoardsPanelPage = props => {
                             <Board 
                                 boardColor={ board.color } 
                                 name={ board.name }
+                                updateBoard={ updateBoard(board._id) }
                                 deleteBoard={ deleteBoard(board._id) }
                                 deleted={ board.deleted }
                                 isLoading={ board.isLoading }
