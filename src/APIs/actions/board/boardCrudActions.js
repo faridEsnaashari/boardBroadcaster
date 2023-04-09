@@ -46,3 +46,21 @@ export const boardDeleteAction = (dispatch, data) => {
             payload: err.response && err.response.data,
         }));
 };
+
+export const boardUpdateAction = (dispatch, data) => {
+    dispatch({ type: REQUESTED_BOARD_UPDATE });
+
+    const { id, ...rest } = data;
+
+    axios.put(`/board/${ id }`, { ...rest })
+        .then(response => dispatch({
+            type: RECIVED_BOARD_UPDATE,
+            statusCode: response.status,
+            payload: response.data,
+        }))
+        .catch(err => dispatch({
+            type: FAILED_BOARD_UPDATE,
+            statusCode: err.response && err.response.status,
+            payload: err.response && err.response.data,
+        }));
+};
