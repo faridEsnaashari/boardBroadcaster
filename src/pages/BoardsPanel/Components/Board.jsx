@@ -15,6 +15,7 @@ const Board = props => {
     const {
         boardColor,
         name,
+        updateBoard,
         deleteBoard,
         deleted,
         isLoading,
@@ -23,9 +24,9 @@ const Board = props => {
     const [ openRenameDialog, setOpenRenameDialog ] = useState(false);
     const [ openDeleteDialog, setOpenDeleteDialog ] = useState(false);
 
-    const [ deleteBoardStatus, setDeleteBoardStatus ] = useState(false);
-
     const [ inputFocuesd, setInputFocused ] = useState(false);
+
+    const renameInputRef = useRef(null);
 
     const boardRef = useRef(null);
 
@@ -68,6 +69,16 @@ const Board = props => {
         }
     };
 
+    const onRename = () => {
+        const newName = renameInputRef.current.value;
+        if(!newName){
+            return;
+        }
+
+        updateBoard(newName);
+        resetBoard();
+    };
+
     return(
         <div 
             className={`board-main-container 
@@ -104,6 +115,7 @@ const Board = props => {
                             onClick={ () => console.log("cp") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            isLoading={ isLoading.rename }
                             icon={ RenameIcon }
                         />
                     </div>
@@ -129,7 +141,8 @@ const Board = props => {
             </div>
             <div className={` board-rename-field-container ${ openRenameDialog ? "board-rename-field-container-open" : "board-rename-field-container-close" }`}>
                 <input 
-                type="text"
+                    ref={ renameInputRef }
+                    type="text"
                     className={`
                     board-rename-input
                     board-rename-input-color${ colors[boardColor] }
@@ -139,7 +152,7 @@ const Board = props => {
                 />
                 <div className={'board-rename-confirm-button-container'}>
                     <div className={'board-rename-confirm-button board-rename-confirm-button-fake'}></div>
-                    <div className={'board-rename-confirm-button'}>
+                    <div className={'board-rename-confirm-button'} onClick={ onRename }>
                         <img src={ ConfirmIcon }/>
                     </div>
                     <div className={'board-rename-confirm-button board-rename-confirm-button-fake'}></div>
