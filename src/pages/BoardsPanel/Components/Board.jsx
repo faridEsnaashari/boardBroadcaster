@@ -13,12 +13,16 @@ import AbortIcon from "../../../assets/icons/crossWhite.png";
 const Board = props => {
 
     const {
+        id,
         boardColor,
         name,
         updateBoard,
         deleteBoard,
         deleted,
         isLoading,
+        copyPresenterUrl,
+        copyParticipantUrl,
+        done,
     } = props;
 
     const [ openRenameDialog, setOpenRenameDialog ] = useState(false);
@@ -94,25 +98,24 @@ const Board = props => {
                     <div className="board-name" style={{ color: boardColor }}>{ name }</div>
                 </div>
                 <div className="board-actions">
-                    <div className="board-copy-presenter-url-action">
+                    <div className="board-copy-presenter-url-action" onClick={ () => copyPresenterUrl() }>
                         <Action
-                            onClick={ () => console.log("cp") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            done={ done.presenterUrlCopiedSignal === id }
                             icon={ LinkIcon }
                         />
                     </div>
-                    <div className="board-copy-participant-url-action">
+                    <div className="board-copy-participant-url-action" onClick={ () => copyParticipantUrl() }>
                         <Action
-                            onClick={ () => console.log("cp") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            done={ done.participantUrlCopiedSignal === id }
                             icon={ LinkIcon }
                         />
                     </div>
                     <div className="board-rename-action" onClick={ () => setOpenRenameDialog(true) }>
                         <Action
-                            onClick={ () => console.log("cp") }
                             tooltipText="tooltip"
                             color={ boardColor }
                             isLoading={ isLoading.rename }
@@ -121,7 +124,6 @@ const Board = props => {
                     </div>
                     <div className="board-delete-action" onClick={ () => setOpenDeleteDialog(true) }>
                         <Action
-                            onClick={ () => console.log("lll") }
                             tooltipText="tooltip"
                             color={ boardColor }
                             isLoading={ isLoading.delete }
