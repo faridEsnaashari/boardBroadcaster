@@ -1,6 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useAPICaller from "../../APIs/APICallers/APICallers.js";
+import { APP_URL } from "../../tools/config.js";
+
+import { useSignal } from "../../tools/useSignal.js";
 
 import { SUCCESS_CREATE_MSG, SUCCESS_MSG } from "../../tools/statusCodes.js";
 
@@ -17,6 +20,9 @@ const BoardsPanelPage = props => {
     const userDetailsContext = useContext(UserDetailsContext);
 
     const [ boards, setBoards ] = useState(userDetailsContext.user.boards);
+
+    const [ presenterUrlCopiedSignal, presenterUrlCopiedSignalActivate ] = useSignal();
+    const [ participantUrlCopiedSignal, participantUrlCopiedSignalActivate ] = useSignal();
 
     useEffect(() => setBoards(userDetailsContext.user.boards), [userDetailsContext]);
 
@@ -129,6 +135,16 @@ const BoardsPanelPage = props => {
         setBoards(updatedBoards);
     };
 
+    const copyPresenterUrl = (boardUrl, boardId) => () => {
+        navigator.clipboard.writeText(`${ APP_URL }/presenter/board/${ boardUrl }`);
+        presenterUrlCopiedSignalActivate(boardId);
+    };
+
+    const copyParticipantUrl = (boardUrl, boardId) => () => {
+        navigator.clipboard.writeText(`${ APP_URL }/participant/board/${ boardUrl }`)
+        participantUrlCopiedSignalActivate(boardId);
+    };
+
     return(
         <div className="boards-panel-main-container">
             <div className="boards-panel-header">
@@ -147,12 +163,16 @@ const BoardsPanelPage = props => {
                     boards && 
                         boards.map((board, index) => (
                             <Board 
+                                id={ board._id }
                                 boardColor={ board.color } 
                                 name={ board.name }
                                 updateBoard={ updateBoard(board._id) }
                                 deleteBoard={ deleteBoard(board._id) }
+                                copyPresenterUrl={ copyPresenterUrl(board.boardIdentifier, board._id) }
+                                copyParticipantUrl={ copyParticipantUrl(board.boardIdentifier, board._id) }
                                 deleted={ board.deleted }
                                 isLoading={ board.isLoading }
+                                done={{ presenterUrlCopiedSignal, participantUrlCopiedSignal }}
                                 key={ index }
                             />
                         ))
