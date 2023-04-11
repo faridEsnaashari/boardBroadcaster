@@ -6,11 +6,12 @@
     width: 100%;
     max-width: fit-content;
     height: fit-content;
+    transform-origin: left;
 }
 
 .board-main-container-delete {
     animation-name: delete-board;
-    animation-duration: 2s;
+    animation-duration: 500ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
@@ -207,12 +208,11 @@
 
 @keyframes delete-board {
     99% {
-        width: .0em;
         position: relative;
     }
 
     100% {
-        width: .0em;
+        transform: scaleX(0);
         position: absolute;
     }
 }
