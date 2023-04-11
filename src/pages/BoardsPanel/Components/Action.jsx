@@ -12,12 +12,30 @@ const Action = props => {
         tooltipText,
         icon: Icon,
         isLoading,
+        done,
     } = props;
 
+    useEffect(() => {
+        if(!done){
+            return;
+        }
+
+        const doneDOM = doneRef.current;
+        console.log(doneDOM);
+        doneDOM.classList.remove("done-hide");
+        doneDOM.classList.add("done-show");
+
+        setTimeout(() => {
+            doneDOM.classList.remove("done-show");
+            doneDOM.classList.add("done-hide");
+        }, 2000);
+    }, [done]);
 
     const [ resetTooltipPostionTimeout, setResetTooltipPostitionTimeOut ] = useState(null);
 
     const tooltipRef = useRef(null);
+
+    const doneRef = useRef(null);
 
     useEffect(() => {
         const tooltip = document.createElement("p");
@@ -75,6 +93,9 @@ const Action = props => {
             onMouseLeave={ (e) => toggleTooltipShowStatus(e, false) }
         >
             <div className={ `actions ${ isLoading && "actions-loading" }` }>
+                <div ref={ doneRef } style={{ backgroundColor: color }} className="done-hide done-container">
+                    <div></div>
+                </div>
                 <div>
                     <LoadingCircle size="3" color="#fff"/>
                 </div>

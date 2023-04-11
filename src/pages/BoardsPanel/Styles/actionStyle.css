@@ -22,6 +22,7 @@
     top: 0;
     left: 0;
     opacity: 0;
+    z-index: 1;
     transition: opacity 200ms;
 }
 
@@ -63,4 +64,34 @@
 
 .actions-loading {
     top: 0;
+}
+
+.done-container {
+    position: absolute;
+    height: 50% !important;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: top 200ms, opacity 200ms;
+    opacity: 0;
+}
+
+.actions > div:first-child div{
+    width: 50%;
+    height: 70%;
+    border: 3px solid #fff;
+    box-sizing: border-box;
+    transform: rotate(45deg);
+    border-left: unset;
+    border-top: unset;
+}
+
+.done-show {
+    top: 50%;
+    opacity: 1;
+}
+
+.done-hide {
+    top: -10px;
 }
