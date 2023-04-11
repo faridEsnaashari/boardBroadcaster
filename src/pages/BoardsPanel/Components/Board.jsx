@@ -12,12 +12,25 @@ import AbortIcon from "../../../assets/icons/crossWhite.png";
 
 const Board = props => {
 
+    const {
+        id,
+        boardColor,
+        name,
+        updateBoard,
+        deleteBoard,
+        deleted,
+        isLoading,
+        copyPresenterUrl,
+        copyParticipantUrl,
+        done,
+    } = props;
+
     const [ openRenameDialog, setOpenRenameDialog ] = useState(false);
     const [ openDeleteDialog, setOpenDeleteDialog ] = useState(false);
 
-    const [ deleteBoard, setDeleteBoard ] = useState(false);
-
     const [ inputFocuesd, setInputFocused ] = useState(false);
+
+    const renameInputRef = useRef(null);
 
     const boardRef = useRef(null);
 
@@ -31,15 +44,11 @@ const Board = props => {
         }
     }, [openRenameDialog, openDeleteDialog]);
 
-    const {
-        boardColor,
-    } = props;
-
     const colors = {
         "#d04f4f": 1,
         "#d0984f": 2,
         "#a8d04f": 3,
-        "#4fd0ac": 3,
+        "#4fd0ac": 4,
     };
     useEffect(() => {
         if(inputFocuesd){
@@ -64,11 +73,21 @@ const Board = props => {
         }
     };
 
+    const onRename = () => {
+        const newName = renameInputRef.current.value;
+        if(!newName){
+            return;
+        }
+
+        updateBoard(newName);
+        resetBoard();
+    };
+
     return(
         <div 
             className={`board-main-container 
             board-main-container-color${ colors[boardColor] }
-            ${ deleteBoard && "board-main-container-delete" }
+            ${ deleted && "board-main-container-delete" }
             `} 
             tabIndex="1" 
             onBlur={ resetBoard }
@@ -76,44 +95,45 @@ const Board = props => {
         >
             <div className="board-wrapper">
                 <div className="board-name-container">
-                    <div className="board-name" style={{ color: boardColor }}>dddddddddddddddddddddddddddddddddddddddddddddddddddddd</div>
+                    <div className="board-name" style={{ color: boardColor }}>{ name }</div>
                 </div>
                 <div className="board-actions">
-                    <div className="board-copy-presenter-url-action">
+                    <div className="board-copy-presenter-url-action" onClick={ () => copyPresenterUrl() }>
                         <Action
-                            onClick={ () => console.log("cp") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            done={ done.presenterUrlCopiedSignal === id }
                             icon={ LinkIcon }
                         />
                     </div>
-                    <div className="board-copy-participant-url-action">
+                    <div className="board-copy-participant-url-action" onClick={ () => copyParticipantUrl() }>
                         <Action
-                            onClick={ () => console.log("cp") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            done={ done.participantUrlCopiedSignal === id }
                             icon={ LinkIcon }
                         />
                     </div>
                     <div className="board-rename-action" onClick={ () => setOpenRenameDialog(true) }>
                         <Action
-                            onClick={ () => console.log("cp") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            isLoading={ isLoading.rename }
                             icon={ RenameIcon }
                         />
                     </div>
                     <div className="board-delete-action" onClick={ () => setOpenDeleteDialog(true) }>
                         <Action
-                            onClick={ () => console.log("lll") }
                             tooltipText="tooltip"
                             color={ boardColor }
+                            isLoading={ isLoading.delete }
                             icon={ DeleteIcon }
-                        />
+                        >
+                        </Action>
                     </div>
                 </div>
                 <div className={`board-delete-confirmaion-container ${ openDeleteDialog ? "board-delete-confirmaion-container-open" : "board-delete-confirmaion-container-close" }`}>
-                    <div onClick={ () => setDeleteBoard(true) }>
+                    <div onClick={ () => deleteBoard() }>
                         <img src={ ConfirmIcon } alt="confirm?"/>
                     </div>
                     <div onClick={ resetBoard }>
@@ -123,7 +143,8 @@ const Board = props => {
             </div>
             <div className={` board-rename-field-container ${ openRenameDialog ? "board-rename-field-container-open" : "board-rename-field-container-close" }`}>
                 <input 
-                type="text"
+                    ref={ renameInputRef }
+                    type="text"
                     className={`
                     board-rename-input
                     board-rename-input-color${ colors[boardColor] }
@@ -133,7 +154,7 @@ const Board = props => {
                 />
                 <div className={'board-rename-confirm-button-container'}>
                     <div className={'board-rename-confirm-button board-rename-confirm-button-fake'}></div>
-                    <div className={'board-rename-confirm-button'}>
+                    <div className={'board-rename-confirm-button'} onClick={ onRename }>
                         <img src={ ConfirmIcon }/>
                     </div>
                     <div className={'board-rename-confirm-button board-rename-confirm-button-fake'}></div>

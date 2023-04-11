@@ -2,7 +2,6 @@ import { createContext } from "react";
 
 export const userDetailsContext = {
     user: {},
-    boards: {},
     updateUserDetails: null,
 };
 

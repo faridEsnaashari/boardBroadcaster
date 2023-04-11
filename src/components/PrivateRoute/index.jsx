@@ -8,7 +8,6 @@ import useAPICaller from "../../APIs/APICallers/APICallers.js";
 import UserDetailsContext, { userDetailsContext as userInitialDetailsContext } from "../../contexts/userDetails";
 
 import LoadingCircle from "../GeneralComponents/LoadingCircle/LoadingCircle";
-import Test from "./Test";
 
 const PrivateRoute = props => {
 
@@ -23,9 +22,9 @@ const PrivateRoute = props => {
 
     const [ userDetailsContext, setUserDetailsContext ] = useState({ ...userInitialDetailsContext, updateUserDetails: getUserData });
 
-    useEffect(() => !userDetails.isFetching && userDetails.data && setUserDetailsContext({ ...userDetailsContext, user: userDetails.data.user, boards: userDetails.data.boards }), [userDetails]);
+    useEffect(() => !userDetails.isFetching && userDetails.data && setUserDetailsContext({ ...userDetailsContext, user: userDetails.data }), [userDetails]);
 
-    if(userDetails.isFetching){
+    if(userDetails.isFetching || !userDetails.data){
         return(
             <Route path={ path }>
                 <div className="private-route-loading-container">

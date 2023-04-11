@@ -9,7 +9,7 @@
 
 .actions-container img {
     width: 100%;
-    height: 100%;
+    height: 40%;
 }
 
 .actions-container::before {
@@ -22,6 +22,7 @@
     top: 0;
     left: 0;
     opacity: 0;
+    z-index: 1;
     transition: opacity 200ms;
 }
 
@@ -43,4 +44,54 @@
 
 .tooltip-show{
     opacity: 1;
+}
+
+.actions {
+    width: 100%;
+    height: 220%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    top: -120%;
+    transition: top 400ms;
+}
+
+.actions > div {
+    width: 100%;
+    height: 40%;
+}
+
+.actions-loading {
+    top: 0;
+}
+
+.done-container {
+    position: absolute;
+    height: 50% !important;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: top 200ms, opacity 200ms;
+    opacity: 0;
+}
+
+.actions > div:first-child div{
+    width: 50%;
+    height: 70%;
+    border: 3px solid #fff;
+    box-sizing: border-box;
+    transform: rotate(45deg);
+    border-left: unset;
+    border-top: unset;
+}
+
+.done-show {
+    top: 50%;
+    opacity: 1;
+}
+
+.done-hide {
+    top: -10px;
 }
