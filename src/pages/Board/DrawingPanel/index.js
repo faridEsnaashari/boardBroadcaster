@@ -4,7 +4,7 @@ const DrawingPanel = (props) => {
     const shapes = props.shapes;
 
     const getShapes = () => {
-        return shapes.map((shape, index) => {
+        return shapes && shapes.map((shape, index) => {
             return(<Shape shapeDetails={ shape } key={ index }/>);
         });
     };

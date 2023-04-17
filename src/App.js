@@ -6,6 +6,7 @@ import SignUpRouter from "./routers/singUp";
 import LogInRouter from "./routers/logIn";
 import BoardsPanelRouter from "./routers/boardsPanel";
 import LogOutRouter from "./routers/logOut";
+import BoardRouter from "./routers/board";
 
 import "./App.css";
 
@@ -21,6 +22,9 @@ const App = () => {
                 </Route>
                 <Route path="/logout">
                     <LogOutRouter/>
+                </Route>
+                <Route path="/board">
+                    <BoardRouter/>
                 </Route>
                 <PrivateRoute path="/boards-panel">
                     <BoardsPanelRouter/>
