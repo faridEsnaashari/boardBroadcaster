@@ -1,11 +1,16 @@
-import { useReducer, useEffect } from "react";
+import { useEffect } from "react";
 
 import { isValidEmail, isValidPassword, isValidUseerName } from "../../../tools/validators";
-import { SUCCESS_CREATE_MSG, CONFILICT_ERR, INTERNAL_SERVER_ERR } from "../../../tools/statusCodes";
-import { APP_URL } from "../../../tools/config";
+import { SUCCESS_CREATE_MSG } from "../../../tools/statusCodes";
 import { getElementValue } from "../../../tools/helpers";
 
 import useAPICaller from "../../../APIs/APICallers/APICallers";
+
+import PasswordIcon from "../../../assets/icons/key.png";
+import UserNameIcon from "../../../assets/icons/user.png";
+import EmailIcon from "../../../assets/icons/mail.png";
+
+import "./index.css"
 
 const SignUpPage = () => {
     const [ signUp, result ] = useAPICaller().signUpCaller;
@@ -37,20 +42,33 @@ const SignUpPage = () => {
     };
 
     return (
-        <>
+        <div className="signup-main-container">
+            <div className="signup-background-color-1"></div>
+            <div className="signup-background-color-2"></div>
+            <div className="signup-container">
             <form onSubmit={ registerTheUser }>
-                <label htmlFor="name">name: </label>
-                <input type="text" name="name" id="name"/>
-                <br/>
-                <label htmlFor="password">password: </label>
-                <input type="password" name="password" id="password"/>
-                <br/>
-                <label htmlFor="email">email: </label>
-                <input type="text" name="email" id="email"/>
-                <br/>
-                <input type="submit"/>
+                <div className="input-container">
+                    <input type="text" name="name" id="name"/>
+                    <div><img src={ UserNameIcon }/></div>
+                </div>
+                <div className="input-container">
+                    <input type="password" name="password" id="password"/>
+                    <div><img src={ PasswordIcon }/></div>
+                </div>
+                <div className="input-container">
+                    <input type="text" name="email" id="email"/>
+                    <div><img src={ EmailIcon }/></div>
+                </div>
+                <div className="signup-submit-main-container">
+                    <div className="signup-submit-container">
+                        <div className="hover"></div>
+                        <div></div>
+                        <input type="submit" value="Signup"/>
+                    </div>
+                </div>
             </form>
-        </>
+                </div>
+        </div>
     );
 }
 

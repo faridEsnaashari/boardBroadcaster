@@ -1,0 +1,136 @@
+.signup-main-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-container {
+    width: 30vw;
+    display: flex;
+    justify-content: center;
+}
+
+.input-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    height: 4rem;
+}
+
+.signup-container > form > div {
+    margin: 4rem 0;
+}
+
+.signup-container > form {
+    width: 70%;
+}
+
+.input-container > input {
+    width: 100%;
+    height: 80%;
+    outline: unset;
+    border: unset;
+    border-radius: 2rem;
+    padding: 0 3rem 0 1rem;
+    box-sizing: border-box;
+    background-color: #476468;
+    opacity: .7;
+    color: #fff;
+    transition: background-color 300ms;
+}
+
+.input-container > input:focus {
+    background-color: #313e40;
+}
+
+.input-container > div {
+    width: 4rem;
+    height: 4rem;
+    background-color: #fff;
+    border-radius: 100%;
+    position: absolute;
+    right: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.input-container > div > img {
+    width: 100%;
+    height: 100%;
+}
+
+.signup-background-color-2{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    background-color: #01212d;
+    clip-path: polygon(0% 0%, 100% 0%, 0.0% 100%);
+}
+
+.signup-background-color-1{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    background-color: #00292d;
+}
+
+.signup-submit-container {
+    width: 100%;
+    height: 3rem;
+    border-radius: 2rem;
+    border: 1px solid;
+    position: relative;
+    overflow: clip;
+    cursor: pointer;
+}
+
+.signup-submit-container > div {
+    width: 100%;
+    height: 100%;
+}
+
+.signup-submit-container:hover > .hover {
+    transform: scaleX(1);
+}
+
+.signup-submit-container > .hover {
+    position: absolute;
+    background-color: #29bb14;
+    transform: scaleX(0);
+    transition: transform 400ms;
+    transform-origin: left;
+}
+
+.signup-submit-container > div:not(.hover) {
+    background-color: #d5d5d5;
+}
+
+.signup-submit-container > input{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: unset;
+    outline: unset;
+    border: unset;
+    cursor: pointer;
+    z-index: 1;
+    background-color: unset;
+}
+
+@media (max-width: 1200px){
+    .signup-container {
+        width: 50vw;
+    }
+}
+
+@media (max-width: 650px){
+    .signup-container {
+        width: 100vw;
+    }
+}
