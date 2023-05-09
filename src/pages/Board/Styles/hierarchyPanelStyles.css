@@ -1,0 +1,59 @@
+.hierarchy-panel{
+    border: 1px solid;
+    border-radius: 10px;
+    width: 30%;
+    margin-right: 5px;
+}
+
+.hierarchy-buttons-container{
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: center;
+}
+
+.hierarchy-buttons-container .button{
+    border: 1px solid;
+    width: 25%;
+    margin: 3px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hierarchy-buttons-container .button > div{
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 90%;
+    height: 90%;
+    max-width: 2em;
+    max-height: 2em;
+}
+
+.horizontal-line{
+    background-image: url(/src/assets/icons/horizontalLineIcon.svg);
+}
+
+.vertical-line{
+    background-image: url(/src/assets/icons/verticalLineIcon.png);
+}
+
+.normal-line{
+    background-image: url(/src/assets/icons/normalLineIcon.png);
+}
+
+.rectongle{
+    background-image: url(/src/assets/icons/rectongleIcon.svg);
+}
+
+.shapes-details-container{
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: clip;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+

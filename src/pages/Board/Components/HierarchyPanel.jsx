@@ -1,14 +1,29 @@
-import "./index.css";
-
 import { useState, useRef, useEffect } from "react";
 
+import ShapeDetail from "./ShapeDetail";
+
+import "../Styles/hierarchyPanelStyles.css";
+
 const HierarchyPanel = (props) => {
-    const onShapesUpdated = props.onShapesUpdated;
+    const {
+        onShapesUpdated,
+        onSelectedChange,
+        shapes,
+    } = props;
 
     const shapesDetailsRef = useRef([]);
     const [shapesDetails, setShapeDetails] = useState([]);
 
+    const [ selected, setSelected ] = useState({ mode: "disable", shape: null });
+
+    useEffect(() => onSelectedChange(selected), [selected]);
+
     useEffect(() => onShapesUpdated(shapesDetails), [shapesDetails]);
+
+    useEffect(() => {
+        shapesDetailsRef.current = shapes;
+        setShapeDetails(shapesDetailsRef.current);
+    }, [shapes]);
 
     const onAShapeAttributeChanged = async(updatedShape) => {
         shapesDetailsRef.current.map(shape => {
@@ -27,8 +42,15 @@ const HierarchyPanel = (props) => {
     };
 
     const getShapesDetails = () => {
-        return shapesDetailsRef.current.map((shapeDetails, index) => {
-            return <ShapeDetail key={ index } onAttributesChanged={ onAShapeAttributeChanged } name={ shapeDetails.name } type={ shapeDetails.type } attributes={ shapeDetails.attributes }/>
+        return shapesDetailsRef.current && shapesDetailsRef.current.map((shapeDetails, index) => {
+            return <ShapeDetail 
+                key={ index } 
+                onAttributesChanged={ onAShapeAttributeChanged }
+                name={ shapeDetails.name } 
+                type={ shapeDetails.type } 
+                attributes={ shapeDetails.attributes }
+                onClick={ () => setSelected({ ...selected, shape: shapeDetails.name }) }
+            />
         });
     };
 
@@ -47,6 +69,8 @@ const HierarchyPanel = (props) => {
                 color: "#000000",
             },
         };
+
+        setSelected({ shape: shapeName, selected: "rescale" });
 
         shapesDetailsRef.current = [ ...shapesDetailsRef.current, newNormalLine ];
         setShapeDetails(shapesDetailsRef.current);
@@ -67,6 +91,8 @@ const HierarchyPanel = (props) => {
             },
         };
 
+        setSelected({ shape: shapeName, selected: "rescale" });
+
         shapesDetailsRef.current = [ ...shapesDetailsRef.current, newHorizontalLine ];
         setShapeDetails(shapesDetailsRef.current);
     }
@@ -85,6 +111,8 @@ const HierarchyPanel = (props) => {
                 color: "#000000",
             },
         };
+
+        setSelected({ shape: shapeName, selected: "rescale" });
 
         shapesDetailsRef.current = [ ...shapesDetailsRef.current, newVerticalLine ];
         setShapeDetails(shapesDetailsRef.current);
@@ -106,72 +134,29 @@ const HierarchyPanel = (props) => {
             },
         };
 
+        setSelected({ shape: shapeName, select: "rescale" });
+
         shapesDetailsRef.current = [ ...shapesDetailsRef.current, newRectongle ];
         setShapeDetails(shapesDetailsRef.current);
     }
 
     return(
         <div className="hierarchy-panel">
+            <div className="hierarchy-buttons-container">
+                <div className="button select-button-move" onClick={ () => setSelected({ ...selected, mode: "move" }) }></div>
+                <div className="button select-button-rescale" onClick={ () => setSelected({ ...selected, mode: "rescale" }) }></div>
+            </div>
             <div className="shapes-details-container">
                 { getShapesDetails() }
             </div>
-            <div className="buttons-container">
-                <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
-                <div className="button vertical-line" onClick={ createVerticalLine }></div>
-                <div className="button rectongle" onClick={ createRectongle }></div>
-                <div className="button normal-line" onClick={ createNormalLine }></div>
+            <div className="hierarchy-buttons-container">
+                <div className="button" onClick={ createHorizontalLine }><div className="horizontal-line"></div></div>
+                <div className="button" onClick={ createVerticalLine }><div className="vertical-line"></div></div>
+                <div className="button" onClick={ createRectongle }><div className="rectongle"></div></div>
+                <div className="button" onClick={ createNormalLine }><div className="normal-line"></div></div>
             </div>
         </div>
     )
 };
-
-const ShapeDetail = (props) => {
-    const shapeName = props.name;
-    const attributes = props.attributes;
-    const type = props.type;
-    const onThisShapeAttributesChanged = props.onAttributesChanged;
-
-    const onAttributesChanged = e => {
-        const attributeName = e.target.name;
-        const attributeValue = e.target.value;
-
-        const shapeWithNewAttributes = { 
-            name: shapeName, 
-            type: type, 
-            attributes: { ...attributes },
-        };
-        shapeWithNewAttributes.attributes[attributeName] = attributeValue;
-
-        onThisShapeAttributesChanged(shapeWithNewAttributes);
-    };
-
-    const getAttributes = () => {
-        let renderedComponents = [];
-        for(let attribute in attributes){
-            renderedComponents.push(
-                <div className="attribute" key= { renderedComponents.length }>
-                    <label>{ attribute }</label>
-                    <br></br>
-                    <input type="text" name={ attribute } id={ shapeName } defaultValue={ attributes[attribute] } onChange={ onAttributesChanged }/>
-                </div>
-            );
-        }
-
-        return renderedComponents;
-    };
-
-    return(
-        <div className="shape-detail-container" key={ shapeName }>
-            <div className="general-info-container">
-                <p className="shape-name">{ shapeName }</p>
-                <p className="shape-type">{ type }</p>
-            </div>
-            <div className="attributes-container">
-                { getAttributes() }
-            </div>
-        </div>
-    );
-};
-
 
 export default HierarchyPanel;

@@ -1,0 +1,49 @@
+.panels-container{
+    width: calc(100vw - 100px);
+    height: calc(100vh - 100px);
+    display: flex;
+    padding: 50px;
+}
+
+body{
+    margin: unset;
+}
+
+@media(max-width: 850px){
+    .panels-container{
+        flex-direction: column;
+        align-items: center;
+        height: unset;
+    }
+
+    .panels-container > .hierarchy-panel{
+        height: 50vh;
+        margin-bottom: 2vh;
+        width: 90%;
+        margin-right: unset;
+    }
+
+    .panels-container > .drawing-panel{
+        height: 100vh;
+        margin-top: 2vh;
+        width: 90%;
+    }
+
+    .panels-container > .hierarchy-panel .hierarchy-buttons-container{
+        height: 10%;
+    }
+
+    .panels-container > .hierarchy-panel .shapes-details-container{
+        height: 80%;
+    }
+}
+
+@media(max-height: 700px){
+    .panels-container > .hierarchy-panel .hierarchy-buttons-container{
+        height: 10%;
+    }
+
+    .panels-container > .hierarchy-panel .shapes-details-container{
+        height: 80%;
+    }
+}
