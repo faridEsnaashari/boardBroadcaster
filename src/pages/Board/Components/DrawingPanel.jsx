@@ -17,7 +17,18 @@ const DrawingPanel = (props) => {
 
     const [ lastMousePosition, setLastMousePosition ] = useState({ x: 0, y: 0 });
 
-    const [ paintingStatus, setPaintingStatus ] = useState(false);
+    const [ panelClicked, setPanelClicked ] = useState(false);
+
+    const [ panelTouched, setPanelTouched ] = useState(false);
+    useEffect(() => {
+        if(panelTouched){
+            const windowCurrentScroll = { x: window.pageXOffset || document.documentElement.scrollLeft , y: window.pageYOffset || document.documentElement.scrollTop };
+            window.onscroll = () => window.scrollTo(windowCurrentScroll.x, windowCurrentScroll.y);
+            return;
+        }
+
+        window.onscroll = () => {};
+    }, [panelTouched]);
 
     const rescaleShape = (shape, mousePostition) => {
         const { attributes, ...rest } = shape;
@@ -104,12 +115,12 @@ const DrawingPanel = (props) => {
     const updateShapeAttribute = (shape, mousePostition) => selected.mode === "rescale" ? moveShape(shape, mousePostition) : rescaleShape(shape, mousePostition);
 
     const paint = e => {
-        if(selected.mode === "disable" || !paintingStatus){
+        if(selected.mode === "disable" || (!panelClicked && !panelTouched)){
             return;
         }
 
         const panelPosition = e.target.getBoundingClientRect();
-        const mousePostition = { x: e.clientX - panelPosition.x, y: e.clientY - panelPosition.y };
+        const mousePostition = { x: (e.clientX || e.touches[0].clientX) - panelPosition.x, y: (e.clientY || e.touches[0].clientY) - panelPosition.y };
 
         const distanceFromLastX = Math.abs(lastMousePosition.x - mousePostition.x);
         const distanceFromLastY =  Math.abs(lastMousePosition.y - mousePostition.y);
@@ -153,9 +164,12 @@ const DrawingPanel = (props) => {
             }
             <div 
                 className="drawing-panel-mouse-panel"
-                onMouseDown={ () => setPaintingStatus(true) } 
-                onMouseUp={ () => setPaintingStatus(false) }
+                onMouseDown={ () => setPanelClicked(true) } 
+                onMouseUp={ () => setPanelClicked(false) }
                 onMouseMove={ e => paint(e) }
+                onTouchMove={ e => paint(e) }
+                onTouchStart={ () => setPanelTouched(true) }
+                onTouchEnd={ () => setPanelTouched(false) }
             >
             </div>
         </div>
