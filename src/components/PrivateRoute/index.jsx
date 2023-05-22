@@ -4,6 +4,7 @@ import { Route, useHistory } from "react-router-dom";
 import "./styles.css";
 
 import useAPICaller from "../../APIs/APICallers/APICallers.js";
+import { SUCCESS_MSG } from "../../tools/statusCodes";
 
 import UserDetailsContext, { userDetailsContext as userInitialDetailsContext } from "../../contexts/userDetails";
 
@@ -24,7 +25,7 @@ const PrivateRoute = props => {
 
     useEffect(() => !userDetails.isFetching && userDetails.data && setUserDetailsContext({ ...userDetailsContext, user: userDetails.data }), [userDetails]);
 
-    if(userDetails.isFetching || !userDetails.data){
+    if(userDetails.isFetching || !userDetails.status){
         return(
             <Route path={ path }>
                 <div className="private-route-loading-container">
