@@ -1,4 +1,4 @@
-import BoardsPanelPage from "../../pages/BoardsPanel";
+import BoardsPanelPage from "../../../pages/BoardsPanel";
 
 const routes = [
     {

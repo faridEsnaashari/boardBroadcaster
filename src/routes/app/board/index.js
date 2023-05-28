@@ -1,4 +1,4 @@
-import BoardPage from "../../pages/Board/index";
+import BoardPage from "../../../pages/Board/index";
 
 const routes = [
     {

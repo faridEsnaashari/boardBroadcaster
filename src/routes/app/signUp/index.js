@@ -1,6 +1,6 @@
-import SignUpPage from "../../pages/SignUp/SignUpPage";
-import VerificationSentPage from "../../pages/SignUp/VerificationSentPage";
-import VerifyEmailPage from "../../pages/SignUp/VerifyEmailPage";
+import SignUpPage from "../../../pages/SignUp/SignUpPage";
+import VerificationSentPage from "../../../pages/SignUp/VerificationSentPage";
+import VerifyEmailPage from "../../../pages/SignUp/VerifyEmailPage";
 
 const routes = [
     {

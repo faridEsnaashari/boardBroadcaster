@@ -1,4 +1,4 @@
-import LogOutPage from "../../pages/logOut";
+import LogOutPage from "../../../pages/logOut";
 
 const routes = [
     {
