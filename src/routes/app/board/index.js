@@ -3,11 +3,12 @@ import PresenterBoardPage from "../../../pages/Board/Components/PresenterBoard";
 
 const routes = [
     {
-        path: "/participant/:id",
+        path: "/:id/participant",
         component: ParticipantBoardPage,
     },
     {
-        path: "/presenter/:id",
+        type: "private",
+        path: "/:id/presenter",
         component: PresenterBoardPage,
     },
     {
