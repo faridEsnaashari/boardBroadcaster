@@ -22,6 +22,9 @@ import { userGetReducer, userGetInitialState } from "../reducers/user/userReduce
 import { userGetAction } from "../actions/user/userActions";
 
 import {
+    boardGetReducer,
+    boardGetInitialState,
+
     boardCreateReducer,
     boardCreateInitialState,
 
@@ -30,12 +33,17 @@ import {
 
     boardUpdateReducer,
     boardUpdateInitialState,
+
+    boardExistsReducer,
+    boardExistsInitialState,
 } from "../reducers/board/boardCrudReducer";
 
 import { 
+    boardGetAction,
     boardCreateAction,
     boardDeleteAction,
     boardUpdateAction,
+    boardExistsAction,
 } from "../actions/board/boardCrudActions";
 
 axios.defaults.baseURL = API_URL;
@@ -57,6 +65,9 @@ export const useAPICaller = () => {
     const [ userGetResult, userGetDispatch ] = useReducer(userGetReducer, userGetInitialState);
     const getUser = data => userGetAction(userGetDispatch, data);
 
+    const [ getBoardResult, boardGetDispatch ] = useReducer(boardGetReducer, boardGetInitialState);
+    const getBoard = data => boardGetAction(boardGetDispatch, data);
+
     const [ createBoardResult, boardCreateDispatch ] = useReducer(boardCreateReducer, boardCreateInitialState);
     const createBoard = data => boardCreateAction(boardCreateDispatch, data);
 
@@ -66,14 +77,19 @@ export const useAPICaller = () => {
     const [ updateBoardResult, boardUpdateDispatch ] = useReducer(boardUpdateReducer, boardUpdateInitialState);
     const updateBoard = data => boardUpdateAction(boardUpdateDispatch, data);
 
+    const [ boardExistsResult, boardExistsDispatch ] = useReducer(boardExistsReducer, boardExistsInitialState);
+    const doesBoardExist = data => boardExistsAction(boardExistsDispatch, data);
+
     return { 
         signUpCaller: [ signUp, signUpResult ],
         verifyEmailCaller: [ verifyEmail, verifyEmailResult ],
         loginCaller: [ login, loginResult ],
         getUserCaller: [ getUser, userGetResult ],
+        getBoardCaller: [ getBoard, getBoardResult ],
         createBoardCaller: [ createBoard, createBoardResult ],
         deleteBoardCaller: [ deleteBoard, deleteBoardResult ],
         updateBoardCaller: [ updateBoard, updateBoardResult ],
+        doesBoardExistCaller: [ doesBoardExist, boardExistsResult ],
     };
 };
 
