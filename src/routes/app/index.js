@@ -29,7 +29,7 @@ const routes = [
         component: () => <Routes routes={ BoardsPanelRoutes }/>,
     },
     {
-        path: "boards-panel",
+        path: "/boards-panel",
         type: "redirect",
     },
 ];
