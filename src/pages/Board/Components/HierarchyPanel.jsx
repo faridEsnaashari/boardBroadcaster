@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import ShapeDetail from "./ShapeDetail";
 
@@ -6,43 +6,27 @@ import "../Styles/hierarchyPanelStyles.css";
 
 const HierarchyPanel = (props) => {
     const {
-        onShapesUpdated,
+        onAShapeUpdated,
         onSelectedChange,
         shapes,
     } = props;
 
-    const shapesDetailsRef = useRef([]);
     const [shapesDetails, setShapeDetails] = useState([]);
 
     const [ selected, setSelected ] = useState({ mode: "disable", shape: null });
 
     useEffect(() => onSelectedChange(selected), [selected]);
 
-    useEffect(() => onShapesUpdated(shapesDetails), [shapesDetails]);
-
     useEffect(() => {
-        shapesDetailsRef.current = shapes;
-        setShapeDetails(shapesDetailsRef.current);
+        setShapeDetails(shapes);
     }, [shapes]);
 
-    const onAShapeAttributeChanged = async(updatedShape) => {
-        shapesDetailsRef.current.map(shape => {
-            if(updatedShape.name !== shape.name){
-                return shape;
-            }
-
-            for(let attribute in shape.attributes){
-                shape.attributes[attribute] = updatedShape.attributes[attribute];
-            }
-
-            return shape;
-        });
-
-        setShapeDetails([ ...shapesDetailsRef.current ]);
+    const onAShapeAttributeChanged = (updatedShape) => {
+        onAShapeUpdated(updatedShape)
     };
 
     const getShapesDetails = () => {
-        return shapesDetailsRef.current && shapesDetailsRef.current.map((shapeDetails, index) => {
+        return shapesDetails && shapesDetails.map((shapeDetails, index) => {
             return <ShapeDetail 
                 key={ index } 
                 onAttributesChanged={ onAShapeAttributeChanged }
@@ -72,8 +56,7 @@ const HierarchyPanel = (props) => {
 
         setSelected({ shape: shapeName, selected: "rescale" });
 
-        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newNormalLine ];
-        setShapeDetails(shapesDetailsRef.current);
+        onAShapeUpdated(newNormalLine);
     }
 
     const createHorizontalLine = () => {
@@ -93,8 +76,7 @@ const HierarchyPanel = (props) => {
 
         setSelected({ shape: shapeName, selected: "rescale" });
 
-        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newHorizontalLine ];
-        setShapeDetails(shapesDetailsRef.current);
+        onAShapeUpdated(newHorizontalLine);
     }
 
     const createVerticalLine = () => {
@@ -114,8 +96,7 @@ const HierarchyPanel = (props) => {
 
         setSelected({ shape: shapeName, selected: "rescale" });
 
-        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newVerticalLine ];
-        setShapeDetails(shapesDetailsRef.current);
+        onAShapeUpdated(newVerticalLine);
     }
 
     const createRectongle = () => {
@@ -136,8 +117,7 @@ const HierarchyPanel = (props) => {
 
         setSelected({ shape: shapeName, select: "rescale" });
 
-        shapesDetailsRef.current = [ ...shapesDetailsRef.current, newRectongle ];
-        setShapeDetails(shapesDetailsRef.current);
+        onAShapeUpdated(newRectongle);
     }
 
     return(
