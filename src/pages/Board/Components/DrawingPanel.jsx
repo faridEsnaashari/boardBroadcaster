@@ -8,12 +8,11 @@ const DrawingPanel = (props) => {
     const {
         shapes,
         selected,
-        onShapesUpdated,
+        onAShapeUpdated,
     } = props;
 
     const [ shapesShadow, setShapesShadow ] = useState(shapes);
     useEffect(() => setShapesShadow(shapes), [shapes]);
-    useEffect(() => onShapesUpdated(shapesShadow), [shapesShadow]);
 
     const [ lastMousePosition, setLastMousePosition ] = useState({ x: 0, y: 0 });
 
@@ -129,9 +128,10 @@ const DrawingPanel = (props) => {
             return;
         }
 
-        const updatedShapes = shapesShadow.map(shape => shape.name !== selected.shape ? shape : updateShapeAttribute(shape, mousePostition));
+        const selectedShape = shapesShadow.find(shape => shape.name === selected.shape);
+        const updatedShape = updateShapeAttribute(selectedShape, mousePostition);
 
-        setShapesShadow(updatedShapes);
+        onAShapeUpdated(updatedShape);
 
         setLastMousePosition({ x: mousePostition.x, y: mousePostition.y });
     };
