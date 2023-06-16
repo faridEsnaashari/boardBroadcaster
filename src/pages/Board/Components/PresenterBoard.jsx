@@ -1,5 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
+
+
+import Socket from "../../../sockets/socket";
 
 import LoadingCircle from "../../../components/GeneralComponents/LoadingCircle/LoadingCircle";
 import HierarchyPanel from "./HierarchyPanel";
@@ -10,13 +13,41 @@ import UserDetailsContext from "../../../contexts/userDetails";
 import "../Styles/boardStyles.css";
 
 const Board = props => {
+    const [ socket, setSocket ] = useState(null);
+
+    const shapesRef = useRef([]);
+    const [ shapes, setShapes ] = useState([]);
+
+    const onAShapeUpdated = updatedShape => {
+        socket && socket.sendShape(updatedShape)
+    };
+
+    const onDraw = updatedShape => {
+        let shapeWasExisted = false;
+
+        const updatedShapes = shapesRef.current.map(shape => {
+            if(shape.name !== updatedShape.name){
+                return shape;
+            }
+
+            shapeWasExisted = true;
+            return updatedShape;
+        });
+
+        shapeWasExisted ? shapesRef.current = updatedShapes : shapesRef.current = [ ...updatedShapes, updatedShape ];
+        setShapes(shapesRef.current)
+    };
+
+    const getShapes = () => shapesRef.current;
+
+    const initShapes = shapes => {
+        shapesRef.current = shapes;
+        setShapes(shapes);
+    };
+
+
     const { id } = useParams();
     const history = useHistory();
-
-    const [ shapes, setShapes ] = useState([]);
-    const onShapesUpdated = updatedShapes => {
-        setShapes(updatedShapes)
-    };
 
     const [ selected, setSelected ] = useState();
     const changeSelection = select => setSelected(select);
@@ -32,8 +63,11 @@ const Board = props => {
 
         setBoard(boards.find(board => board.boardIdentifier === id));
     }, [userDetailsContext]);
-    useEffect(() => console.log(board), [board]);
 
+    useEffect(() => {
+        const newSocket = new Socket(onDraw, getShapes, initShapes, id);
+        setSocket(newSocket);
+    }, []);
 
     if(!board){
         history.push("/board/not_found");
@@ -54,8 +88,8 @@ const Board = props => {
     else{
         return(
             <div className="panels-container">
-                <HierarchyPanel shapes={ shapes } onShapesUpdated={ onShapesUpdated } onSelectedChange={ changeSelection }/>
-                <DrawingPanel shapes={ shapes } selected={ selected } onShapesUpdated={ onShapesUpdated }/>
+                <HierarchyPanel shapes={ shapes } onAShapeUpdated={ onAShapeUpdated } onSelectedChange={ changeSelection }/>
+                <DrawingPanel shapes={ shapes } selected={ selected } onAShapeUpdated={ onAShapeUpdated } paintable={ true }/>
             </div>
         );
     }
