@@ -1,0 +1,32 @@
+.shape-detail-container{
+    width: calc(100% - 20px);
+    border: 1px solid;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.general-info-container{
+    position: relative;
+    height: 4rem;
+    border-bottom: 1px solid;
+}
+
+.shape-name{
+    position: absolute;
+    font-size: .9em;
+    left: 5px;
+    bottom: 0;
+}
+
+.shape-type{
+    position: absolute;
+    font-size: .7em;
+    right: 5px;
+}
+
+.attributes-container{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

@@ -136,12 +136,12 @@ const BoardsPanelPage = props => {
     };
 
     const copyPresenterUrl = (boardUrl, boardId) => () => {
-        navigator.clipboard.writeText(`${ APP_URL }/presenter/board/${ boardUrl }`);
+        navigator.clipboard.writeText(`${ APP_URL }/board/${ boardUrl }/presenter`);
         presenterUrlCopiedSignalActivate(boardId);
     };
 
     const copyParticipantUrl = (boardUrl, boardId) => () => {
-        navigator.clipboard.writeText(`${ APP_URL }/participant/board/${ boardUrl }`)
+        navigator.clipboard.writeText(`${ APP_URL }/board/${ boardUrl }/participant`)
         participantUrlCopiedSignalActivate(boardId);
     };
 

@@ -1,0 +1,10 @@
+.attribute{
+    width: 35%;
+    margin: 5px;
+}
+
+.attribute > input[type="text"]{
+    width: calc(100% - 4px);
+    border: 1px solid;
+    border-radius: 10px;
+}
