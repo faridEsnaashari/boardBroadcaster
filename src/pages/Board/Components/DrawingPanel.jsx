@@ -9,6 +9,7 @@ const DrawingPanel = (props) => {
         shapes,
         selected,
         onAShapeUpdated,
+        paintable,
     } = props;
 
     const [ shapesShadow, setShapesShadow ] = useState(shapes);
@@ -149,7 +150,7 @@ const DrawingPanel = (props) => {
                 name={ name }
                 type={ type }
                 key={ index }
-                selected={ name === selected.shape }
+                selected={ selected && name === selected.shape }
             />);
         });
     };
@@ -162,16 +163,19 @@ const DrawingPanel = (props) => {
             {
                 getShapes()
             }
-            <div 
-                className="drawing-panel-mouse-panel"
-                onMouseDown={ () => setPanelClicked(true) } 
-                onMouseUp={ () => setPanelClicked(false) }
-                onMouseMove={ e => paint(e) }
-                onTouchMove={ e => paint(e) }
-                onTouchStart={ () => setPanelTouched(true) }
-                onTouchEnd={ () => setPanelTouched(false) }
-            >
-            </div>
+            {
+                paintable &&
+                    <div 
+                        className="drawing-panel-mouse-panel"
+                        onMouseDown={ () => setPanelClicked(true) } 
+                        onMouseUp={ () => setPanelClicked(false) }
+                        onMouseMove={ e => paint(e) }
+                        onTouchMove={ e => paint(e) }
+                        onTouchStart={ () => setPanelTouched(true) }
+                        onTouchEnd={ () => setPanelTouched(false) }
+                    >
+                    </div>
+            }
         </div>
     )
 };
