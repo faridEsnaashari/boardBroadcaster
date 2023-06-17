@@ -15,36 +15,114 @@ import "../Styles/boardStyles.css";
 const Board = props => {
     const [ socket, setSocket ] = useState(null);
 
+    const [ drawingPanelSize, setDrawingPanelSize ] = useState({ width: 0, height: 0 });
+    const drawingPanelSizeRef = useRef({ width: 0, height: 0 });
+    useEffect(() => drawingPanelSizeRef.current = drawingPanelSize, [drawingPanelSize]);
+
     const shapesRef = useRef([]);
     const [ shapes, setShapes ] = useState([]);
 
+    const changePixelToRelative = (value, axis) => value / (drawingPanelSizeRef.current)[axis === "x" ? "width" : "height"];
+
+    const changeRelativeToPixel = (value, axis) => (drawingPanelSizeRef.current)[axis === "x" ? "width" : "height"] * value;
+
+    const changeShapeValues = (type, shapeType, attributes) => {
+        
+        let { 
+            x,
+            y,
+            length,
+            x1,
+            x2,
+            y1,
+            y2,
+            width,
+            height,
+            ...rest
+        } = attributes;
+
+        switch(shapeType){
+            case "horizontalLine" :
+                return {
+                    ...rest,
+                    x: type === "relative" ? changePixelToRelative(x, "x") : changeRelativeToPixel(x, "x"),
+                    y: type === "relative" ? changePixelToRelative(y, "y") : changeRelativeToPixel(y, "y"),
+                    length: type === "relative" ? changePixelToRelative(length, "x") : changeRelativeToPixel(length, "x"),
+                }
+
+            case "verticalLine" :
+                return {
+                    ...rest,
+                    x: type === "relative" ? changePixelToRelative(x, "x") : changeRelativeToPixel(x, "x"),
+                    y: type === "relative" ? changePixelToRelative(y, "y") : changeRelativeToPixel(y, "y"),
+                    length: type === "relative" ? changePixelToRelative(length, "y") : changeRelativeToPixel(length, "y"),
+                }
+
+            case "rectongle" :
+                return {
+                    ...rest,
+                    x: type === "relative" ? changePixelToRelative(x, "x") : changeRelativeToPixel(x, "x"),
+                    y: type === "relative" ? changePixelToRelative(y, "y") : changeRelativeToPixel(y, "y"),
+                    width: type === "relative" ? changePixelToRelative(width, "x") : changeRelativeToPixel(width, "x"),
+                    height: type === "relative" ? changePixelToRelative(height, "y") : changeRelativeToPixel(height, "y"),
+                }
+
+            case "normalLine" :
+                return {
+                    ...rest,
+                    x1: type === "relative" ? changePixelToRelative(x1, "x") : changeRelativeToPixel(x1, "x"),
+                    y1: type === "relative" ? changePixelToRelative(y1, "y") : changeRelativeToPixel(y1, "y"),
+                    y2: type === "relative" ? changePixelToRelative(y2, "y") : changeRelativeToPixel(y2, "y"),
+                    x2: type === "relative" ? changePixelToRelative(x2, "x") : changeRelativeToPixel(x2, "x"),
+                }
+        }
+    };
+
     const onAShapeUpdated = updatedShape => {
-        socket && socket.sendShape(updatedShape)
+        const preparedUpdatedShape = {
+            ...updatedShape,
+            attributes: changeShapeValues("relative", updatedShape.type, updatedShape.attributes),
+        };
+
+        socket && socket.sendShape(preparedUpdatedShape)
     };
 
     const onDraw = updatedShape => {
         let shapeWasExisted = false;
 
+        const preparedUpdatedShape = {
+            ...updatedShape,
+            attributes: changeShapeValues("pixel", updatedShape.type, updatedShape.attributes),
+        }
+
         const updatedShapes = shapesRef.current.map(shape => {
-            if(shape.name !== updatedShape.name){
+            if(shape.name !== preparedUpdatedShape.name){
                 return shape;
             }
 
             shapeWasExisted = true;
-            return updatedShape;
+            return preparedUpdatedShape;
         });
 
-        shapeWasExisted ? shapesRef.current = updatedShapes : shapesRef.current = [ ...updatedShapes, updatedShape ];
+        shapeWasExisted ? shapesRef.current = updatedShapes : shapesRef.current = [ ...updatedShapes, preparedUpdatedShape ];
         setShapes(shapesRef.current)
     };
 
-    const getShapes = () => shapesRef.current;
+    const getShapes = () => shapesRef.current.map(shape => ({
+        ...shape,
+        attributes: changeShapeValues("relative", shape.type, shape.attributes),
+    }));
+
 
     const initShapes = shapes => {
-        shapesRef.current = shapes;
-        setShapes(shapes);
-    };
+        const updatedShapes = shapes.map(shape => ({
+            ...shape,
+            attributes: changeShapeValues("pixel", shape.type, shape.attributes),
+        }));
 
+        shapesRef.current = updatedShapes;
+        setShapes(updatedShapes);
+    };
 
     const { id } = useParams();
     const history = useHistory();
@@ -88,8 +166,18 @@ const Board = props => {
     else{
         return(
             <div className="panels-container">
-                <HierarchyPanel shapes={ shapes } onAShapeUpdated={ onAShapeUpdated } onSelectedChange={ changeSelection }/>
-                <DrawingPanel shapes={ shapes } selected={ selected } onAShapeUpdated={ onAShapeUpdated } paintable={ true }/>
+                <HierarchyPanel 
+                    shapes={ shapes }
+                    onAShapeUpdated={ onAShapeUpdated } 
+                    onSelectedChange={ changeSelection }
+                />
+                <DrawingPanel 
+                    shapes={ shapes } 
+                    selected={ selected } 
+                    onAShapeUpdated={ onAShapeUpdated } 
+                    setDrawingPanelSize={ setDrawingPanelSize }
+                    paintable={ true }
+                />
             </div>
         );
     }

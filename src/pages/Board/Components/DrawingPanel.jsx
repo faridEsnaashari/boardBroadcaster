@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import Shape from "./Shape";
 
@@ -10,7 +10,19 @@ const DrawingPanel = (props) => {
         selected,
         onAShapeUpdated,
         paintable,
+        setDrawingPanelSize,
     } = props;
+
+    const drawingPanelRef = useRef(null);
+
+    const onResize = () => {
+        const { width, height } = drawingPanelRef.current.getBoundingClientRect();
+        setDrawingPanelSize({ width, height });
+    }
+
+    useEffect(() => {
+        onResize();
+    }, []);
 
     const [ shapesShadow, setShapesShadow ] = useState(shapes);
     useEffect(() => setShapesShadow(shapes), [shapes]);
@@ -157,6 +169,7 @@ const DrawingPanel = (props) => {
 
     return(
         <div 
+            ref={ drawingPanelRef }
             className="drawing-panel" 
             id="drawingPanel" 
         >
