@@ -124,10 +124,10 @@ const DrawingPanel = (props) => {
         }
     }
 
-    const updateShapeAttribute = (shape, mousePostition) => selected.mode === "rescale" ? moveShape(shape, mousePostition) : rescaleShape(shape, mousePostition);
+    const updateShapeAttribute = (shape, mousePostition) => selected.mode === "move" ? moveShape(shape, mousePostition) : rescaleShape(shape, mousePostition);
 
     const paint = e => {
-        if(selected.mode === "disable" || (!panelClicked && !panelTouched)){
+        if(selected.mode === "disable" || !selected.shape || (!panelClicked && !panelTouched)){
             return;
         }
 
