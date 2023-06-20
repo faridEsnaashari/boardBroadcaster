@@ -1,9 +1,9 @@
 .drawing-panel{
-    border: 1px solid;
     border-radius: 10px;
-    width: 70%;
-    margin-left: 5px;
+    width: 100%;
     position: relative;
+    background-color: #ebf0f2;
+    box-shadow: 5px 5px 20px, -5px -5px 20px;
 }
 
 .drawing-panel .shape{

@@ -1,35 +1,59 @@
 .hierarchy-panel{
-    border: 1px solid;
     border-radius: 10px;
-    width: 30%;
-    margin-right: 5px;
+    position: absolute;
+    margin: 1rem;
+    display: flex;
+    max-height: calc(100% - 8rem);
+    top: 3rem;
+    z-index: 2;
 }
 
 .hierarchy-buttons-container{
-    width: 100%;
-    height: 5%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: .5rem;
+    width: 5rem;
+    border-radius: 10px;
+    height: fit-content;
+    background-color: #141417;
 }
 
 .hierarchy-buttons-container .button{
-    border: 1px solid;
-    width: 25%;
-    margin: 3px;
+    width: 100%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 4rem;
+    background-color: #fff;
 }
 
-.hierarchy-buttons-container .button > div{
-    background-size: 100% 100%;
+.button-clicked {
+    box-shadow: 1px 1px 7px 2px #000 inset;
+}
+
+.button {
+    background-size: 50% 50%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 90%;
-    height: 90%;
-    max-width: 2em;
-    max-height: 2em;
+}
+
+.hierarchy-panel-divider {
+    border: 1px solid;
+    border: 1px solid #fff;
+}
+
+.select-button-move{
+    background-image: url(/src/assets/icons/move.png);
+}
+
+.select-button-rescale{
+    background-image: url(/src/assets/icons/pen.png);
+}
+
+.shape-lists{
+    background-image: url(/src/assets/icons/menu.png);
 }
 
 .horizontal-line{
@@ -49,11 +73,33 @@
 }
 
 .shapes-details-container{
-    width: 100%;
-    height: 90%;
-    overflow-y: auto;
-    overflow-x: clip;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
+    position: relative;
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-left: 1rem;
+    direction: ltr;
 }
 
+.shapes-details-ui{
+    background-color: #141417;
+    padding: .5em;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 10px;
+    width: 5rem;
+}
+
+.shapes-details-container-overflow-owner{
+    overflow-y: auto;
+    direction: rtl;
+    transform: scaleY(0);
+    transition: transform 300ms;
+    transform-origin: top;
+}
+
+.shapes-details-container-overflow-owner-open {
+    transform: scaleY(1);
+}

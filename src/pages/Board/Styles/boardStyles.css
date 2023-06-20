@@ -1,8 +1,15 @@
 .panels-container{
-    width: calc(100vw - 100px);
-    height: calc(100vh - 100px);
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    padding: 50px;
+    padding: 3rem;
+    position: relative;
+    box-sizing: border-box;
+    background-color: #494a57;
+}
+
+.panels-container div {
+    box-sizing: border-box;
 }
 
 body{

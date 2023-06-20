@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import ShapeDetail from "./ShapeDetail";
 
@@ -11,9 +11,45 @@ const HierarchyPanel = (props) => {
         shapes,
     } = props;
 
+    const OPEN_SHAPES_LIST_TIME = 400;
+    const BUTTON_ACTIVE_TIME = 300;
+
+    const shapesListRef = useRef(null);
+
     const [shapesDetails, setShapeDetails] = useState([]);
 
     const [ selected, setSelected ] = useState({ mode: "disable", shape: null });
+
+    const moveButtonRef = useRef(null);
+    const rescaleButtonRef = useRef(null);
+
+    useEffect(() => {
+        if(selected.mode === "disable") return; 
+
+        if(selected.mode === "rescale"){
+            rescaleButtonRef.current.classList.add("button-clicked");
+            moveButtonRef.current.classList.remove("button-clicked");
+            return;
+        }
+
+        moveButtonRef.current.classList.add("button-clicked");
+        rescaleButtonRef.current.classList.remove("button-clicked");
+    }, [selected.mode]);
+
+    const [ shapesListOpening, setShapesListOpening ] = useState(false);
+
+    const openOrCloseShapesList = e => {
+        if(shapesListOpening){
+            setShapesListOpening(false);
+            setTimeout(() => shapesListRef.current.scroll(0, 0), OPEN_SHAPES_LIST_TIME);
+            e.target.classList.remove("button-clicked");
+            return;
+        }
+
+        setShapesListOpening(true);
+        setTimeout(() => shapesListRef.current.scroll({ top: 100000, behavior: "smooth" }), OPEN_SHAPES_LIST_TIME);
+        e.target.classList.add("button-clicked");
+    }
 
     useEffect(() => onSelectedChange(selected), [selected]);
 
@@ -34,11 +70,15 @@ const HierarchyPanel = (props) => {
                 type={ shapeDetails.type } 
                 attributes={ shapeDetails.attributes }
                 onClick={ () => setSelected({ ...selected, shape: shapeDetails.name }) }
+                selected={ selected.shape && shapeDetails.name === selected.shape }
             />
         });
     };
 
-    const createNormalLine = () => {
+    const createNormalLine = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `normalLine${ shapeId }`;
 
@@ -59,7 +99,10 @@ const HierarchyPanel = (props) => {
         onAShapeUpdated(newNormalLine);
     }
 
-    const createHorizontalLine = () => {
+    const createHorizontalLine = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `horizontalLine${ shapeId }`;
 
@@ -79,7 +122,10 @@ const HierarchyPanel = (props) => {
         onAShapeUpdated(newHorizontalLine);
     }
 
-    const createVerticalLine = () => {
+    const createVerticalLine = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `verticalLine${ shapeId }`;
 
@@ -99,7 +145,10 @@ const HierarchyPanel = (props) => {
         onAShapeUpdated(newVerticalLine);
     }
 
-    const createRectongle = () => {
+    const createRectongle = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `rectongle${ shapeId }`;
 
@@ -123,17 +172,32 @@ const HierarchyPanel = (props) => {
     return(
         <div className="hierarchy-panel">
             <div className="hierarchy-buttons-container">
-                <div className="button select-button-move" onClick={ () => setSelected({ ...selected, mode: "move" }) }></div>
-                <div className="button select-button-rescale" onClick={ () => setSelected({ ...selected, mode: "rescale" }) }></div>
+                <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
+                <div className="button vertical-line" onClick={ createVerticalLine }></div>
+                <div className="button rectongle" onClick={ createRectongle }></div>
+                <div className="button normal-line" onClick={ createNormalLine }></div>
+                <div className="hierarchy-panel-divider"></div>
+                <div 
+                    ref={ moveButtonRef }
+                    className="button select-button-move" 
+                    onClick={ () => setSelected({ ...selected, mode: "move" })} 
+                >
+                </div>
+                <div 
+                    ref={ rescaleButtonRef }
+                    className="button select-button-rescale" 
+                    onClick={ () => setSelected({ ...selected, mode: "rescale" })} 
+                >
+                </div>
+                <div className="hierarchy-panel-divider"></div>
+                <div className="button shape-lists" onClick={ openOrCloseShapesList }></div>
             </div>
+            <div ref={ shapesListRef } className={`shapes-details-container-overflow-owner  ${ shapesListOpening && "shapes-details-container-overflow-owner-open" }`}>
             <div className="shapes-details-container">
-                { getShapesDetails() }
+                <div className="shapes-details-ui">
+                    { getShapesDetails() }
+                </div>
             </div>
-            <div className="hierarchy-buttons-container">
-                <div className="button" onClick={ createHorizontalLine }><div className="horizontal-line"></div></div>
-                <div className="button" onClick={ createVerticalLine }><div className="vertical-line"></div></div>
-                <div className="button" onClick={ createRectongle }><div className="rectongle"></div></div>
-                <div className="button" onClick={ createNormalLine }><div className="normal-line"></div></div>
             </div>
         </div>
     )
