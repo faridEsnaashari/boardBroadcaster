@@ -71,3 +71,48 @@
 .rectongle{
     background-image: url(/src/assets/icons/rectongleIcon.svg);
 }
+
+@media(max-width: 850px){
+    .hierarchy-panel {
+        overflow: scroll;
+        top: calc(100% - 10rem);
+        transition: left 300ms, max-width 300ms;
+        left: 3rem;
+        max-width: calc(100% - 8rem);
+    }
+
+    .hierarchy-panel-shapes-list-open {
+        left: 9rem;
+        max-width: calc(100% - 14rem);
+    }
+
+    .hierarchy-buttons-container {
+        flex-direction: row-reverse;
+        height: 5rem;
+        width: unset;
+    }
+
+    .hierarchy-buttons-container .button{
+        height: 100%;
+        width: 4rem;
+    }
+}
+
+@media(max-width: 600px){
+    .hierarchy-panel-shapes-list-open {
+        left: 7rem;
+        max-width: calc(100% - 12rem);
+    }
+
+    .hierarchy-panel {
+        top: calc(100% - 8rem);
+    }
+
+    .hierarchy-buttons-container {
+        height: 3rem;
+    }
+
+    .hierarchy-buttons-container .button{
+        width: 2rem;
+    }
+}

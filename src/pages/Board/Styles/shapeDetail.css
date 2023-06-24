@@ -81,3 +81,15 @@
 .rectongle{
     background-image: url(/src/assets/icons/rectongleIcon.svg);
 }
+
+@media(max-width: 600px){
+    .shape-detail-container {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .attributes-container {
+        left: 3rem;
+        width: 10rem;
+    }
+}

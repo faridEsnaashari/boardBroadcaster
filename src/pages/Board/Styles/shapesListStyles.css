@@ -36,3 +36,20 @@
 .shapes-details-container-overflow-owner-open {
     transform: scaleY(1);
 }
+
+@media(max-width: 850px){
+    .shapes-details-container-overflow-owner {
+        left: unset;
+    }
+
+    .shapes-details-ui {
+        width: 5rem;
+    }
+}
+
+@media(max-width: 600px){
+    .shapes-details-ui {
+        width: 3rem;
+    }
+}
+

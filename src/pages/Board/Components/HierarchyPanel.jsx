@@ -140,7 +140,7 @@ const HierarchyPanel = (props) => {
     }
 
     return(
-        <div className="hierarchy-panel">
+        <div className={` hierarchy-panel ${ shapesListOpening && "hierarchy-panel-shapes-list-open" } `}>
             <div className="hierarchy-buttons-container">
                 <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
                 <div className="button vertical-line" onClick={ createVerticalLine }></div>
