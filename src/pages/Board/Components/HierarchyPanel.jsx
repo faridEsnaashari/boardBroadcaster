@@ -65,6 +65,7 @@ const HierarchyPanel = (props) => {
         };
 
         setSelected("rescale");
+        onSelectedChange({ shape: shapeName });
 
         onAShapeUpdated(newNormalLine);
     }
@@ -88,6 +89,7 @@ const HierarchyPanel = (props) => {
         };
 
         setSelected("rescale");
+        onSelectedChange({ shape: shapeName });
 
         onAShapeUpdated(newHorizontalLine);
     }
@@ -111,6 +113,7 @@ const HierarchyPanel = (props) => {
         };
 
         setSelected("rescale");
+        onSelectedChange({ shape: shapeName });
 
         onAShapeUpdated(newVerticalLine);
     }
@@ -135,6 +138,7 @@ const HierarchyPanel = (props) => {
         };
 
         setSelected("rescale");
+        onSelectedChange({ shape: shapeName });
 
         onAShapeUpdated(newRectongle);
     }
