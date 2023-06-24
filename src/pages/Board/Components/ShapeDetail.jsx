@@ -9,8 +9,10 @@ const ShapeDetail = (props) => {
         attributes,
         type,
         onAttributesChanged,
-        onClick: onClickRef,
+        onClick: onClickProp,
         selected,
+        onOpenOrCloseAttributes,
+        attributesOpening,
     } = props;
 
     const shapeDetailsRef = useRef(null);
@@ -20,7 +22,17 @@ const ShapeDetail = (props) => {
         shapeDetailsRef.current.classList.remove("button-clicked")
         , [selected]);
 
-    const [ attributesOpening, setAttributesOpening ] = useState(false);
+    const [ open, setOpen ] = useState(false);
+    useEffect(() => onOpenOrCloseAttributes({ shapeName, open }), [open]);
+
+    useEffect(() => {
+        attributesOpening !== shapeName ? setOpen(false) : shapeDetailsRef.current.focus();
+    }, [attributesOpening]);
+
+    const onClick = () => {
+        onClickProp();
+        setOpen(true);
+    }
 
     const onThisShapeAttributesChanged = (attributeName, attributeValue) => {
         const shapeWithNewAttributes = { 
@@ -31,11 +43,6 @@ const ShapeDetail = (props) => {
         shapeWithNewAttributes.attributes[attributeName] = attributeValue;
 
         onAttributesChanged(shapeWithNewAttributes);
-    };
-
-    const onClick = () => {
-        onClickRef();
-        setAttributesOpening(!attributesOpening);
     };
 
     const getShapeTypeClass = () => {
@@ -72,10 +79,14 @@ const ShapeDetail = (props) => {
             className={` shape-detail-container button ${ getShapeTypeClass() }`} 
             key={ shapeName } 
             onClick={ onClick }
-            onBlur={ () => setAttributesOpening(false) }
+            onMouseEnter={ () => setOpen(true) }
+            onBlur={ () => setOpen(false) }
             tabIndex="1"
         >
-            <div className={` attributes-container ${ attributesOpening && "attributes-container-open" } `}>
+            <div 
+                className={` attributes-container ${ attributesOpening === shapeName ? "attributes-container-open" : "attributes-container-close" } `}
+                onMouseLeave={ () => setOpen(false) }
+            >
                 { getAttributes() }
             </div>
         </div>

@@ -1,21 +1,30 @@
 .shape-detail-container{
-position: relative;
-display: flex;
-justify-content: center;
-background-color: #fff;
-border-radius: 10px;
-width: 4rem;
-height: 4rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 10px;
+    width: 4rem;
+    height: 4rem;
+}
+
+.shape-detail-container:focus {
+    border: unset;
+    outline: unset;
 }
 
 .button {
-background-size: 50% 50%;
-background-repeat: no-repeat;
-background-position: center;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-.shape-detail-container:hover .attributes-container{
-transform: scaleY(1);
+.attributes-container-close{
+    transform: scaleY(0);
+}
+
+.attributes-container-open{
+    transform: scaleY(1);
 }
 
 .shape-name{
@@ -45,17 +54,12 @@ transform: scaleY(1);
     border: 1px solid;
     top: 0;
     transition: transform 300ms;
-    transform: scaleY(0);
     transform-origin: top;
     color: #fff;
     padding: 1rem 0 1rem 1rem;
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 10% 100%, 9% 99%, 8% 98%, 5% 20%);
     background-color: #141417;
     border-radius: 6px;
-}
-
-.attributes-container-open {
-    transform: scaleY(1);
 }
 
 .attributes-container:hover {
