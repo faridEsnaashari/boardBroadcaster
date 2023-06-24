@@ -10,6 +10,7 @@ const ShapesList = (props) => {
         onSelectedChange,
         shapes,
         shapesListOpening,
+        selected,
     } = props;
 
     const OPEN_SHAPES_LIST_TIME = 400;
@@ -18,8 +19,6 @@ const ShapesList = (props) => {
     const shapesListRef = useRef(null);
 
     const [shapesDetails, setShapeDetails] = useState([]);
-
-    const [ selected, setSelected ] = useState(null);
 
     const [ attributesOpening, setAttributesOpening ] = useState("");
     const [ attributesContainerOpening, setAttributesContainerOpening ] = useState(false);
@@ -43,8 +42,6 @@ const ShapesList = (props) => {
     }
     useEffect(() => scrollShapesList(), [shapesListOpening]);
 
-    useEffect(() => onSelectedChange({ shape: selected }), [selected]);
-
     useEffect(() => {
         setShapeDetails(shapes);
     }, [shapes]);
@@ -61,7 +58,7 @@ const ShapesList = (props) => {
                 name={ shapeDetails.name } 
                 type={ shapeDetails.type } 
                 attributes={ shapeDetails.attributes }
-                onClick={ () => setSelected(shapeDetails.name) }
+                onClick={ () => onSelectedChange({ shape: shapeDetails.name }) }
                 selected={ selected && shapeDetails.name === selected }
                 onOpenOrCloseAttributes={ onOpenOrCloseAttributes }
                 attributesOpening={ attributesOpening }
