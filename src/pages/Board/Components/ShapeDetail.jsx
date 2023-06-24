@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from "react";
 import Attribute from "./Attribute";
 
 import "../Styles/shapeDetail.css";
@@ -8,8 +9,30 @@ const ShapeDetail = (props) => {
         attributes,
         type,
         onAttributesChanged,
-        onClick,
+        onClick: onClickProp,
+        selected,
+        onOpenOrCloseAttributes,
+        attributesOpening,
     } = props;
+
+    const shapeDetailsRef = useRef(null);
+    useEffect(() => selected ?
+        shapeDetailsRef.current.classList.add("button-clicked")
+        :
+        shapeDetailsRef.current.classList.remove("button-clicked")
+        , [selected]);
+
+    const [ open, setOpen ] = useState(false);
+    useEffect(() => onOpenOrCloseAttributes({ shapeName, open }), [open]);
+
+    useEffect(() => {
+        attributesOpening !== shapeName ? setOpen(false) : shapeDetailsRef.current.focus();
+    }, [attributesOpening]);
+
+    const onClick = () => {
+        onClickProp();
+        setOpen(true);
+    }
 
     const onThisShapeAttributesChanged = (attributeName, attributeValue) => {
         const shapeWithNewAttributes = { 
@@ -21,6 +44,17 @@ const ShapeDetail = (props) => {
 
         onAttributesChanged(shapeWithNewAttributes);
     };
+
+    const getShapeTypeClass = () => {
+        const shapeTypesClassDictionary = {
+            horizontalLine: "horizontal-line",
+            verticalLine: "vertical-line",
+            normalLine: "normal-line",
+            rectongle: "rectongle",
+        };
+
+        return shapeTypesClassDictionary[type];
+    }
 
     const getAttributes = () => {
         let renderedComponents = [];
@@ -40,12 +74,19 @@ const ShapeDetail = (props) => {
     };
 
     return(
-        <div className="shape-detail-container" key={ shapeName } onClick={ onClick }>
-            <div className="general-info-container">
-                <p className="shape-name">{ shapeName }</p>
-                <p className="shape-type">{ type }</p>
-            </div>
-            <div className="attributes-container">
+        <div 
+            ref={ shapeDetailsRef } 
+            className={` shape-detail-container button ${ getShapeTypeClass() }`} 
+            key={ shapeName } 
+            onClick={ onClick }
+            onMouseEnter={ () => setOpen(true) }
+            onBlur={ () => setOpen(false) }
+            tabIndex="1"
+        >
+            <div 
+                className={` attributes-container ${ attributesOpening === shapeName ? "attributes-container-open" : "attributes-container-close" } `}
+                onMouseLeave={ () => setOpen(false) }
+            >
                 { getAttributes() }
             </div>
         </div>

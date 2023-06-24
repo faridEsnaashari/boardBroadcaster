@@ -1,35 +1,59 @@
 .hierarchy-panel{
-    border: 1px solid;
     border-radius: 10px;
-    width: 30%;
-    margin-right: 5px;
+    position: absolute;
+    margin: 1rem;
+    display: flex;
+    max-height: calc(100% - 8rem);
+    top: 3rem;
+    z-index: 2;
 }
 
 .hierarchy-buttons-container{
-    width: 100%;
-    height: 5%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: .5rem;
+    width: 5rem;
+    border-radius: 10px;
+    height: fit-content;
+    background-color: #141417;
 }
 
 .hierarchy-buttons-container .button{
-    border: 1px solid;
-    width: 25%;
-    margin: 3px;
+    width: 100%;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 4rem;
+    background-color: #fff;
 }
 
-.hierarchy-buttons-container .button > div{
-    background-size: 100% 100%;
+.button-clicked {
+    box-shadow: 1px 1px 7px 2px #000 inset;
+}
+
+.button {
+    background-size: 50% 50%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 90%;
-    height: 90%;
-    max-width: 2em;
-    max-height: 2em;
+}
+
+.hierarchy-panel-divider {
+    border: 1px solid;
+    border: 1px solid #fff;
+}
+
+.select-button-move{
+    background-image: url(/src/assets/icons/move.png);
+}
+
+.select-button-rescale{
+    background-image: url(/src/assets/icons/pen.png);
+}
+
+.shape-lists{
+    background-image: url(/src/assets/icons/menu.png);
 }
 
 .horizontal-line{
@@ -48,12 +72,47 @@
     background-image: url(/src/assets/icons/rectongleIcon.svg);
 }
 
-.shapes-details-container{
-    width: 100%;
-    height: 90%;
-    overflow-y: auto;
-    overflow-x: clip;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
+@media(max-width: 850px){
+    .hierarchy-panel {
+        overflow: scroll;
+        top: calc(100% - 10rem);
+        transition: left 300ms, max-width 300ms;
+        left: 3rem;
+        max-width: calc(100% - 8rem);
+    }
+
+    .hierarchy-panel-shapes-list-open {
+        left: 9rem;
+        max-width: calc(100% - 14rem);
+    }
+
+    .hierarchy-buttons-container {
+        flex-direction: row-reverse;
+        height: 5rem;
+        width: unset;
+    }
+
+    .hierarchy-buttons-container .button{
+        height: 100%;
+        width: 4rem;
+    }
 }
 
+@media(max-width: 600px){
+    .hierarchy-panel-shapes-list-open {
+        left: 7rem;
+        max-width: calc(100% - 12rem);
+    }
+
+    .hierarchy-panel {
+        top: calc(100% - 8rem);
+    }
+
+    .hierarchy-buttons-container {
+        height: 3rem;
+    }
+
+    .hierarchy-buttons-container .button{
+        width: 2rem;
+    }
+}

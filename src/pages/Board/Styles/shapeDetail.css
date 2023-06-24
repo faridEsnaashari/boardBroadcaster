@@ -1,14 +1,30 @@
 .shape-detail-container{
-    width: calc(100% - 20px);
-    border: 1px solid;
-    margin: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
     border-radius: 10px;
+    width: 4rem;
+    height: 4rem;
 }
 
-.general-info-container{
-    position: relative;
-    height: 4rem;
-    border-bottom: 1px solid;
+.shape-detail-container:focus {
+    border: unset;
+    outline: unset;
+}
+
+.button {
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.attributes-container-close{
+    transform: scaleY(0);
+}
+
+.attributes-container-open{
+    transform: scaleY(1);
 }
 
 .shape-name{
@@ -24,9 +40,56 @@
     right: 5px;
 }
 
+.button-clicked {
+    box-shadow: 1px 1px 7px 2px #000 inset;
+}
+
 .attributes-container{
     display: flex;
-    width: 100%;
+    width: 20rem;
     flex-wrap: wrap;
     justify-content: space-around;
+    position: absolute;
+    left: 5rem;
+    border: 1px solid;
+    top: 0;
+    transition: transform 300ms;
+    transform-origin: top;
+    color: #fff;
+    padding: 1rem 0 1rem 1rem;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 10% 100%, 9% 99%, 8% 98%, 5% 20%);
+    background-color: #141417;
+    border-radius: 6px;
+}
+
+.attributes-container:hover {
+    transform: scaleY(1);
+}
+
+.horizontal-line{
+    background-image: url(/src/assets/icons/horizontalLineIcon.svg);
+}
+
+.vertical-line{
+    background-image: url(/src/assets/icons/verticalLineIcon.png);
+}
+
+.normal-line{
+    background-image: url(/src/assets/icons/normalLineIcon.png);
+}
+
+.rectongle{
+    background-image: url(/src/assets/icons/rectongleIcon.svg);
+}
+
+@media(max-width: 600px){
+    .shape-detail-container {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .attributes-container {
+        left: 3rem;
+        width: 10rem;
+    }
 }

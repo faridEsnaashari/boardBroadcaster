@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-
-import ShapeDetail from "./ShapeDetail";
+import { useState, useEffect, useRef } from "react";
 
 import "../Styles/hierarchyPanelStyles.css";
 
@@ -8,37 +6,49 @@ const HierarchyPanel = (props) => {
     const {
         onAShapeUpdated,
         onSelectedChange,
-        shapes,
+        onShapesListOpening,
     } = props;
 
-    const [shapesDetails, setShapeDetails] = useState([]);
+    const BUTTON_ACTIVE_TIME = 300;
 
-    const [ selected, setSelected ] = useState({ mode: "disable", shape: null });
+    const [ selected, setSelected ] = useState("disable");
 
-    useEffect(() => onSelectedChange(selected), [selected]);
+    const moveButtonRef = useRef(null);
+    const rescaleButtonRef = useRef(null);
 
     useEffect(() => {
-        setShapeDetails(shapes);
-    }, [shapes]);
+        if(selected === "disable") return; 
 
-    const onAShapeAttributeChanged = (updatedShape) => {
-        onAShapeUpdated(updatedShape)
-    };
+        if(selected === "rescale"){
+            rescaleButtonRef.current.classList.add("button-clicked");
+            moveButtonRef.current.classList.remove("button-clicked");
+            return;
+        }
 
-    const getShapesDetails = () => {
-        return shapesDetails && shapesDetails.map((shapeDetails, index) => {
-            return <ShapeDetail 
-                key={ index } 
-                onAttributesChanged={ onAShapeAttributeChanged }
-                name={ shapeDetails.name } 
-                type={ shapeDetails.type } 
-                attributes={ shapeDetails.attributes }
-                onClick={ () => setSelected({ ...selected, shape: shapeDetails.name }) }
-            />
-        });
-    };
+        moveButtonRef.current.classList.add("button-clicked");
+        rescaleButtonRef.current.classList.remove("button-clicked");
+    }, [selected]);
 
-    const createNormalLine = () => {
+    const [ shapesListOpening, setShapesListOpening ] = useState(false);
+    useEffect(() => onShapesListOpening(shapesListOpening), [shapesListOpening]);
+
+    const openOrCloseShapesList = e => {
+        if(shapesListOpening){
+            setShapesListOpening(false);
+            e.target.classList.remove("button-clicked");
+            return;
+        }
+
+        setShapesListOpening(true);
+        e.target.classList.add("button-clicked");
+    }
+
+    useEffect(() => onSelectedChange({ mode: selected }), [selected]);
+
+    const createNormalLine = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `normalLine${ shapeId }`;
 
@@ -54,12 +64,15 @@ const HierarchyPanel = (props) => {
             },
         };
 
-        setSelected({ shape: shapeName, selected: "rescale" });
+        setSelected("rescale");
 
         onAShapeUpdated(newNormalLine);
     }
 
-    const createHorizontalLine = () => {
+    const createHorizontalLine = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `horizontalLine${ shapeId }`;
 
@@ -74,12 +87,15 @@ const HierarchyPanel = (props) => {
             },
         };
 
-        setSelected({ shape: shapeName, selected: "rescale" });
+        setSelected("rescale");
 
         onAShapeUpdated(newHorizontalLine);
     }
 
-    const createVerticalLine = () => {
+    const createVerticalLine = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `verticalLine${ shapeId }`;
 
@@ -94,12 +110,15 @@ const HierarchyPanel = (props) => {
             },
         };
 
-        setSelected({ shape: shapeName, selected: "rescale" });
+        setSelected("rescale");
 
         onAShapeUpdated(newVerticalLine);
     }
 
-    const createRectongle = () => {
+    const createRectongle = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
         const shapeId = Date.now();
         const shapeName = `rectongle${ shapeId }`;
 
@@ -115,25 +134,33 @@ const HierarchyPanel = (props) => {
             },
         };
 
-        setSelected({ shape: shapeName, select: "rescale" });
+        setSelected("rescale");
 
         onAShapeUpdated(newRectongle);
     }
 
     return(
-        <div className="hierarchy-panel">
+        <div className={` hierarchy-panel ${ shapesListOpening && "hierarchy-panel-shapes-list-open" } `}>
             <div className="hierarchy-buttons-container">
-                <div className="button select-button-move" onClick={ () => setSelected({ ...selected, mode: "move" }) }></div>
-                <div className="button select-button-rescale" onClick={ () => setSelected({ ...selected, mode: "rescale" }) }></div>
-            </div>
-            <div className="shapes-details-container">
-                { getShapesDetails() }
-            </div>
-            <div className="hierarchy-buttons-container">
-                <div className="button" onClick={ createHorizontalLine }><div className="horizontal-line"></div></div>
-                <div className="button" onClick={ createVerticalLine }><div className="vertical-line"></div></div>
-                <div className="button" onClick={ createRectongle }><div className="rectongle"></div></div>
-                <div className="button" onClick={ createNormalLine }><div className="normal-line"></div></div>
+                <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
+                <div className="button vertical-line" onClick={ createVerticalLine }></div>
+                <div className="button rectongle" onClick={ createRectongle }></div>
+                <div className="button normal-line" onClick={ createNormalLine }></div>
+                <div className="hierarchy-panel-divider"></div>
+                <div 
+                    ref={ moveButtonRef }
+                    className="button select-button-move" 
+                    onClick={ () => setSelected("move")} 
+                >
+                </div>
+                <div 
+                    ref={ rescaleButtonRef }
+                    className="button select-button-rescale" 
+                    onClick={ () => setSelected("rescale")} 
+                >
+                </div>
+                <div className="hierarchy-panel-divider"></div>
+                <div className="button shape-lists" onClick={ openOrCloseShapesList }></div>
             </div>
         </div>
     )

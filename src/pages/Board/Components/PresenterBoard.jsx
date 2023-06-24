@@ -7,6 +7,7 @@ import Socket from "../../../sockets/socket";
 import LoadingCircle from "../../../components/GeneralComponents/LoadingCircle/LoadingCircle";
 import HierarchyPanel from "./HierarchyPanel";
 import DrawingPanel from "./DrawingPanel";
+import ShapesList from "./ShapesList";
 
 import UserDetailsContext from "../../../contexts/userDetails";
 
@@ -18,6 +19,8 @@ const Board = props => {
     const [ drawingPanelSize, setDrawingPanelSize ] = useState({ width: 0, height: 0 });
     const drawingPanelSizeRef = useRef({ width: 0, height: 0 });
     useEffect(() => drawingPanelSizeRef.current = drawingPanelSize, [drawingPanelSize]);
+
+    const [ shapesListOpening, setShapesListOpening ] = useState(false);
 
     const shapesRef = useRef([]);
     const [ shapes, setShapes ] = useState([]);
@@ -113,7 +116,6 @@ const Board = props => {
         attributes: changeShapeValues("relative", shape.type, shape.attributes),
     }));
 
-
     const initShapes = shapes => {
         const updatedShapes = shapes.map(shape => ({
             ...shape,
@@ -128,7 +130,7 @@ const Board = props => {
     const history = useHistory();
 
     const [ selected, setSelected ] = useState();
-    const changeSelection = select => setSelected(select);
+    const changeSelection = select => setSelected({ ...selected, ...select });
 
     const userDetailsContext = useContext(UserDetailsContext);
     const [ board, setBoard ] = useState("wait");
@@ -167,9 +169,15 @@ const Board = props => {
         return(
             <div className="panels-container">
                 <HierarchyPanel 
+                    onAShapeUpdated={ onAShapeUpdated } 
+                    onSelectedChange={ changeSelection }
+                    onShapesListOpening={ setShapesListOpening }
+                />
+                <ShapesList
                     shapes={ shapes }
                     onAShapeUpdated={ onAShapeUpdated } 
                     onSelectedChange={ changeSelection }
+                    shapesListOpening={ shapesListOpening }
                 />
                 <DrawingPanel 
                     shapes={ shapes } 
