@@ -10,7 +10,7 @@ const HorizontalLine = (props) => {
         shapeStyles.top = top;
 
         shapeStyles.width = `${ attributes.length }px`;
-        shapeStyles.height = `0px`;
+        shapeStyles.height = `2px`;
 
         return(<div className="shape" style={ shapeStyles } id={ name }></div>);
     };

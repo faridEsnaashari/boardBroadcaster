@@ -60,7 +60,7 @@ const HierarchyPanel = (props) => {
                 y1: 0,
                 x2: 0,
                 y2: 0,
-                color: "#000000",
+                color: "#454545",
             },
         };
 
@@ -84,7 +84,7 @@ const HierarchyPanel = (props) => {
                 x: 0,
                 y: 0,
                 length: 0, 
-                color: "#000000",
+                color: "#454545",
             },
         };
 
@@ -108,7 +108,7 @@ const HierarchyPanel = (props) => {
                 x: 0,
                 y: 0,
                 length: 0, 
-                color: "#000000",
+                color: "#454545",
             },
         };
 
@@ -133,7 +133,7 @@ const HierarchyPanel = (props) => {
                 y: 0,
                 width: 0,
                 height: 0,
-                color: "#000000",
+                color: "#454545",
             },
         };
 

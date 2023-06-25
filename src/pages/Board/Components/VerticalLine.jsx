@@ -9,7 +9,7 @@ const VerticalLine = (props) => {
         shapeStyles.left = left;
         shapeStyles.top = top;
 
-        shapeStyles.width = `0px`;
+        shapeStyles.width = `2px`;
         shapeStyles.height = `${ attributes.length }px`;
 
         return(<div className="shape" style={ shapeStyles } id={ name }></div>);

@@ -16,9 +16,7 @@ const Shape = (props) => {
         const color = attributes.color;
 
 
-        shapeStyles.border = `1px solid ${ color }`;
-        shapeStyles.borderRadius = "2px";
-
+        shapeStyles.backgroundColor = color;
         return shapeStyles;
     };
 

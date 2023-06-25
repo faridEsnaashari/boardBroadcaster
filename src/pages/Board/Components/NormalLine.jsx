@@ -19,7 +19,7 @@ const NormalLine = (props) => {
         const angleInDegree = angleInRadians * 180 / Math.PI;
 
         shapeStyles.width = `${ diagonalLength }px`;
-        shapeStyles.height = `0px`;
+        shapeStyles.height = `2px`;
 
         const left = `${ attributes.x1 }px`;
         const top = `${ attributes.y1 }px`;
