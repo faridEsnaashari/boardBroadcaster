@@ -9,14 +9,15 @@ const Shape = (props) => {
         name,
         type,
         selected,
+        onSelectedChange,
     } = props;
 
     const setCommonStyles = shapeStyles => {
 
         const color = attributes.color;
 
-
         shapeStyles.backgroundColor = color;
+
         return shapeStyles;
     };
 
@@ -108,16 +109,44 @@ const Shape = (props) => {
         return (
             <>
                 {
-                    type === "verticalLine" && <VerticalLine selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ preparedAttributes }/>
+                    type === "verticalLine" && 
+                        <VerticalLine 
+                            selected={ selected } 
+                            shapeStyles={ shapeStyles } 
+                            id={ name } 
+                            attributes={ preparedAttributes }
+                            onSelectedChange={ onSelectedChange }
+                        />
                 }
                 {
-                    type === "horizontalLine" && <HorizontalLine selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ preparedAttributes }/>
+                    type === "horizontalLine" && 
+                        <HorizontalLine 
+                            selected={ selected }
+                            shapeStyles={ shapeStyles } 
+                            id={ name }
+                            attributes={ preparedAttributes }
+                            onSelectedChange={ onSelectedChange }
+                        />
                 }
                 {
-                    type === "normalLine" && <NormalLine selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
+                    type === "normalLine" && 
+                        <NormalLine
+                            selected={ selected }
+                            shapeStyles={ shapeStyles }
+                            id={ name }
+                            attributes={ attributes }
+                            onSelectedChange={ onSelectedChange }
+                        />
                 }
                 {
-                    type === "rectongle" && <Rectongle selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ preparedAttributes }/>
+                    type === "rectongle" && 
+                        <Rectongle 
+                            selected={ selected }
+                            shapeStyles={ shapeStyles }
+                            id={ name }
+                            attributes={ preparedAttributes }
+                            onSelectedChange={ onSelectedChange }
+                        />
                 }
             </>
         );

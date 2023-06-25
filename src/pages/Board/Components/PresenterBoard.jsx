@@ -181,6 +181,7 @@ const Board = props => {
                     selected={ selected && selected.shape }
                 />
                 <DrawingPanel 
+                    onSelectedChange={ changeSelection }
                     shapes={ shapes } 
                     selected={ selected } 
                     onAShapeUpdated={ onAShapeUpdated } 
