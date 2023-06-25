@@ -18,7 +18,7 @@ const DrawingPanel = (props) => {
     const drawingPanelRef = useRef(null);
     const mousePanelRef = useRef(null);
 
-    const cancelSelections = () => selected.mode === "select" && onSelectedChange({ shape: null });
+    const cancelSelections = () => (selected.mode === "disable" || selected.mode === "select") && onSelectedChange({ shape: null });
 
     useEffect(() => selected && (selected.mode === "disable" || selected.mode === "select") ?
         mousePanelRef.current.style.zIndex = 0
