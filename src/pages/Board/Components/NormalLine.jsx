@@ -1,6 +1,13 @@
 
 const NormalLine = (props) => {
-    const { shapeStyles, name, attributes } = props;
+    const { 
+        onSelectedChange,
+        shapeStyles, 
+        id, 
+        attributes, 
+        selected,
+        hoverd,
+    } = props;
 
     const prepareNormal = () => {
         const { x1, y1, x2, y2 } = attributes;
@@ -19,7 +26,7 @@ const NormalLine = (props) => {
         const angleInDegree = angleInRadians * 180 / Math.PI;
 
         shapeStyles.width = `${ diagonalLength }px`;
-        shapeStyles.height = `0px`;
+        shapeStyles.height = `2px`;
 
         const left = `${ attributes.x1 }px`;
         const top = `${ attributes.y1 }px`;
@@ -31,11 +38,14 @@ const NormalLine = (props) => {
             position: "absolute",
             top: top,
             left: left,
+            zIndex: selected ? 1 : 0,
         };
 
         return(
             <div style={ normalLineHolderStyles }>
-                <div className="shape" style={ shapeStyles } id={ name }></div>
+                <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) }>
+                    <div className={` shape-selection-box ${ (selected || hoverd) && "shape-selection-box-selected" } `}></div>
+                </div>
             </div>
         );
     };

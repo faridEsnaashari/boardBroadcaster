@@ -28,7 +28,7 @@
     transform-origin: top;
     position: absolute;
     margin: 1rem;
-    z-index: 2;
+    z-index: 3;
     height: calc(100% - 8rem);
     left: 9rem;
 }

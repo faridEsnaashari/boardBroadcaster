@@ -9,15 +9,15 @@ const Shape = (props) => {
         name,
         type,
         selected,
+        onSelectedChange,
+        hoverd,
     } = props;
 
     const setCommonStyles = shapeStyles => {
 
         const color = attributes.color;
 
-
-        shapeStyles.border = `1px solid ${ color }`;
-        shapeStyles.borderRadius = "2px";
+        shapeStyles.backgroundColor = color;
 
         return shapeStyles;
     };
@@ -110,16 +110,48 @@ const Shape = (props) => {
         return (
             <>
                 {
-                    type === "verticalLine" && <VerticalLine selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ preparedAttributes }/>
+                    type === "verticalLine" && 
+                        <VerticalLine 
+                            selected={ selected } 
+                            shapeStyles={ shapeStyles } 
+                            id={ name } 
+                            attributes={ preparedAttributes }
+                            onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
+                        />
                 }
                 {
-                    type === "horizontalLine" && <HorizontalLine selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ preparedAttributes }/>
+                    type === "horizontalLine" && 
+                        <HorizontalLine 
+                            selected={ selected }
+                            shapeStyles={ shapeStyles } 
+                            id={ name }
+                            attributes={ preparedAttributes }
+                            onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
+                        />
                 }
                 {
-                    type === "normalLine" && <NormalLine selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ attributes }/>
+                    type === "normalLine" && 
+                        <NormalLine
+                            selected={ selected }
+                            shapeStyles={ shapeStyles }
+                            id={ name }
+                            attributes={ attributes }
+                            onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
+                        />
                 }
                 {
-                    type === "rectongle" && <Rectongle selected={ selected } shapeStyles={ shapeStyles } id={ name } attributes={ preparedAttributes }/>
+                    type === "rectongle" && 
+                        <Rectongle 
+                            selected={ selected }
+                            shapeStyles={ shapeStyles }
+                            id={ name }
+                            attributes={ preparedAttributes }
+                            onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
+                        />
                 }
             </>
         );

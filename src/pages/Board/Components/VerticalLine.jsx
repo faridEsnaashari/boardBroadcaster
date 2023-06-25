@@ -1,6 +1,13 @@
 
 const VerticalLine = (props) => {
-    const { shapeStyles, name, attributes } = props;
+    const { 
+        onSelectedChange,
+        shapeStyles, 
+        id, 
+        attributes, 
+        selected,
+        hoverd,
+    } = props;
 
     const prepareVerticalLine = () => {
         const left = `${ attributes.x }px`;
@@ -9,10 +16,16 @@ const VerticalLine = (props) => {
         shapeStyles.left = left;
         shapeStyles.top = top;
 
-        shapeStyles.width = `0px`;
+        shapeStyles.width = `2px`;
         shapeStyles.height = `${ attributes.length }px`;
 
-        return(<div className="shape" style={ shapeStyles } id={ name }></div>);
+        shapeStyles.zIndex = selected ? 1 : 0;
+
+        return(
+            <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) }>
+                <div className={` shape-selection-box ${ (selected || hoverd) && "shape-selection-box-selected" } `}></div>
+            </div>
+        );
     };
 
     return(

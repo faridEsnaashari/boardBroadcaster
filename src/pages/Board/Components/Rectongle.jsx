@@ -1,6 +1,13 @@
 
 const Rectongle = (props) => {
-    const { shapeStyles, name, attributes } = props;
+    const { 
+        onSelectedChange,
+        shapeStyles, 
+        id, 
+        attributes, 
+        selected,
+        hoverd,
+    } = props;
 
     const prepareRectangle = () => {
         const left = `${ attributes.x }px`;
@@ -12,7 +19,13 @@ const Rectongle = (props) => {
         shapeStyles.height = `${ attributes.height }px`;
         shapeStyles.width = `${ attributes.width }px`;
 
-        return(<div className="shape" style={ shapeStyles } id={ name }></div>);
+        shapeStyles.zIndex = selected ? 1 : 0;
+
+        return(
+            <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) }>
+                <div className={` shape-selection-box ${ (selected || hoverd) && "shape-selection-box-selected" } `}></div>
+            </div>
+        );
     };
 
     return(
