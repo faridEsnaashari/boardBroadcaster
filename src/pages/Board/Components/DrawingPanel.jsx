@@ -11,9 +11,19 @@ const DrawingPanel = (props) => {
         onAShapeUpdated,
         paintable,
         setDrawingPanelSize,
+        onSelectedChange,
     } = props;
 
     const drawingPanelRef = useRef(null);
+    const mousePanelRef = useRef(null);
+
+    const cancelSelections = () => selected.mode === "select" && onSelectedChange({ shape: null });
+
+    useEffect(() => selected && (selected.mode === "disable" || selected.mode === "select") ?
+        mousePanelRef.current.style.zIndex = 0
+        :
+        mousePanelRef.current.style.zIndex = 2
+        , [selected]);
 
     const onResize = () => {
         const { width, height } = drawingPanelRef.current.getBoundingClientRect();
@@ -127,7 +137,7 @@ const DrawingPanel = (props) => {
     const updateShapeAttribute = (shape, mousePostition) => selected.mode === "move" ? moveShape(shape, mousePostition) : rescaleShape(shape, mousePostition);
 
     const paint = e => {
-        if(selected.mode === "disable" || !selected.shape || (!panelClicked && !panelTouched)){
+        if(selected.mode === "disable" || selected.mode === "select" || !selected.shape || (!panelClicked && !panelTouched)){
             return;
         }
 
@@ -163,6 +173,7 @@ const DrawingPanel = (props) => {
                 type={ type }
                 key={ index }
                 selected={ selected && name === selected.shape }
+                onSelectedChange={ onSelectedChange }
             />);
         });
     };
@@ -174,11 +185,9 @@ const DrawingPanel = (props) => {
             id="drawingPanel" 
         >
             {
-                getShapes()
-            }
-            {
                 paintable &&
                     <div 
+                        ref={ mousePanelRef }
                         className="drawing-panel-mouse-panel"
                         onMouseDown={ () => setPanelClicked(true) } 
                         onMouseUp={ () => setPanelClicked(false) }
@@ -186,8 +195,12 @@ const DrawingPanel = (props) => {
                         onTouchMove={ e => paint(e) }
                         onTouchStart={ () => setPanelTouched(true) }
                         onTouchEnd={ () => setPanelTouched(false) }
+                        onClick={ cancelSelections }
                     >
                     </div>
+            }
+            {
+                getShapes()
             }
         </div>
     )
