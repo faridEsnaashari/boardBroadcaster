@@ -5,7 +5,8 @@ const NormalLine = (props) => {
         shapeStyles, 
         id, 
         attributes, 
-        selected 
+        selected,
+        hoverd,
     } = props;
 
     const prepareNormal = () => {
@@ -43,7 +44,7 @@ const NormalLine = (props) => {
         return(
             <div style={ normalLineHolderStyles }>
                 <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) }>
-                    <div className={` shape-selection-box ${ selected && "shape-selection-box-selected" } `}></div>
+                    <div className={` shape-selection-box ${ (selected || hoverd) && "shape-selection-box-selected" } `}></div>
                 </div>
             </div>
         );

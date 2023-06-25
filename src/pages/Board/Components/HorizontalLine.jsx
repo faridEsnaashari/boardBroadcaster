@@ -6,6 +6,7 @@ const HorizontalLine = (props) => {
         attributes, 
         selected,
         onSelectedChange,
+        hoverd,
     } = props;
 
     const prepareHorizontalLine = () => {
@@ -22,7 +23,7 @@ const HorizontalLine = (props) => {
 
         return(
             <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) }>
-                <div className={` shape-selection-box ${ selected && "shape-selection-box-selected" } `}></div>
+                <div className={` shape-selection-box ${ (selected || hoverd) && "shape-selection-box-selected" } `}></div>
             </div>
         );
     };

@@ -13,6 +13,7 @@ const ShapeDetail = (props) => {
         selected,
         onOpenOrCloseAttributes,
         attributesOpening,
+        onAShapeHovered,
     } = props;
 
     const shapeDetailsRef = useRef(null);
@@ -72,6 +73,15 @@ const ShapeDetail = (props) => {
 
         return renderedComponents;
     };
+    
+    const onMouseEnter =  () => {
+        setOpen(true);
+        onAShapeHovered(shapeName);
+    }
+
+    const onMouseLeave =  () => {
+        onAShapeHovered(null);
+    }
 
     return(
         <div 
@@ -79,7 +89,8 @@ const ShapeDetail = (props) => {
             className={` shape-detail-container button ${ getShapeTypeClass() }`} 
             key={ shapeName } 
             onClick={ onClick }
-            onMouseEnter={ () => setOpen(true) }
+            onMouseEnter={ onMouseEnter }
+            onMouseLeave={ onMouseLeave }
             onBlur={ () => setOpen(false) }
             tabIndex="1"
         >

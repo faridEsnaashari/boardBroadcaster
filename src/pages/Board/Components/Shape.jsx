@@ -10,6 +10,7 @@ const Shape = (props) => {
         type,
         selected,
         onSelectedChange,
+        hoverd,
     } = props;
 
     const setCommonStyles = shapeStyles => {
@@ -116,6 +117,7 @@ const Shape = (props) => {
                             id={ name } 
                             attributes={ preparedAttributes }
                             onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
                         />
                 }
                 {
@@ -126,6 +128,7 @@ const Shape = (props) => {
                             id={ name }
                             attributes={ preparedAttributes }
                             onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
                         />
                 }
                 {
@@ -136,6 +139,7 @@ const Shape = (props) => {
                             id={ name }
                             attributes={ attributes }
                             onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
                         />
                 }
                 {
@@ -146,6 +150,7 @@ const Shape = (props) => {
                             id={ name }
                             attributes={ preparedAttributes }
                             onSelectedChange={ onSelectedChange }
+                            hoverd={ hoverd }
                         />
                 }
             </>

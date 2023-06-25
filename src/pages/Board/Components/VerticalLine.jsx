@@ -5,7 +5,8 @@ const VerticalLine = (props) => {
         shapeStyles, 
         id, 
         attributes, 
-        selected 
+        selected,
+        hoverd,
     } = props;
 
     const prepareVerticalLine = () => {
@@ -21,8 +22,8 @@ const VerticalLine = (props) => {
         shapeStyles.zIndex = selected ? 1 : 0;
 
         return(
-            <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) } onBlur={ () => console.log("ksdlfjkslfj") }>
-                <div className={` shape-selection-box ${ selected && "shape-selection-box-selected" } `}></div>
+            <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) }>
+                <div className={` shape-selection-box ${ (selected || hoverd) && "shape-selection-box-selected" } `}></div>
             </div>
         );
     };

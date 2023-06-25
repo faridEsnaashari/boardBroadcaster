@@ -11,6 +11,7 @@ const ShapesList = (props) => {
         shapes,
         shapesListOpening,
         selected,
+        onAShapeHovered,
     } = props;
 
     const OPEN_SHAPES_LIST_TIME = 400;
@@ -62,6 +63,7 @@ const ShapesList = (props) => {
                 selected={ selected && shapeDetails.name === selected }
                 onOpenOrCloseAttributes={ onOpenOrCloseAttributes }
                 attributesOpening={ attributesOpening }
+                onAShapeHovered={ onAShapeHovered }
             />
         });
     };

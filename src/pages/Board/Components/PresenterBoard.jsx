@@ -20,6 +20,8 @@ const Board = props => {
     const drawingPanelSizeRef = useRef({ width: 0, height: 0 });
     useEffect(() => drawingPanelSizeRef.current = drawingPanelSize, [drawingPanelSize]);
 
+    const [ hoverdShape, setHoveredShape ] = useState(null);
+
     const [ shapesListOpening, setShapesListOpening ] = useState(false);
 
     const shapesRef = useRef([]);
@@ -179,6 +181,7 @@ const Board = props => {
                     onSelectedChange={ changeSelection }
                     shapesListOpening={ shapesListOpening }
                     selected={ selected && selected.shape }
+                    onAShapeHovered={ shape => setHoveredShape(shape) }
                 />
                 <DrawingPanel 
                     onSelectedChange={ changeSelection }
@@ -187,6 +190,7 @@ const Board = props => {
                     onAShapeUpdated={ onAShapeUpdated } 
                     setDrawingPanelSize={ setDrawingPanelSize }
                     paintable={ true }
+                    hoverdShape={ hoverdShape }
                 />
             </div>
         );

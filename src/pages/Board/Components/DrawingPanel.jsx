@@ -12,6 +12,7 @@ const DrawingPanel = (props) => {
         paintable,
         setDrawingPanelSize,
         onSelectedChange,
+        hoverdShape,
     } = props;
 
     const drawingPanelRef = useRef(null);
@@ -174,6 +175,7 @@ const DrawingPanel = (props) => {
                 key={ index }
                 selected={ selected && name === selected.shape }
                 onSelectedChange={ onSelectedChange }
+                hoverd={ hoverdShape === name }
             />);
         });
     };
