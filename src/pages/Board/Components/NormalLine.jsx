@@ -1,6 +1,12 @@
 
 const NormalLine = (props) => {
-    const { shapeStyles, name, attributes } = props;
+    const { 
+        onSelectedChange,
+        shapeStyles, 
+        id, 
+        attributes, 
+        selected 
+    } = props;
 
     const prepareNormal = () => {
         const { x1, y1, x2, y2 } = attributes;
@@ -31,11 +37,14 @@ const NormalLine = (props) => {
             position: "absolute",
             top: top,
             left: left,
+            zIndex: selected ? 1 : 0,
         };
 
         return(
             <div style={ normalLineHolderStyles }>
-                <div className="shape" style={ shapeStyles } id={ name }></div>
+                <div className="shape" style={ shapeStyles } id={ id } onClick={ () => onSelectedChange({ shape: id }) }>
+                    <div className={` shape-selection-box ${ selected && "shape-selection-box-selected" } `}></div>
+                </div>
             </div>
         );
     };
