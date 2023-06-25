@@ -15,6 +15,7 @@ const HierarchyPanel = (props) => {
 
     const moveButtonRef = useRef(null);
     const rescaleButtonRef = useRef(null);
+    const selectButtonRef = useRef(null);
 
     useEffect(() => {
         if(selected === "disable") return; 
@@ -22,11 +23,24 @@ const HierarchyPanel = (props) => {
         if(selected === "rescale"){
             rescaleButtonRef.current.classList.add("button-clicked");
             moveButtonRef.current.classList.remove("button-clicked");
+            selectButtonRef.current.classList.remove("button-clicked");
             return;
         }
 
-        moveButtonRef.current.classList.add("button-clicked");
-        rescaleButtonRef.current.classList.remove("button-clicked");
+        if(selected === "move"){
+            moveButtonRef.current.classList.add("button-clicked");
+            rescaleButtonRef.current.classList.remove("button-clicked");
+            selectButtonRef.current.classList.remove("button-clicked");
+            return;
+        }
+
+        if(selected === "select"){
+            moveButtonRef.current.classList.remove("button-clicked");
+            rescaleButtonRef.current.classList.remove("button-clicked");
+            selectButtonRef.current.classList.add("button-clicked");
+            return;
+        }
+
     }, [selected]);
 
     const [ shapesListOpening, setShapesListOpening ] = useState(false);
@@ -161,6 +175,12 @@ const HierarchyPanel = (props) => {
                     ref={ rescaleButtonRef }
                     className="button select-button-rescale" 
                     onClick={ () => setSelected("rescale")} 
+                >
+                </div>
+                <div 
+                    ref={ selectButtonRef }
+                    className="button select-button-select" 
+                    onClick={ () => setSelected("select")} 
                 >
                 </div>
                 <div className="hierarchy-panel-divider"></div>
