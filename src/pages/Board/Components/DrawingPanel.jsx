@@ -20,11 +20,16 @@ const DrawingPanel = (props) => {
 
     const cancelSelections = () => (selected.mode === "disable" || selected.mode === "select") && onSelectedChange({ shape: null });
 
-    useEffect(() => selected && (selected.mode === "disable" || selected.mode === "select") ?
-        mousePanelRef.current.style.zIndex = 0
-        :
-        mousePanelRef.current.style.zIndex = 2
-        , [selected]);
+    useEffect(() => {
+        if(!mousePanelRef.current){ 
+            return;
+        }
+
+        selected && (selected.mode === "disable" || selected.mode === "select") ?
+            mousePanelRef.current.style.zIndex = 0
+            :
+            mousePanelRef.current.style.zIndex = 2
+    }, [selected]);
 
     const onResize = () => {
         const { width, height } = drawingPanelRef.current.getBoundingClientRect();
@@ -174,7 +179,7 @@ const DrawingPanel = (props) => {
                 type={ type }
                 key={ index }
                 selected={ selected && name === selected.shape }
-                onSelectedChange={ onSelectedChange }
+                onSelectedChange={ paintable ? onSelectedChange : () => {} }
                 hoverd={ hoverdShape === name }
             />);
         });
