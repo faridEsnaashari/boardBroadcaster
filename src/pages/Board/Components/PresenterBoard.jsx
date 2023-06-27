@@ -190,6 +190,7 @@ const Board = props => {
                     onAShapeUpdated={ drawNewShape } 
                     onSelectedChange={ changeSelection }
                     onShapesListOpening={ setShapesListOpening }
+                    drawingPanelSize={ drawingPanelSize }
                 />
                 <ShapesList
                     shapes={ shapes }
