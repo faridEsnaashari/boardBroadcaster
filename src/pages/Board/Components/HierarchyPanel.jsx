@@ -7,11 +7,19 @@ const HierarchyPanel = (props) => {
         onAShapeUpdated,
         onSelectedChange,
         onShapesListOpening,
+        drawingPanelSize,
     } = props;
 
     const BUTTON_ACTIVE_TIME = 300;
 
     const [ selected, setSelected ] = useState("disable");
+
+    const [ centerOfDrawingPanel, setCenterOfDrawingPanel ] = useState({ x: 0, y: 0, firstShapeLength: 0 });
+    useEffect(() => setCenterOfDrawingPanel({ 
+        x: drawingPanelSize.width / 2, 
+        y: drawingPanelSize.height / 2, 
+        firstShapeLength: drawingPanelSize.width / 20 
+    }), [drawingPanelSize]);
 
     const moveButtonRef = useRef(null);
     const rescaleButtonRef = useRef(null);
@@ -70,10 +78,10 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "normalLine",
             attributes: {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 0,
+                x1: centerOfDrawingPanel.x,
+                y1: centerOfDrawingPanel.y,
+                x2: centerOfDrawingPanel.x + centerOfDrawingPanel.firstShapeLength,
+                y2: centerOfDrawingPanel.y + centerOfDrawingPanel.firstShapeLength,
                 color: "#454545",
             },
         };
@@ -95,9 +103,9 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "horizontalLine",
             attributes: {
-                x: 0,
-                y: 0,
-                length: 0, 
+                x: centerOfDrawingPanel.x,
+                y: centerOfDrawingPanel.y,
+                length: centerOfDrawingPanel.firstShapeLength, 
                 color: "#454545",
             },
         };
@@ -119,9 +127,9 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "verticalLine",
             attributes: {
-                x: 0,
-                y: 0,
-                length: 0, 
+                x: centerOfDrawingPanel.x,
+                y: centerOfDrawingPanel.y,
+                length: centerOfDrawingPanel.firstShapeLength, 
                 color: "#454545",
             },
         };
@@ -143,10 +151,10 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "rectongle",
             attributes: {
-                x: 0,
-                y: 0,
-                width: 0,
-                height: 0,
+                x: centerOfDrawingPanel.x,
+                y: centerOfDrawingPanel.y,
+                width: centerOfDrawingPanel.firstShapeLength,
+                height: centerOfDrawingPanel.firstShapeLength,
                 color: "#454545",
             },
         };
