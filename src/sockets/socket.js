@@ -14,7 +14,7 @@ export default class Socket {
         this.#_socket.on("connect", () => {
             this.#_socket.emit("joinToRoom", this.#_boardIdentifier);
 
-            this.#_socket.on("newShape", shape => onDraw(shape));
+            this.#_socket.on("newShape", shape => onDraw && onDraw(shape));
             this.#_socket.on("getAllShapes", () => this.#getShapes(getShapes()));
             this.#_socket.on("initShapes", shapes => initShapes(shapes));
         });
