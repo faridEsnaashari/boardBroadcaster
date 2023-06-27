@@ -20,6 +20,8 @@ const Board = props => {
     const drawingPanelSizeRef = useRef({ width: 0, height: 0 });
     useEffect(() => drawingPanelSizeRef.current = drawingPanelSize, [drawingPanelSize]);
 
+    const [ timeOfLastSend, setTimeOfLastSend ] = useState(0);
+
     const [ hoverdShape, setHoveredShape ] = useState(null);
 
     const [ shapesListOpening, setShapesListOpening ] = useState(false);
@@ -83,33 +85,47 @@ const Board = props => {
         }
     };
 
-    const onAShapeUpdated = updatedShape => {
+    const sendShape = (newShape) => {
         const preparedUpdatedShape = {
-            ...updatedShape,
-            attributes: changeShapeValues("relative", updatedShape.type, updatedShape.attributes),
+            ...newShape,
+            attributes: changeShapeValues("relative", newShape.type, newShape.attributes),
         };
 
         socket && socket.sendShape(preparedUpdatedShape)
     };
 
+    const drawNewShape = updatedShape => {
+        onDraw(updatedShape);
+        sendShape(updatedShape);
+    }
+
+    const onAShapeUpdated = updatedShape => {
+        onDraw(updatedShape);
+
+        const now = new Date();
+
+        if(now.getTime() - timeOfLastSend < 500){
+            return;
+        }
+
+        sendShape(updatedShape);
+
+        setTimeOfLastSend(now.getTime());
+    };
+
     const onDraw = updatedShape => {
         let shapeWasExisted = false;
 
-        const preparedUpdatedShape = {
-            ...updatedShape,
-            attributes: changeShapeValues("pixel", updatedShape.type, updatedShape.attributes),
-        }
-
-        const updatedShapes = shapesRef.current.map(shape => {
-            if(shape.name !== preparedUpdatedShape.name){
+        const updatedShapes = shapes.map(shape => {
+            if(shape.name !== updatedShape.name){
                 return shape;
             }
 
             shapeWasExisted = true;
-            return preparedUpdatedShape;
+            return updatedShape;
         });
 
-        shapeWasExisted ? shapesRef.current = updatedShapes : shapesRef.current = [ ...updatedShapes, preparedUpdatedShape ];
+        shapeWasExisted ? shapesRef.current = updatedShapes : shapesRef.current = [ ...updatedShapes, updatedShape ];
         setShapes(shapesRef.current)
     };
 
@@ -147,7 +163,7 @@ const Board = props => {
     }, [userDetailsContext]);
 
     useEffect(() => {
-        const newSocket = new Socket(onDraw, getShapes, initShapes, id);
+        const newSocket = new Socket(null, getShapes, initShapes, id);
         setSocket(newSocket);
     }, []);
 
@@ -171,13 +187,13 @@ const Board = props => {
         return(
             <div className="panels-container">
                 <HierarchyPanel 
-                    onAShapeUpdated={ onAShapeUpdated } 
+                    onAShapeUpdated={ drawNewShape } 
                     onSelectedChange={ changeSelection }
                     onShapesListOpening={ setShapesListOpening }
                 />
                 <ShapesList
                     shapes={ shapes }
-                    onAShapeUpdated={ onAShapeUpdated } 
+                    onAShapeUpdated={ drawNewShape } 
                     onSelectedChange={ changeSelection }
                     shapesListOpening={ shapesListOpening }
                     selected={ selected && selected.shape }
@@ -191,6 +207,7 @@ const Board = props => {
                     setDrawingPanelSize={ setDrawingPanelSize }
                     paintable={ true }
                     hoverdShape={ hoverdShape }
+                    onFinishPainting={ sendShape }
                 />
             </div>
         );

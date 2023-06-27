@@ -13,6 +13,7 @@ const DrawingPanel = (props) => {
         setDrawingPanelSize,
         onSelectedChange,
         hoverdShape,
+        onFinishPainting,
     } = props;
 
     const drawingPanelRef = useRef(null);
@@ -43,7 +44,7 @@ const DrawingPanel = (props) => {
     const [ shapesShadow, setShapesShadow ] = useState(shapes);
     useEffect(() => setShapesShadow(shapes), [shapes]);
 
-    const [ lastMousePosition, setLastMousePosition ] = useState({ x: 0, y: 0 });
+    const [ lastPaint, setLastPaint ] = useState(0);
 
     const [ panelClicked, setPanelClicked ] = useState(false);
 
@@ -57,6 +58,15 @@ const DrawingPanel = (props) => {
 
         window.onscroll = () => {};
     }, [panelTouched]);
+
+    useEffect(() => {
+        if(!selected || selected.mode === "disable" || selected.mode === "select" || !selected.shape || panelClicked || panelTouched){
+            return;
+        }
+
+        const selectedShape = shapesShadow.find(shape => shape.name === selected.shape);
+        onFinishPainting(selectedShape);
+    }, [panelTouched, panelClicked]);
 
     const rescaleShape = (shape, mousePostition) => {
         const { attributes, ...rest } = shape;
@@ -150,10 +160,11 @@ const DrawingPanel = (props) => {
         const panelPosition = e.target.getBoundingClientRect();
         const mousePostition = { x: (e.clientX || e.touches[0].clientX) - panelPosition.x, y: (e.clientY || e.touches[0].clientY) - panelPosition.y };
 
-        const distanceFromLastX = Math.abs(lastMousePosition.x - mousePostition.x);
-        const distanceFromLastY =  Math.abs(lastMousePosition.y - mousePostition.y);
+        const now = new Date();
 
-        if(distanceFromLastY < 5 && distanceFromLastX < 5){
+        const timeFromLastPaint = now.getTime() - lastPaint;
+
+        if(timeFromLastPaint < 50){
             return;
         }
 
@@ -162,7 +173,7 @@ const DrawingPanel = (props) => {
 
         onAShapeUpdated(updatedShape);
 
-        setLastMousePosition({ x: mousePostition.x, y: mousePostition.y });
+        setLastPaint(now.getTime());
     };
 
     const getShapes = () => {
