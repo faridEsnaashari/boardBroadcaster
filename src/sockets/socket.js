@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-import { API_URL } from "../tools/config";
+import { SOCKET_URL } from "../tools/config";
 
 export default class Socket {
 
@@ -8,7 +8,7 @@ export default class Socket {
     #_boardIdentifier = "";
 
     constructor(onDraw, getShapes, initShapes, boardIdentifier){
-        this.#_socket = io(API_URL);
+        this.#_socket = io(SOCKET_URL);
         this.#_boardIdentifier = boardIdentifier;
 
         this.#_socket.on("connect", () => {
