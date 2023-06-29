@@ -8,6 +8,8 @@ const HierarchyPanel = (props) => {
         onSelectedChange,
         onShapesListOpening,
         drawingPanelSize,
+        onDeleteShape: onDeleteShapeProp,
+        onDeleteAllShape: onDeleteAllShapeProp,
     } = props;
 
     const BUTTON_ACTIVE_TIME = 300;
@@ -43,9 +45,9 @@ const HierarchyPanel = (props) => {
         }
 
         if(selected === "select"){
+            selectButtonRef.current.classList.add("button-clicked");
             moveButtonRef.current.classList.remove("button-clicked");
             rescaleButtonRef.current.classList.remove("button-clicked");
-            selectButtonRef.current.classList.add("button-clicked");
             return;
         }
 
@@ -165,6 +167,20 @@ const HierarchyPanel = (props) => {
         onAShapeUpdated(newRectongle);
     }
 
+    const onDeleteShape = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
+        onDeleteShapeProp();
+    };
+
+    const onDeleteAllShape = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
+        onDeleteAllShapeProp();
+    };
+
     return(
         <div className={` hierarchy-panel ${ shapesListOpening && "hierarchy-panel-shapes-list-open" } `}>
             <div className="hierarchy-buttons-container">
@@ -191,6 +207,9 @@ const HierarchyPanel = (props) => {
                     onClick={ () => setSelected("select")} 
                 >
                 </div>
+                <div className="hierarchy-panel-divider"></div>
+                <div className="button delete-button" onClick={ onDeleteShape }></div>
+                <div className="button delete-all-button" onClick={ onDeleteAllShape }></div>
                 <div className="hierarchy-panel-divider"></div>
                 <div className="button shape-lists" onClick={ openOrCloseShapesList }></div>
             </div>

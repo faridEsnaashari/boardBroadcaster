@@ -44,6 +44,14 @@
     border: 1px solid #fff;
 }
 
+.delete-all-button{
+    background-image: url(/src/assets/icons/broom.png);
+}
+
+.delete-button{
+    background-image: url(/src/assets/icons/x-mark.png);
+}
+
 .select-button-select{
     background-image: url(/src/assets/icons/tap.png);
 }
