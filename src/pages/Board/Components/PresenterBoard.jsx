@@ -163,9 +163,36 @@ const Board = props => {
     }, [userDetailsContext]);
 
     useEffect(() => {
-        const newSocket = new Socket(null, getShapes, initShapes, id);
+        const newSocket = new Socket(null, getShapes, initShapes, null, id);
         setSocket(newSocket);
     }, []);
+
+    const onDeleteShape = () => {
+        if(!selected.shape){
+            return;
+        }
+
+        const deletedShape = shapes.find(shape => shape.name === selected.shape);
+
+        const updatedShapes = shapes.filter(shape => shape.name !== selected.shape);
+        setShapes(updatedShapes);
+        shapesRef.current = updatedShapes;
+        changeSelection(updatedShapes.length > 0 ?
+            { shape: updatedShapes[updatedShapes.length - 1].name }
+            :
+            { mode: "disable" }
+        );
+
+        socket.deleteShape(deletedShape);
+    };
+
+    const onDeleteAllShape = () => {
+        setShapes([]);
+        shapesRef.current = [];
+        changeSelection({ mode: "disable" });
+
+        socket.deleteShape()
+    };
 
     if(!board){
         history.push("/board/not_found");
@@ -191,6 +218,9 @@ const Board = props => {
                     onSelectedChange={ changeSelection }
                     onShapesListOpening={ setShapesListOpening }
                     drawingPanelSize={ drawingPanelSize }
+                    selected={ selected && selected.shape }
+                    onDeleteShape={ onDeleteShape }
+                    onDeleteAllShape={ onDeleteAllShape }
                 />
                 <ShapesList
                     shapes={ shapes }
@@ -203,7 +233,7 @@ const Board = props => {
                 <DrawingPanel 
                     onSelectedChange={ changeSelection }
                     shapes={ shapes } 
-                    selected={ selected } 
+                    selected={ selected && selected } 
                     onAShapeUpdated={ onAShapeUpdated } 
                     setDrawingPanelSize={ setDrawingPanelSize }
                     paintable={ true }
