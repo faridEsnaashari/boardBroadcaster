@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
+import CollapsableButtons from "./Collapsable";
+
 import "../Styles/hierarchyPanelStyles.css";
 
 const HierarchyPanel = (props) => {
@@ -184,10 +186,14 @@ const HierarchyPanel = (props) => {
     return(
         <div className={` hierarchy-panel ${ shapesListOpening && "hierarchy-panel-shapes-list-open" } `}>
             <div className="hierarchy-buttons-container">
-                <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
-                <div className="button vertical-line" onClick={ createVerticalLine }></div>
-                <div className="button rectongle" onClick={ createRectongle }></div>
-                <div className="button normal-line" onClick={ createNormalLine }></div>
+                <div className="button shape-lists" onClick={ openOrCloseShapesList }></div>
+                <div className="hierarchy-panel-divider"></div>
+                <CollapsableButtons>
+                    <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
+                    <div className="button vertical-line" onClick={ createVerticalLine }></div>
+                    <div className="button rectongle" onClick={ createRectongle }></div>
+                    <div className="button normal-line" onClick={ createNormalLine }></div>
+                </CollapsableButtons>
                 <div className="hierarchy-panel-divider"></div>
                 <div 
                     ref={ moveButtonRef }
@@ -210,8 +216,6 @@ const HierarchyPanel = (props) => {
                 <div className="hierarchy-panel-divider"></div>
                 <div className="button delete-button" onClick={ onDeleteShape }></div>
                 <div className="button delete-all-button" onClick={ onDeleteAllShape }></div>
-                <div className="hierarchy-panel-divider"></div>
-                <div className="button shape-lists" onClick={ openOrCloseShapesList }></div>
             </div>
         </div>
     )

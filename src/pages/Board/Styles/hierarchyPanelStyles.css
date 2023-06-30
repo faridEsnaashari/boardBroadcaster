@@ -6,6 +6,7 @@
     max-height: calc(100% - 8rem);
     top: 3rem;
     z-index: 3;
+    overflow: auto;
 }
 
 .hierarchy-buttons-container{
@@ -86,7 +87,8 @@
 
 @media(max-width: 850px){
     .hierarchy-panel {
-        overflow: scroll;
+        overflow-x: scroll;
+        overflow-y: clip;
         top: calc(100% - 10rem);
         transition: left 300ms, max-width 300ms;
         left: 3rem;
@@ -99,7 +101,7 @@
     }
 
     .hierarchy-buttons-container {
-        flex-direction: row-reverse;
+        flex-direction: row;
         height: 5rem;
         width: unset;
     }
