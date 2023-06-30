@@ -1,0 +1,57 @@
+.collapsable-buttons-container {
+}
+
+.collapsable-buttons {
+    transform: scaleY(0);
+    transition: transform 300ms;
+    transform-origin: top;
+}
+
+.collapsable-buttons > .button {
+    transition: height 300ms;
+}
+
+.collapsable-buttons-open {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transform: scaleY(1);
+}
+
+.collapsable-buttons-button > .button {
+    height: 0px !important;
+}
+
+.collapsable-container-closer {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.new-shapes {
+    background-image: url(/src/assets/icons/plus.png);
+}
+
+@media(max-width: 850px){
+    .collapsable-buttons {
+        transform: scaleX(0);
+        transform-origin: right;
+        height: 100%;
+    }
+
+    .collapsable-buttons > .button {
+        transition: width 300ms;
+    }
+
+    .collapsable-buttons-open {
+        transform: scaleX(1);
+        flex-direction: row;
+    }
+
+    .collapsable-buttons-button > .button {
+        width: 0px !important;
+    }
+}
+
