@@ -189,9 +189,46 @@ const Board = props => {
     const onDeleteAllShape = () => {
         setShapes([]);
         shapesRef.current = [];
-        changeSelection({ mode: "disable" });
+        changeSelection({ mode: "disable", shape: null });
 
         socket.deleteShape()
+    };
+
+    const onDuplicate = () => {
+        if(!selected.shape){
+            return;
+        }
+
+        const selectedShape = shapes.find(shape => shape.name === selected.shape);
+
+        let { x, y, x1, y1 } = selectedShape.attributes;
+
+        let attributes = { ...selectedShape.attributes };
+
+        if(x && y){
+            attributes.x = x + 10;
+            attributes.y = y + 10;
+        }
+
+        if(x1 && y1){
+            attributes.x1 = x1 + 10;
+            attributes.y1 = y1 + 10;
+        }
+
+        const shapeId = Date.now();
+        const newShape = {
+            ...selectedShape,
+            name: `${ selectedShape.type }${ shapeId }`,
+            attributes,
+        }
+
+        changeSelection({ shape: newShape.name });
+
+        setShapes([...shapes, newShape]);
+        shapesRef.current = [...shapes, newShape];
+
+        sendShape(newShape);
+
     };
 
     if(!board){
@@ -221,6 +258,7 @@ const Board = props => {
                     selected={ selected && selected.shape }
                     onDeleteShape={ onDeleteShape }
                     onDeleteAllShape={ onDeleteAllShape }
+                    onDuplicate={ onDuplicate }
                 />
                 <ShapesList
                     shapes={ shapes }
