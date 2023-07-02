@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
+import CollapsableButtons from "./Collapsable";
+
 import "../Styles/hierarchyPanelStyles.css";
 
 const HierarchyPanel = (props) => {
@@ -7,11 +9,22 @@ const HierarchyPanel = (props) => {
         onAShapeUpdated,
         onSelectedChange,
         onShapesListOpening,
+        drawingPanelSize,
+        onDeleteShape: onDeleteShapeProp,
+        onDeleteAllShape: onDeleteAllShapeProp,
+        onDuplicate: onDuplicateProp,
     } = props;
 
     const BUTTON_ACTIVE_TIME = 300;
 
     const [ selected, setSelected ] = useState("disable");
+
+    const [ centerOfDrawingPanel, setCenterOfDrawingPanel ] = useState({ x: 0, y: 0, firstShapeLength: 0 });
+    useEffect(() => setCenterOfDrawingPanel({ 
+        x: drawingPanelSize.width / 2, 
+        y: drawingPanelSize.height / 2, 
+        firstShapeLength: drawingPanelSize.width / 20 
+    }), [drawingPanelSize]);
 
     const moveButtonRef = useRef(null);
     const rescaleButtonRef = useRef(null);
@@ -35,9 +48,9 @@ const HierarchyPanel = (props) => {
         }
 
         if(selected === "select"){
+            selectButtonRef.current.classList.add("button-clicked");
             moveButtonRef.current.classList.remove("button-clicked");
             rescaleButtonRef.current.classList.remove("button-clicked");
-            selectButtonRef.current.classList.add("button-clicked");
             return;
         }
 
@@ -70,10 +83,10 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "normalLine",
             attributes: {
-                x1: 0,
-                y1: 0,
-                x2: 0,
-                y2: 0,
+                x1: centerOfDrawingPanel.x,
+                y1: centerOfDrawingPanel.y,
+                x2: centerOfDrawingPanel.x + centerOfDrawingPanel.firstShapeLength,
+                y2: centerOfDrawingPanel.y + centerOfDrawingPanel.firstShapeLength,
                 color: "#454545",
             },
         };
@@ -95,9 +108,9 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "horizontalLine",
             attributes: {
-                x: 0,
-                y: 0,
-                length: 0, 
+                x: centerOfDrawingPanel.x,
+                y: centerOfDrawingPanel.y,
+                length: centerOfDrawingPanel.firstShapeLength, 
                 color: "#454545",
             },
         };
@@ -119,9 +132,9 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "verticalLine",
             attributes: {
-                x: 0,
-                y: 0,
-                length: 0, 
+                x: centerOfDrawingPanel.x,
+                y: centerOfDrawingPanel.y,
+                length: centerOfDrawingPanel.firstShapeLength, 
                 color: "#454545",
             },
         };
@@ -143,10 +156,10 @@ const HierarchyPanel = (props) => {
             name: shapeName,
             type: "rectongle",
             attributes: {
-                x: 0,
-                y: 0,
-                width: 0,
-                height: 0,
+                x: centerOfDrawingPanel.x,
+                y: centerOfDrawingPanel.y,
+                width: centerOfDrawingPanel.firstShapeLength,
+                height: centerOfDrawingPanel.firstShapeLength,
                 color: "#454545",
             },
         };
@@ -157,13 +170,38 @@ const HierarchyPanel = (props) => {
         onAShapeUpdated(newRectongle);
     }
 
+    const onDeleteShape = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
+        onDeleteShapeProp();
+    };
+
+    const onDeleteAllShape = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
+        onDeleteAllShapeProp();
+    };
+
+    const onDuplicate = e => {
+        e.target.classList.add("button-clicked");
+        setTimeout(() => e.target.classList.remove("button-clicked"), BUTTON_ACTIVE_TIME);
+
+        onDuplicateProp();
+    };
+
     return(
         <div className={` hierarchy-panel ${ shapesListOpening && "hierarchy-panel-shapes-list-open" } `}>
             <div className="hierarchy-buttons-container">
-                <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
-                <div className="button vertical-line" onClick={ createVerticalLine }></div>
-                <div className="button rectongle" onClick={ createRectongle }></div>
-                <div className="button normal-line" onClick={ createNormalLine }></div>
+                <div className="button shape-lists" onClick={ openOrCloseShapesList }></div>
+                <div className="hierarchy-panel-divider"></div>
+                <CollapsableButtons>
+                    <div className="button horizontal-line" onClick={ createHorizontalLine }></div>
+                    <div className="button vertical-line" onClick={ createVerticalLine }></div>
+                    <div className="button rectongle" onClick={ createRectongle }></div>
+                    <div className="button normal-line" onClick={ createNormalLine }></div>
+                </CollapsableButtons>
                 <div className="hierarchy-panel-divider"></div>
                 <div 
                     ref={ moveButtonRef }
@@ -184,7 +222,10 @@ const HierarchyPanel = (props) => {
                 >
                 </div>
                 <div className="hierarchy-panel-divider"></div>
-                <div className="button shape-lists" onClick={ openOrCloseShapesList }></div>
+                <div className="button duplicate" onClick={ onDuplicate }></div>
+                <div className="hierarchy-panel-divider"></div>
+                <div className="button delete-button" onClick={ onDeleteShape }></div>
+                <div className="button delete-all-button" onClick={ onDeleteAllShape }></div>
             </div>
         </div>
     )

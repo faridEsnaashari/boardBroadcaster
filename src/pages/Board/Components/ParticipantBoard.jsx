@@ -120,8 +120,19 @@ const Board = props => {
     useEffect(() => {
         doesBoardExistAction({ id })
 
-        new Socket(onDraw, getShapes, initShapes, id);
+        new Socket(onDraw, getShapes, initShapes, onDelete, id);
     }, []);
+
+    const onDelete = deletedShape => {
+        let updatedShapes = [];
+
+        if(deletedShape){
+            updatedShapes = shapesRef.current.filter(shape => shape.name !== deletedShape.name);
+        }
+
+        setShapes(updatedShapes);
+        shapesRef.current = updatedShapes;
+    };
 
     if(doesBoardExistResult.status === SUCCESS_MSG){
         return(
