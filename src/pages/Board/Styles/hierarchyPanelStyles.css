@@ -45,6 +45,10 @@
     border: 1px solid #fff;
 }
 
+.duplicate{
+    background-image: url(/src/assets/icons/duplicate.png);
+}
+
 .delete-all-button{
     background-image: url(/src/assets/icons/broom.png);
 }
