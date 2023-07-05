@@ -6,7 +6,7 @@ export default class Socket {
 
     #_socket = null;
 
-    constructor(onDraw, getShapes, initShapes, onDelete, boardIdentifier){
+    constructor(boardIdentifier, initShapes, onDraw, onDelete){
         this.#_socket = io(SOCKET_URL);
 
         this.#_socket.on("connect", () => {
@@ -14,7 +14,6 @@ export default class Socket {
 
             this.#_socket.on("newShape", shape => onDraw && onDraw(shape));
             this.#_socket.on("deleteShape", shape => onDelete && onDelete(shape));
-            this.#_socket.on("getAllShapes", () => this.#getShapes(getShapes()));
             this.#_socket.on("initShapes", shapes => initShapes(shapes));
         });
     }
@@ -23,15 +22,15 @@ export default class Socket {
         this.#_socket.emit("deleteShape", shape);
     }
 
+    deleteAllShapes(shapes){
+        this.#_socket.emit("deleteAllShapes", shapes);
+    }
+
     sendShape(shape){
         this.#_socket.emit("draw", shape);
     }
 
     sendShapes(shapes){
-        this.#_socket.emit("allShapes", shapes);
-    }
-
-    #getShapes(shapes){
         this.#_socket.emit("allShapes", shapes);
     }
 }
