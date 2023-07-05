@@ -13,11 +13,13 @@ const HierarchyPanel = (props) => {
         onDeleteShape: onDeleteShapeProp,
         onDeleteAllShape: onDeleteAllShapeProp,
         onDuplicate: onDuplicateProp,
+        selected: selectedProp,
     } = props;
 
     const BUTTON_ACTIVE_TIME = 300;
 
-    const [ selected, setSelected ] = useState("disable");
+    const [ selected, setSelected ] = useState(selectedProp);
+    useEffect(() => setSelected(selectedProp), [selectedProp]);
 
     const [ centerOfDrawingPanel, setCenterOfDrawingPanel ] = useState({ x: 0, y: 0, firstShapeLength: 0 });
     useEffect(() => setCenterOfDrawingPanel({ 
@@ -80,6 +82,7 @@ const HierarchyPanel = (props) => {
         const shapeName = `normalLine${ shapeId }`;
 
         const newNormalLine = {
+            deleted: false,
             name: shapeName,
             type: "normalLine",
             attributes: {
@@ -105,6 +108,7 @@ const HierarchyPanel = (props) => {
         const shapeName = `horizontalLine${ shapeId }`;
 
         const newHorizontalLine = {
+            deleted: false,
             name: shapeName,
             type: "horizontalLine",
             attributes: {
@@ -129,6 +133,7 @@ const HierarchyPanel = (props) => {
         const shapeName = `verticalLine${ shapeId }`;
 
         const newVerticalLine = {
+            deleted: false,
             name: shapeName,
             type: "verticalLine",
             attributes: {
@@ -153,6 +158,7 @@ const HierarchyPanel = (props) => {
         const shapeName = `rectongle${ shapeId }`;
 
         const newRectongle = {
+            deleted: false,
             name: shapeName,
             type: "rectongle",
             attributes: {
