@@ -28,6 +28,11 @@ const Board = props => {
 
     const shapesRef = useRef([]);
     const [ shapes, setShapes ] = useState([]);
+    const [ showableShapes, setShowableShapes ] = useState([]);
+    useEffect(() => {
+        const noneDeletedShapes = shapes.filter(shape => !shape.deleted);
+        setShowableShapes(noneDeletedShapes);
+    }, [shapes]);
 
     const changePixelToRelative = (value, axis) => value / (drawingPanelSizeRef.current)[axis === "x" ? "width" : "height"];
 
@@ -172,13 +177,25 @@ const Board = props => {
             return;
         }
 
-        const deletedShape = shapes.find(shape => shape.name === selected.shape);
+        let deletedShape = null;
 
-        const updatedShapes = shapes.filter(shape => shape.name !== selected.shape);
+        const updatedShapes = shapes.map(shape => {
+            if(!(shape.name === selected.shape)){
+                return shape;
+            }
+
+            deletedShape = { ...shape, deleted: true };
+            return deletedShape;
+            
+        });
+
         setShapes(updatedShapes);
         shapesRef.current = updatedShapes;
-        changeSelection(updatedShapes.length > 0 ?
-            { shape: updatedShapes[updatedShapes.length - 1].name }
+
+        const noneDeletedShapes = updatedShapes.filter(shape => !shape.deleted);
+
+        changeSelection(noneDeletedShapes.length > 0 ?
+            { shape: noneDeletedShapes[noneDeletedShapes.length - 1].name }
             :
             { mode: "disable" }
         );
@@ -187,11 +204,13 @@ const Board = props => {
     };
 
     const onDeleteAllShape = () => {
-        setShapes([]);
-        shapesRef.current = [];
+        const updatedShapes = shapes.map(shape => ({ ...shape, deleted: true }));
+
+        setShapes(updatedShapes);
+        shapesRef.current = updatedShapes;
         changeSelection({ mode: "disable", shape: null });
 
-        socket.deleteShape()
+        socket.deleteAllShapes(updatedShapes);
     };
 
     const onDuplicate = () => {
@@ -255,13 +274,13 @@ const Board = props => {
                     onSelectedChange={ changeSelection }
                     onShapesListOpening={ setShapesListOpening }
                     drawingPanelSize={ drawingPanelSize }
-                    selected={ selected && selected.shape }
+                    selected={ selected && selected.mode }
                     onDeleteShape={ onDeleteShape }
                     onDeleteAllShape={ onDeleteAllShape }
                     onDuplicate={ onDuplicate }
                 />
                 <ShapesList
-                    shapes={ shapes }
+                    shapes={ showableShapes }
                     onAShapeUpdated={ drawNewShape } 
                     onSelectedChange={ changeSelection }
                     shapesListOpening={ shapesListOpening }
@@ -270,7 +289,7 @@ const Board = props => {
                 />
                 <DrawingPanel 
                     onSelectedChange={ changeSelection }
-                    shapes={ shapes } 
+                    shapes={ showableShapes } 
                     selected={ selected && selected } 
                     onAShapeUpdated={ onAShapeUpdated } 
                     setDrawingPanelSize={ setDrawingPanelSize }
