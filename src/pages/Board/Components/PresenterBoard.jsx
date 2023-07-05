@@ -134,11 +134,6 @@ const Board = props => {
         setShapes(shapesRef.current)
     };
 
-    const getShapes = () => shapesRef.current.map(shape => ({
-        ...shape,
-        attributes: changeShapeValues("relative", shape.type, shape.attributes),
-    }));
-
     const initShapes = shapes => {
         const updatedShapes = shapes.map(shape => ({
             ...shape,
@@ -168,7 +163,7 @@ const Board = props => {
     }, [userDetailsContext]);
 
     useEffect(() => {
-        const newSocket = new Socket(null, getShapes, initShapes, null, id);
+        const newSocket = new Socket(id, initShapes);
         setSocket(newSocket);
     }, []);
 
