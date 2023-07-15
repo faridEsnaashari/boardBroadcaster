@@ -1,0 +1,12 @@
+{
+    "signup": "ثبت نام",
+    "login": "ورود",
+    " A verification link sent to your email. Please check your email and click on that link to verify your email.": "یک لینک به ایمیل شما ارسال شده است لطفا برای تاییدشدت اکانت خود روی آن کلیک کنید",
+    "loged out successfully": "با موفقیت خارج شدید",
+    "Boards": "برد ها",
+    "log out": "خروج",
+    "presenter url": "آیدی ارائه دهنده",
+    "participant url": "آیدی شرکت کننده",
+    "rename": "تغییر نام",
+    "delete": "حذف"
+}

@@ -1,4 +1,7 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+
+import withSettingsHoc from "./components/HOCs/withSettingsHOCs";
 
 import Routes from "./components/Routes";
 
@@ -13,4 +16,4 @@ const App = () => {
         </Router>
     );
 };
-export default App;
+export default withSettingsHoc(App);

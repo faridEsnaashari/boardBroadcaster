@@ -123,6 +123,14 @@
     background-color: unset;
 }
 
+.language-selector-container{
+    position: fixed;
+    width: 3rem;
+    height: 3rem;
+    top: 3rem;
+    left: 3rem;
+}
+
 @media (max-width: 1200px){
     .login-container {
         width: 50vw;

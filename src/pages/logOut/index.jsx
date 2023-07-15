@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
+import texts from "../../tools/localization/localization";
+
 const LogOutPage = props => {
     const history = useHistory();
 
@@ -9,7 +11,7 @@ const LogOutPage = props => {
         history.push("login");
     }, []);
     return(
-        <p>loged out successfully</p>
+        <p>{ texts["loged out successfully"] }</p>
     );
 };
 

@@ -5,6 +5,10 @@ import { isValidEmail, isValidPassword } from "../../../tools/validators";
 import { SUCCESS_MSG, UNAUTHORIZED_ERR, INTERNAL_SERVER_ERR } from "../../../tools/statusCodes";
 import { getElementValue } from "../../../tools/helpers";
 
+import LanguageSelector from "../../../components/LanguageSelector/LanguageSelector";
+
+import texts from "../../../tools/localization/localization";
+
 import useAPICaller from "../../../APIs/APICallers/APICallers";
 
 import PasswordIcon from "../../../assets/icons/key.png";
@@ -42,6 +46,9 @@ const LogInPage = () => {
         <div className="login-main-container">
             <div className="login-background-color-1"></div>
             <div className="login-background-color-2"></div>
+            <div className="language-selector-container">
+                <LanguageSelector/>
+            </div>
             <div className="login-container">
             <form onSubmit={ logInTheUser }>
                 <div className="input-container">
@@ -56,7 +63,7 @@ const LogInPage = () => {
                     <div className="login-submit-container">
                         <div className="hover"></div>
                         <div></div>
-                        <input type="submit" value="Login"/>
+                        <input type="submit" value={ texts.login }/>
                     </div>
                 </div>
             </form>
