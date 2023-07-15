@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { isValidEmail, isValidPassword, isValidUseerName } from "../../../tools/validators";
 import { SUCCESS_CREATE_MSG } from "../../../tools/statusCodes";
 import { getElementValue } from "../../../tools/helpers";
+import texts from "../../../tools/localization/localization";
 
 import useAPICaller from "../../../APIs/APICallers/APICallers";
+
+import LanguageSelector from "../../../components/LanguageSelector/LanguageSelector";
 
 import PasswordIcon from "../../../assets/icons/key.png";
 import UserNameIcon from "../../../assets/icons/user.png";
@@ -45,6 +48,9 @@ const SignUpPage = () => {
         <div className="signup-main-container">
             <div className="signup-background-color-1"></div>
             <div className="signup-background-color-2"></div>
+            <div className="language-selector-container">
+                <LanguageSelector/>
+            </div>
             <div className="signup-container">
             <form onSubmit={ registerTheUser }>
                 <div className="input-container">
@@ -63,7 +69,7 @@ const SignUpPage = () => {
                     <div className="signup-submit-container">
                         <div className="hover"></div>
                         <div></div>
-                        <input type="submit" value="Signup"/>
+                        <input type="submit" value={ texts.signup }/>
                     </div>
                 </div>
             </form>

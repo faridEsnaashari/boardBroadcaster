@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useAPICaller from "../../APIs/APICallers/APICallers.js";
 import { APP_URL } from "../../tools/config.js";
+import texts from "../../tools/localization/localization";
 
 import { useSignal } from "../../tools/useSignal.js";
 
@@ -10,6 +11,8 @@ import { SUCCESS_CREATE_MSG, SUCCESS_MSG } from "../../tools/statusCodes.js";
 import UserDetailsContext from "../../contexts/userDetails.js";
 
 import { getRandomBoardColor } from "../../tools/helpers.js";
+
+import LanguageSelector from "../../components/LanguageSelector/LanguageSelector.jsx";
 
 import Board from "./Components/Board";
 import NewBoard from "./Components/newBoard";
@@ -148,9 +151,12 @@ const BoardsPanelPage = props => {
     return(
         <div className="boards-panel-main-container">
             <div className="boards-panel-header">
-                <div>Boards</div>
+                <div>
+                    <div className="boards-panel-language-selector-container"><LanguageSelector/></div>
+                    <div>{ texts["Boards"] }</div>
+                </div>
                 <div className="option-container">
-                    <div className={` log-out ${ !openLogOutDialog && "log-out-close" }`} onClick={ redirectToLogOut } >log out</div>
+                    <div className={` log-out ${ !openLogOutDialog && "log-out-close" }`} onClick={ redirectToLogOut } >{ texts["log out"] }</div>
                     <div className="three-dot-container" tabIndex="1" onBlur={ () => setOpenLogOutDialog(false) } onClick={ () => setOpenLogOutDialog(!openLogOutDialog) }>
                         <div></div>
                         <div></div>
