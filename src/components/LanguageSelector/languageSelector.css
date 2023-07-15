@@ -1,0 +1,61 @@
+.language-selector-main {
+    width: 100%;
+    height: 300%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    flex-direction: column;
+}
+
+.language-selector-main > div {
+    border-radius: 3em;
+    position: absolute;
+    right: 0;
+    background-color: #878793;
+    cursor: pointer;
+    width: 100%;
+}
+
+.language-selector-body {
+    height: 100%;
+    transition: height 300ms;
+    transition-delay: 100ms;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.language-selector-body-close {
+    height: 33%;
+    overflow: hidden;
+}
+
+.languages-button-container {
+    height: 33%;
+    flex-direction: column;
+    gap: .1em;
+    display: flex;
+    background-image: url(/src/assets/icons/internet.png);
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.language-selector-body-english{
+    background-image: url(/src/assets/icons/circle.png);
+}
+
+.language-selector-body-persian{
+    background-image: url(/src/assets/icons/iran.png);
+    background-size: 110% !important;
+}
+
+.language-selector-body > div {
+    width: 100%;
+    height: 33%;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
