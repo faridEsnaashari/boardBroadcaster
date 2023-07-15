@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 import Action from "./Action";
+import texts from "../../../tools/localization/localization";
 
 import "../Styles/boardStyles.css";
 
@@ -100,7 +101,7 @@ const Board = props => {
                 <div className="board-actions">
                     <div className="board-copy-presenter-url-action" onClick={ () => copyPresenterUrl() }>
                         <Action
-                            tooltipText="tooltip"
+                            tooltipText={ texts["presenter url"] }
                             color={ boardColor }
                             done={ done.presenterUrlCopiedSignal === id }
                             icon={ LinkIcon }
@@ -108,7 +109,7 @@ const Board = props => {
                     </div>
                     <div className="board-copy-participant-url-action" onClick={ () => copyParticipantUrl() }>
                         <Action
-                            tooltipText="tooltip"
+                            tooltipText={ texts["participant url"] }
                             color={ boardColor }
                             done={ done.participantUrlCopiedSignal === id }
                             icon={ LinkIcon }
@@ -116,7 +117,7 @@ const Board = props => {
                     </div>
                     <div className="board-rename-action" onClick={ () => setOpenRenameDialog(true) }>
                         <Action
-                            tooltipText="tooltip"
+                            tooltipText={ texts["rename"] }
                             color={ boardColor }
                             isLoading={ isLoading.rename }
                             icon={ RenameIcon }
@@ -124,7 +125,7 @@ const Board = props => {
                     </div>
                     <div className="board-delete-action" onClick={ () => setOpenDeleteDialog(true) }>
                         <Action
-                            tooltipText="tooltip"
+                            tooltipText={ texts["delete"] }
                             color={ boardColor }
                             isLoading={ isLoading.delete }
                             icon={ DeleteIcon }
