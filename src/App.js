@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import withSettingsHoc from "./components/HOCs/withSettingsHOCs";
+import withNotificationHoc from "./components/HOCs/withNotificationHOC.jsx";
 
 import Routes from "./components/Routes";
 
@@ -16,4 +17,4 @@ const App = () => {
         </Router>
     );
 };
-export default withSettingsHoc(App);
+export default withNotificationHoc(withSettingsHoc(App));
