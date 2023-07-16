@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { isValidEmail, isValidPassword } from "../../../tools/validators";
-import { SUCCESS_MSG, UNAUTHORIZED_ERR, INTERNAL_SERVER_ERR } from "../../../tools/statusCodes";
+import { SUCCESS_MSG, UNAUTHORIZED_ERR } from "../../../tools/statusCodes";
 import { getElementValue } from "../../../tools/helpers";
 
 import LanguageSelector from "../../../components/LanguageSelector/LanguageSelector";
 
 import texts from "../../../tools/localization/localization";
+
+import notificationsContext from "../../../contexts/notificationsContext";
 
 import useAPICaller from "../../../APIs/APICallers/APICallers";
 
@@ -20,13 +22,18 @@ const LogInPage = () => {
     const [ login, result ] = useAPICaller().loginCaller;
     const history = useHistory();
 
+    const {
+        error,
+        success,
+    } = useContext(notificationsContext)
+
     const logInTheUser = (e) => {
         e.preventDefault();
         const password = getElementValue("password");
         const email = getElementValue("email");
 
         if(!isValidPassword(password) || !isValidEmail(email)){
-            console.error("invalid data");
+            error(texts["wrong format"]);
             return;
         }
 
@@ -40,7 +47,25 @@ const LogInPage = () => {
 
     const redirectToBoardsPanel = () => history.push("boards-panel");
 
-    useEffect(() => result.status === SUCCESS_MSG && redirectToBoardsPanel(), [ result.status ]);
+    useEffect(() => {
+        console.log(result.error);
+        if(result.status === UNAUTHORIZED_ERR){
+            error(texts["wrong username or password"]);
+            return;
+        }
+
+        if(result.status === SUCCESS_MSG){
+            success(texts["successfull login"]);
+            redirectToBoardsPanel();
+            return;
+        }
+
+        if(result.error){
+            error(texts["something wrong happened"]);
+            redirectToBoardsPanel();
+            return;
+        }
+    }, [ result.status ]);
 
     return (
         <div className="login-main-container">
