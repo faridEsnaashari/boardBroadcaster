@@ -17,8 +17,15 @@ const getRandomBoardColor = () => {
     return colors[randomNumber];
 };
 
+const changeHtmlTitle = title => {
+    const htmlTitle = document.getElementsByTagName("title")[0];
+    htmlTitle.innerHTML = title;
+};
+
+
 export {
     getElementValue,
     getRandomNumber,
     getRandomBoardColor,
+    changeHtmlTitle,
 };
