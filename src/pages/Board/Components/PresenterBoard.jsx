@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 
@@ -13,7 +13,7 @@ import UserDetailsContext from "../../../contexts/userDetails";
 
 import "../Styles/boardStyles.css";
 
-const Board = props => {
+const Board = () => {
     const [ socket, setSocket ] = useState(null);
 
     const [ drawingPanelSize, setDrawingPanelSize ] = useState({ width: 0, height: 0 });

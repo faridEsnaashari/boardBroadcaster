@@ -1,3 +1,5 @@
+import React from "react";
+
 import "../Styles/attributeStyles.css";
 
 const Attribute = props => {

@@ -19,29 +19,32 @@ export const signUpReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTD_SIGNUP: 
+        case REQUESTD_SIGNUP: {
             currentState = {
                 isFetching: true,
                 status: null,
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_SIGNUP: 
+        case RECIVED_SIGNUP: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
                 error: null,
             };
             break;
+        }
 
-        case FAILED_SIGNUP: 
+        case FAILED_SIGNUP: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;
@@ -57,29 +60,32 @@ export const verifyEmailReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTD_VERIFY_EMAIL: 
+        case REQUESTD_VERIFY_EMAIL: {
             currentState = {
                 isFetching: true,
                 status: null,
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_VERIFY_EMAIL: 
+        case RECIVED_VERIFY_EMAIL: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
                 error: null,
             };
             break;
+        }
 
-        case FAILED_VERIFY_EMAIL: 
+        case FAILED_VERIFY_EMAIL: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;

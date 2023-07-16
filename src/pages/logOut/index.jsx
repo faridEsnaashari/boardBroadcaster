@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import texts from "../../tools/localization/localization";
 
-const LogOutPage = props => {
+const LogOutPage = () => {
     const history = useHistory();
 
     useEffect(() => {

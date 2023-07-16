@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useAPICaller from "../../APIs/APICallers/APICallers.js";
 import { APP_URL } from "../../tools/config.js";
@@ -20,7 +20,7 @@ import NewBoard from "./Components/newBoard";
 
 import "./Styles/indexStyles.css";
 
-const BoardsPanelPage = props => {
+const BoardsPanelPage = () => {
 
     const {
         error,

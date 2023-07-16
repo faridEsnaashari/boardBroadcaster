@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./loadingCircleStyles.css";
 
 const LoadingCircle = props => {

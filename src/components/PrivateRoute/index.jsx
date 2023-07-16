@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, useHistory } from "react-router-dom";
 
 import "./styles.css";
 
 import useAPICaller from "../../APIs/APICallers/APICallers.js";
-import { SUCCESS_MSG } from "../../tools/statusCodes";
 
 import UserDetailsContext, { userDetailsContext as userInitialDetailsContext } from "../../contexts/userDetails";
 

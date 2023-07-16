@@ -1,3 +1,5 @@
+import React from "react";
+
 import texts from "../../../tools/localization/localization";
 
 const VerificationSentPage = () => {
