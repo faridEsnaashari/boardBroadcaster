@@ -24,7 +24,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .language-selector-body-close {

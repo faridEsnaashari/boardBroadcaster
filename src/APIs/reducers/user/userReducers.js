@@ -21,7 +21,7 @@ export const userGetReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTED_USER_GET: 
+        case REQUESTED_USER_GET: {
             currentState = {
                 isFetching: true,
                 status: null,
@@ -29,8 +29,9 @@ export const userGetReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_USER_GET: 
+        case RECIVED_USER_GET: {
             const { boards, ...rest } = action.payload.data;
 
             currentState = {
@@ -43,8 +44,9 @@ export const userGetReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case FAILED_USER_GET: 
+        case FAILED_USER_GET: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -52,6 +54,7 @@ export const userGetReducer = (state, action) => {
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;

@@ -1,3 +1,5 @@
+import React from "react";
+
 import Rectongle from "./Rectongle";
 import HorizontalLine from "./HorizontalLine";
 import VerticalLine from "./VerticalLine";

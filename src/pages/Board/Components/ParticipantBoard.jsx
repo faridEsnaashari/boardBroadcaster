@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import useAPICaller from "../../../APIs/APICallers/APICallers";
@@ -11,7 +11,7 @@ import DrawingPanel from "./DrawingPanel";
 
 import "../Styles/boardStyles.css";
 
-const Board = props => {
+const Board = () => {
     const shapesRef = useRef([]);
     const [ shapes, setShapes ] = useState([]);
 

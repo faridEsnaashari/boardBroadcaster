@@ -1,3 +1,4 @@
+import React from "react";
 
 const Rectongle = (props) => {
     const { 

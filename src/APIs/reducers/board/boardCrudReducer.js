@@ -35,7 +35,7 @@ export const boardGetReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTED_BOARD_GET: 
+        case REQUESTED_BOARD_GET: {
             currentState = {
                 isFetching: true,
                 status: null,
@@ -43,8 +43,9 @@ export const boardGetReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_BOARD_GET: 
+        case RECIVED_BOARD_GET: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -52,8 +53,9 @@ export const boardGetReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case FAILED_BOARD_GET: 
+        case FAILED_BOARD_GET: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -61,6 +63,7 @@ export const boardGetReducer = (state, action) => {
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;
@@ -77,7 +80,7 @@ export const boardCreateReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTED_BOARD_CREATE: 
+        case REQUESTED_BOARD_CREATE: {
             currentState = {
                 isFetching: true,
                 status: null,
@@ -85,8 +88,9 @@ export const boardCreateReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_BOARD_CREATE: 
+        case RECIVED_BOARD_CREATE: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -94,8 +98,9 @@ export const boardCreateReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case FAILED_BOARD_CREATE: 
+        case FAILED_BOARD_CREATE: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -103,6 +108,7 @@ export const boardCreateReducer = (state, action) => {
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;
@@ -119,7 +125,7 @@ export const boardDeleteReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTED_BOARD_DELETE: 
+        case REQUESTED_BOARD_DELETE: {
             currentState = {
                 isFetching: true,
                 status: null,
@@ -127,8 +133,9 @@ export const boardDeleteReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_BOARD_DELETE: 
+        case RECIVED_BOARD_DELETE: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -136,8 +143,9 @@ export const boardDeleteReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case FAILED_BOARD_DELETE: 
+        case FAILED_BOARD_DELETE: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -145,6 +153,7 @@ export const boardDeleteReducer = (state, action) => {
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;
@@ -161,7 +170,7 @@ export const boardUpdateReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTED_BOARD_UPDATE: 
+        case REQUESTED_BOARD_UPDATE: {
             currentState = {
                 isFetching: true,
                 status: null,
@@ -169,8 +178,9 @@ export const boardUpdateReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_BOARD_UPDATE: 
+        case RECIVED_BOARD_UPDATE: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -178,8 +188,9 @@ export const boardUpdateReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case FAILED_BOARD_UPDATE: 
+        case FAILED_BOARD_UPDATE: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -187,6 +198,7 @@ export const boardUpdateReducer = (state, action) => {
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;
@@ -203,7 +215,7 @@ export const boardExistsReducer = (state, action) => {
     let currentState = {};
 
     switch(action.type){
-        case REQUESTED_BOARD_EXISTS: 
+        case REQUESTED_BOARD_EXISTS: {
             currentState = {
                 isFetching: true,
                 status: null,
@@ -211,8 +223,9 @@ export const boardExistsReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case RECIVED_BOARD_EXISTS: 
+        case RECIVED_BOARD_EXISTS: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -220,8 +233,9 @@ export const boardExistsReducer = (state, action) => {
                 error: null,
             };
             break;
+        }
 
-        case FAILED_BOARD_EXISTS: 
+        case FAILED_BOARD_EXISTS: {
             currentState = {
                 isFetching: false,
                 status: statusCodesDictionary[action.statusCode],
@@ -229,6 +243,7 @@ export const boardExistsReducer = (state, action) => {
                 error: action.payload,
             };
             break;
+        }
     }
 
     return currentState;
