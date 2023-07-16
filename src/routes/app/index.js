@@ -7,28 +7,44 @@ import LogInRoutes from "./logIn";
 import LogOutRoutes from "./logOut";
 import SignUpRoutes from "./signUp";
 import BoardsPanelRoutes from "./boardsPanel";
+import {changeHtmlTitle} from "../../tools/helpers";
 
 const routes = [
     {
         path: "signup",
-        component: () => <Routes routes={ SignUpRoutes }/>,
+        component: () => {
+            changeHtmlTitle("signup");
+            return (<Routes routes={ SignUpRoutes }/>);
+        },
     },
     {
         path: "logout",
-        component: () => <Routes routes={ LogOutRoutes }/>,
+        component: () => {
+            changeHtmlTitle("logout")
+            return (<Routes routes={ LogOutRoutes }/>);
+        },
     },
     {
         path: "login",
-        component: () => <Routes routes={ LogInRoutes }/>,
+        component: () => {
+            changeHtmlTitle("login");
+            return (<Routes routes={ LogInRoutes }/>);
+        },
     },
     {
         path: "board",
-        component: () => <Routes routes={ BoardRoutes }/>,
+        component: () => {
+            changeHtmlTitle("board");
+            return (<Routes routes={ BoardRoutes }/>);
+        },
     },
     {
         path: "boards-panel",
         type: "private",
-        component: () => <Routes routes={ BoardsPanelRoutes }/>,
+        component: () => {
+            changeHtmlTitle("boards-panel");
+            return(<Routes routes={ BoardsPanelRoutes }/>)
+        },
     },
     {
         path: "/boards-panel",
