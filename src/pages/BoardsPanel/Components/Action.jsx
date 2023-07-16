@@ -37,6 +37,8 @@ const Action = props => {
 
     const doneRef = useRef(null);
 
+    useEffect(() => tooltipRef.current && (tooltipRef.current.innerHTML = tooltipText), [tooltipText]);
+
     useEffect(() => {
         const tooltip = document.createElement("p");
         tooltip.classList.add("tooltip");
