@@ -1,0 +1,38 @@
+.notification-container {
+    height: 5vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    transition: height 300ms;
+    box-sizing: border-box;
+}
+
+.notification-container-close{
+    height: 0;
+}
+
+.notification-container-error {
+    background-color: #eec9c9;
+    border: 4px solid #f00;
+}
+
+.notification-container-success {
+    background-color: #c0e3ad;
+    border: 4px solid #0f0;
+}
+
+.notification-container-info {
+    background-color: #b9d8dd;
+    border: 4px solid #00f;
+}
+
+.notification-container-warning {
+    background-color: #e8e7ae;
+    border: 4px solid #ffef00;
+}

@@ -8,5 +8,14 @@
     "presenter url": "آیدی ارائه دهنده",
     "participant url": "آیدی شرکت کننده",
     "rename": "تغییر نام",
-    "delete": "حذف"
+    "delete": "حذف",
+    "wrong format": "فرمت اشتباه",
+    "successfull login": "ورود موفق",
+    "wrong username or password": "یوزر نیم یا پسورد اشتباه است",
+    "something wrong happened": "اشکالی رخ داده است",
+    "successfull operation": "عملیات موفق",
+    "this user already exists": "یوزر از قبل وجود دارد",
+    "board has been created successfully": "برد با موفقیت ساخته شد",
+    "board has been deleted successfully": "برد با موفقیت حذف شد",
+    "board has been updated successfully": "برد با موفقیت تغییر یافت"
 }

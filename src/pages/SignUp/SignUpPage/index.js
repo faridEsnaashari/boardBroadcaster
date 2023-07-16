@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 
 import { isValidEmail, isValidPassword, isValidUseerName } from "../../../tools/validators";
-import { SUCCESS_CREATE_MSG } from "../../../tools/statusCodes";
+import { SUCCESS_CREATE_MSG, CONFILICT_ERR } from "../../../tools/statusCodes";
 import { getElementValue } from "../../../tools/helpers";
 import texts from "../../../tools/localization/localization";
+
+import NotificationContext from "../../../contexts/notificationsContext";
 
 import useAPICaller from "../../../APIs/APICallers/APICallers";
 
@@ -18,9 +20,26 @@ import "./index.css"
 const SignUpPage = () => {
     const [ signUp, result ] = useAPICaller().signUpCaller;
 
+    const {
+        error,
+        success,
+    } = useContext(NotificationContext);
+
     useEffect(() => {
         if(result.status === SUCCESS_CREATE_MSG){
+            success(texts["successfull operation"]);
             window.location.href = "/signup/verification_sent";
+            return;
+        }
+
+        if(result.status === CONFILICT_ERR){
+            error(texts["this user already exists"]);
+            return;
+        }
+
+        if(result.error){
+            error(texts["something wron happened"]);
+            return;
         }
     }, [result]);
 
@@ -31,7 +50,7 @@ const SignUpPage = () => {
         const email = getElementValue("email");
 
         if(!isValidUseerName(name) || !isValidPassword(password) || !isValidEmail(email)){
-            console.error("invalid data");
+            error(texts["wrong format"]);
             return;
         }
 

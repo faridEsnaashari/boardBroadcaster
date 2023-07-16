@@ -8,5 +8,14 @@
     "presenter url": "presenter url",
     "participant url": "participant url",
     "rename": "rename",
-    "delete": "delete"
+    "delete": "delete",
+    "wrong format": "wrong format",
+    "successfull login": "successfull login",
+    "wrong username or password": "wrong username or password",
+    "something wrong happened": "something wrong happened",
+    "successfull operation": "successfull operation",
+    "this user already exists": "this user already exists",
+    "board has been created successfully": "board has been created successfully",
+    "board has been deleted successfully": "board has been deleted successfully",
+    "board has been updated successfully": "board has been updated successfully"
 }

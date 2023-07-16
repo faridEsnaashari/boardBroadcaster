@@ -9,6 +9,7 @@ import { useSignal } from "../../tools/useSignal.js";
 import { SUCCESS_CREATE_MSG, SUCCESS_MSG } from "../../tools/statusCodes.js";
 
 import UserDetailsContext from "../../contexts/userDetails.js";
+import NotificationContext from "../../contexts/notificationsContext";
 
 import { getRandomBoardColor } from "../../tools/helpers.js";
 
@@ -20,6 +21,12 @@ import NewBoard from "./Components/newBoard";
 import "./Styles/indexStyles.css";
 
 const BoardsPanelPage = props => {
+
+    const {
+        error,
+        success,
+    } = useContext(NotificationContext);
+
     const userDetailsContext = useContext(UserDetailsContext);
 
     const [ boards, setBoards ] = useState(userDetailsContext.user.boards);
@@ -49,7 +56,12 @@ const BoardsPanelPage = props => {
         setCreateBoardLoading(false);
 
         if(createBoardActionResult.status === SUCCESS_CREATE_MSG){
+            success(texts["board has been created successfully"]);
             setBoards([ ...boards, createBoardActionResult.data ])
+        }
+
+        if(createBoardActionResult.error){
+            error(texts["something wrong happened"]);
         }
     }, [createBoardActionResult.isFetching]);
 
@@ -59,12 +71,14 @@ const BoardsPanelPage = props => {
         }
 
         if(deleteBoardActionResult.error){
+            error(texts["something wrong happened"]);
             const updatedBoards = boards.map(board => ({ ...board, isLoading: { ...board.isLoading, delete: false } }));
             setBoards(updatedBoards);
             return;
         }
 
         if(deleteBoardActionResult.status === SUCCESS_MSG){
+            success(texts["board has been deleted successfully"]);
             const updatedboards = boards.map(board => board.isLoading.delete ? { ...board, deleted: true } : board);
             setBoards(updatedboards);
         }
@@ -76,12 +90,14 @@ const BoardsPanelPage = props => {
         }
 
         if(updateBoardActionResult.error){
+            error(texts["something wrong happened"]);
             const updatedBoards = boards.map(board => ({ ...board, isLoading: { ...board.isLoading, rename: false } }));
             setBoards(updatedBoards);
             return;
         }
 
         if(updateBoardActionResult.status === SUCCESS_MSG){
+            success(texts["board has been updated successfully"]);
             const updatedboards = boards.map(board => {
                 if(!board.isLoading.rename){
                     return board;
